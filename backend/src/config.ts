@@ -1,0 +1,21 @@
+import 'dotenv/config';
+
+const toNumber = (value: string | undefined, fallback: number): number => {
+  const parsed = Number(value);
+  return value !== undefined && Number.isFinite(parsed) ? parsed : fallback;
+};
+
+export const config = {
+  port: toNumber(process.env.PORT, 4000),
+  corsOrigins: (process.env.CORS_ORIGINS ?? 'http://localhost:3000,http://localhost:5173')
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean),
+  db: {
+    host: process.env.DB_HOST ?? 'localhost',
+    port: toNumber(process.env.DB_PORT, 3306),
+    user: process.env.DB_USER ?? 'inventory',
+    password: process.env.DB_PASSWORD ?? 'inventory',
+    database: process.env.DB_NAME ?? 'inventory',
+  },
+};
