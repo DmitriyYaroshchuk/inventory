@@ -1,29 +1,7 @@
-# зависимости
 node_modules/
-
-# секреты и локальные настройки (шаблон .env.example остаётся в Git)
 .env
-.env.*
-!.env.example
-
-# сборки
 .next/
 dist/
 build/
-out/
-next-env.d.ts
-*.tsbuildinfo
-
-# тесты
-coverage/
-
-# логи и мусор ОС
 *.log
 .DS_Store
-Thumbs.db
-
-# редакторы
-.idea/
-
-# резервные копии MySQL Workbench (сам .mwb файл схемы в Git нужен!)
-*.mwb.bak
