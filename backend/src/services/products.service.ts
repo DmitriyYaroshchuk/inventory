@@ -2,6 +2,12 @@ import type { RowDataPacket } from 'mysql2';
 import { pool } from '../db';
 import type { Price, ProductDto } from '../types';
 
+interface RawPrice {
+  value: number;
+  symbol: string;
+  isDefault: number | boolean;
+}
+
 interface ProductRow extends RowDataPacket {
   id: number;
   order_id: number;
@@ -14,18 +20,17 @@ interface ProductRow extends RowDataPacket {
   specification: string | null;
   guarantee_start: Date;
   guarantee_end: Date;
-  created_at: Date;
-}
-
-interface PriceRow extends RowDataPacket {
-  product_id: number;
-  value: number;
-  symbol: string;
-  is_default: number;
+  price: RawPrice[] | string;
+  date: Date;
 }
 
 interface TypeRow extends RowDataPacket {
   type: string;
+}
+
+function parsePrices(raw: RawPrice[] | string): Price[] {
+  const list: RawPrice[] = typeof raw === 'string' ? JSON.parse(raw) : raw;
+  return list.map((x) => ({ value: Number(x.value), symbol: x.symbol, isDefault: Boolean(x.isDefault) }));
 }
 
 export interface ProductsFilter {
@@ -57,23 +62,6 @@ export async function getProducts(filter: ProductsFilter = {}): Promise<ProductD
     params,
   );
 
-  if (products.length === 0) return [];
-
-  const [prices] = await pool.query<PriceRow[]>(
-    `SELECT product_id, value, symbol, is_default
-       FROM product_prices
-      WHERE product_id IN (?)
-      ORDER BY id`,
-    [products.map((p) => p.id)],
-  );
-
-  const pricesByProduct = new Map<number, Price[]>();
-  for (const row of prices) {
-    const list = pricesByProduct.get(row.product_id) ?? [];
-    list.push({ value: row.value, symbol: row.symbol, isDefault: row.is_default === 1 });
-    pricesByProduct.set(row.product_id, list);
-  }
-
   return products.map((p) => ({
     id: p.id,
     serialNumber: p.serial_number,
@@ -86,9 +74,9 @@ export async function getProducts(filter: ProductsFilter = {}): Promise<ProductD
       start: p.guarantee_start.toISOString(),
       end: p.guarantee_end.toISOString(),
     },
-    price: pricesByProduct.get(p.id) ?? [],
+    price: parsePrices(p.price),
     order: { id: p.order_id, title: p.order_title },
-    date: p.created_at.toISOString(),
+    date: p.date.toISOString(),
   }));
 }
 

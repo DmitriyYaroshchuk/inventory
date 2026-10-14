@@ -57,6 +57,15 @@ API: <http://localhost:4000/api>. Socket.io работает на том же п
 
 Проверка: `curl http://localhost:4000/api/health` → `{"status":"ok"}`
 
+## База данных
+
+Структура повторяет `app.js` из ТЗ: две таблицы.
+
+- `orders` — приходы (`id`, `title`, `description`, `date`).
+- `products` — продукты (`serial_number`, `is_new`, `photo`, `title`, `type`, `specification`, `guarantee_start`, `guarantee_end`, `price`, `order_id`, `date`). Колонка `price` — JSON-массив `[{"value", "symbol", "isDefault"}]`, как поле `price` в `app.js`. Связь с приходом — `order_id` (удаление прихода удаляет его продукты).
+
+Схема лежит в `db/01-schema.sql`, тестовые данные в `db/02-seed.sql`. Если схему меняли, пересоздайте базу: `docker compose down -v`, затем `docker compose up -d --build`.
+
 ## API
 
 | Метод | URL | Описание |
