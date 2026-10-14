@@ -8,19 +8,38 @@ SPA-приложение для учёта приходов (Orders) и прод
 
 ```
 db/                  # схема БД и тестовые данные (применяются при первом старте MySQL)
-backend/             # Express + Socket.io + MySQL (TypeScript)
-docker-compose.yml   # MySQL
+backend/             # Express + Socket.io + MySQL (TypeScript), Dockerfile
+docker-compose.yml   # MySQL + backend
 ```
 
-## Запуск (разработка)
+## Запуск в Docker (всё одной командой)
 
-Нужны Node.js 22+ и Docker.
+Нужен только Docker.
+
+```bash
+cp .env.example .env
+docker compose up -d --build
+```
+
+Поднимутся два контейнера: `inventory-mysql` (данные создаются при первом старте) и `inventory-backend` (API на <http://localhost:4000/api>). Проверка:
+
+```bash
+docker compose ps                      # оба сервиса должны быть healthy
+curl http://localhost:4000/api/health  # {"status":"ok"}
+docker compose logs -f backend         # логи бэкенда
+```
+
+Остановить: `docker compose down`. Остановить и удалить данные БД: `docker compose down -v`.
+
+## Запуск для разработки (бэкенд локально)
+
+Нужны Node.js 22+ и Docker (для MySQL). Если бэкенд уже запущен в Docker, сначала остановите его: `docker compose stop backend` (иначе будет занят порт 4000).
 
 ### 1. База данных
 
 ```bash
 cp .env.example .env
-docker compose up -d
+docker compose up -d mysql
 ```
 
 Пересоздать базу с нуля (удалит данные): `docker compose down -v && docker compose up -d`
