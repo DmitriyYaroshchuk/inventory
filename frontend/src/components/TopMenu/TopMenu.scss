@@ -83,4 +83,17 @@
   &__icon {
     color: $green;
   }
+
+  &__sessions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: $text-dark;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  &__sessions-icon {
+    color: $green;
+  }
 }
