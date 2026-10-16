@@ -4,36 +4,42 @@
   padding: 32px 0;
 
   &__list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
   &__link {
-    display: block;
-    padding: 12px 24px;
-    border-left: 4px solid transparent;
-    color: $text-muted;
-    font-weight: 600;
+    display: inline-block;
+    padding: 4px 6px;
+    border-bottom: 3px solid transparent;
+    color: $text-dark;
+    font-size: 14px;
+    font-weight: 700;
     letter-spacing: 0.05em;
     text-decoration: none;
     text-transform: uppercase;
-    transition: color 0.2s;
+    transition:
+      color 0.2s,
+      border-color 0.2s;
 
     &:hover {
-      color: $text-dark;
+      color: $green;
     }
 
     &--active {
-      border-left-color: $green;
-      color: $green;
+      border-bottom-color: $green;
     }
 
     &--disabled {
       cursor: default;
 
       &:hover {
-        color: $text-muted;
+        color: $text-dark;
       }
     }
   }
