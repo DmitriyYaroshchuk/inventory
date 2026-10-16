@@ -3,6 +3,7 @@ import Providers from "@/components/Providers/Providers";
 import "./globals.scss";
 import Navigation from "@/components/NavigationMenu/NavigationMenu";
 import UserProfile from "@/components/UserProfile/UserProfile";
+import TopMenu from "@/components/TopMenu/TopMenu";
 
 export const metadata: Metadata = {
   title: 'Inventory',
@@ -14,6 +15,7 @@ const RootLayout = ({ children }: LayoutProps<'/'>) => {
     <html lang="ru">
       <body>
         <Providers>
+          <TopMenu />
           <div className="app__body">
             <aside className="app__sidebar">
               <UserProfile />
