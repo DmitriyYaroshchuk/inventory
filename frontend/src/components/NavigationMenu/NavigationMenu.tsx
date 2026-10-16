@@ -3,8 +3,9 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import './NavigationMenu.scss';
+import { NavigationItem } from '@/types';
 
-type NavigationItem = { href?: string; label: string };
+
 
 const items: NavigationItem[] = [
     { href: '/orders', label: 'Приход' },
