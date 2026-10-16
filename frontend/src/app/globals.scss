@@ -1,0 +1,25 @@
+@use "bootstrap/scss/bootstrap";
+@use "@/styles/variables" as *;
+
+body {
+  background: $background;
+  color: $text-dark;
+}
+
+.app {
+  &__body {
+    display: flex;
+    min-height: calc(100vh - #{$header-height});
+  }
+
+  &__sidebar {
+    flex: 0 0 $sidebar-width;
+    background: #fff;
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+    padding: 32px 48px;
+  }
+}

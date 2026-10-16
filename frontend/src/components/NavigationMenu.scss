@@ -1,0 +1,32 @@
+@use "@/styles/variables" as *;
+
+.navigation {
+  padding: 32px 0;
+
+  &__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__link {
+    display: block;
+    padding: 12px 24px;
+    border-left: 4px solid transparent;
+    color: $text-muted;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+
+    &:hover {
+      color: $text-dark;
+    }
+
+    &--active {
+      border-left-color: $green;
+      color: $green;
+    }
+  }
+}
