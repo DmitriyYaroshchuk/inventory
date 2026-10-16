@@ -1,9 +1,12 @@
-import type { NextConfig } from "next";
+import path from 'path';
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  cacheComponents: true,
-  partialPrefetching: true,
+  sassOptions: {
+    loadPaths: [path.join(process.cwd(), 'node_modules', 'bootstrap', 'scss')],
+    quietDeps: true,
+    silenceDeprecations: ['import', 'global-builtin', 'color-functions', 'if-function'],
+  },
 };
 
 export default nextConfig;
