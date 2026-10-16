@@ -1,4 +1,4 @@
-function ProductsPage() {
+const ProductsPage = () => {
     return <h1>Продукты</h1>
 }
 

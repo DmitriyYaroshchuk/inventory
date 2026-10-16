@@ -1,12 +1,15 @@
+'use client';
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import "./Navigation.scss";
 
 const links = [
     { href: '/orders', label: 'Приход' },
     { href: '/products', label: 'Продукты' },
 ];
 
-function Navigation() {
+const Navigation = () => {
     const pathname = usePathname();
 
     return (
@@ -17,7 +20,7 @@ function Navigation() {
                         <li key={href}>
                             <Link
                                 href={href}
-                                className={`navigation__link${pathname.startsWith(href) ? 'navigation__link--active' : ''}`}>
+                                className={`navigation__link${pathname.startsWith(href) ? ' navigation__link--active' : ''}`}>
                                 {label}
                             </Link>
                         </li>
