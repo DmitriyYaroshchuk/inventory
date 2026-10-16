@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { OrderDetails, OrderSummary, Product } from '@/types';
+import type { OrderDetails, OrderSummary, Product } from '@/types';
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000';
 export const api = createApi({
