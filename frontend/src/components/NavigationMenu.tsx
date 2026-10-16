@@ -1,33 +1,42 @@
 'use client';
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import "./Navigation.scss";
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import './NavigationMenu.scss';
 
-const links = [
+type NavigationItem = { href?: string; label: string };
+
+const items: NavigationItem[] = [
     { href: '/orders', label: 'Приход' },
+    { label: 'Группы' },
     { href: '/products', label: 'Продукты' },
+    { label: 'Пользователи' },
+    { label: 'Настройки' },
 ];
 
-const Navigation = () => {
+const NavigationMenu = () => {
     const pathname = usePathname();
 
     return (
-        <nav className="navigation">
-            <ul className="navigation__list">
-                {
-                    links.map(({ href, label }) => (
-                        <li key={href}>
+        <nav className="navigation-menu">
+            <ul className="navigation-menu__list">
+                {items.map(({ href, label }) => (
+                    <li key={label}>
+                        {href ? (
                             <Link
                                 href={href}
-                                className={`navigation__link${pathname.startsWith(href) ? ' navigation__link--active' : ''}`}>
+                                className={`navigation-menu__link${pathname.startsWith(href) ? ' navigation-menu__link--active' : ''}`}
+                            >
                                 {label}
                             </Link>
-                        </li>
-                    ))
-                }
+                        ) : (
+                            <span className="navigation-menu__link navigation-menu__link--disabled">{label}</span>
+                        )}
+                    </li>
+                ))}
             </ul>
         </nav>
-    )
-}
-export default Navigation;
+    );
+};
+
+export default NavigationMenu;
