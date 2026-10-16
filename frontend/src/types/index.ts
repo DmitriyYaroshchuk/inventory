@@ -40,3 +40,5 @@ export type OrderSummary = {
 export type OrderDetails = OrderSummary & {
     products: Product[]
 }
+
+export type NavigationItem = { href?: string; label: string };
