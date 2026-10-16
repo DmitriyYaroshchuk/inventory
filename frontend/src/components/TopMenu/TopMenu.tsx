@@ -1,5 +1,7 @@
 'use client';
 
+import { io } from 'socket.io-client';
+import { API_URL } from '@/services/api';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import './TopMenu.scss';
@@ -10,6 +12,7 @@ const pad = (value: number) => String(value).padStart(2, '0');
 
 const TopMenu = () => {
     const [now, setNow] = useState<Date | null>(null);
+    const [sessions, setSessions] = useState<number | null>(null);
 
     useEffect(() => {
         const tick = () => setNow(new Date());
@@ -18,6 +21,15 @@ const TopMenu = () => {
         const timer = setInterval(tick, 1000);
 
         return () => clearInterval(timer);
+    }, []);
+
+    useEffect(() => {
+        const socket = io(API_URL);
+        socket.on('activeSessions', (count: number) => setSessions(count));
+
+        return () => {
+            socket.disconnect();
+        }
     }, []);
 
     return (
@@ -34,6 +46,16 @@ const TopMenu = () => {
             <input className="top-menu__search" type="search" placeholder="Поиск" aria-label="Поиск" />
 
             <div className="top-menu__info">
+                {sessions !== null && (
+                    <div className="top-menu__sessions" title="Активные сессии" aria-label="Активные сессии">
+                        <svg className="top-menu__sessions-icon" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true">
+                            <circle cx="10" cy="6.5" r="3.5" fill="currentColor" />
+                            <path d="M3 17c0-3.9 3.1-6 7-6s7 2.1 7 6z" fill="currentColor" />
+                        </svg>
+                        {sessions}
+                    </div>
+                )}
+
                 {now && (
                     <div className="top-menu__clock">
                         <div className="top-menu__weekday">
