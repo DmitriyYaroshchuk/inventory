@@ -1,0 +1,144 @@
+@use '@/styles/variables' as *;
+
+.order-details {
+  position: relative;
+  border: 1px solid $border;
+  border-radius: 4px;
+  background: #fff;
+
+  &__close {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 40px;
+    height: 40px;
+    padding: 0 0 2px;
+    border: 0;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    color: $text-muted;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+
+    &:hover {
+      color: $text-dark;
+    }
+  }
+
+  &__status {
+    margin: 0;
+    padding: 32px 36px;
+    color: $text-muted;
+  }
+
+  &__title {
+    margin: 0;
+    padding: 32px 36px 16px;
+    font-size: 22px;
+    letter-spacing: 0.02em;
+    font-weight: 700;
+  }
+
+  &__add {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 36px 16px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: $green;
+    font-size: 14px;
+    cursor: default;
+  }
+
+  &__add-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: $green;
+    color: #fff;
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  &__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__product {
+    display: grid;
+    grid-template-columns: 10px 48px minmax(0, 1fr) 80px 32px;
+    align-items: center;
+    gap: 24px;
+    padding: 12px 36px;
+    border-top: 1px solid #e3e8ec;
+  }
+
+  &__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #c9d1d9;
+
+    &--new {
+      background: $green;
+    }
+  }
+
+  &__photo {
+    width: 48px;
+    height: 36px;
+    object-fit: contain;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  &__name {
+    overflow: hidden;
+    color: $text-dark;
+    text-decoration: underline;
+    text-decoration-color: #c9d1d9;
+    text-overflow: ellipsis;
+    text-underline-offset: 4px;
+    white-space: nowrap;
+  }
+
+  &__serial {
+    color: $text-muted;
+    font-size: 12px;
+  }
+
+  &__state {
+    color: $text-muted;
+    font-size: 14px;
+
+    &--new {
+      color: $green;
+    }
+  }
+
+  &__delete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: $text-muted;
+    cursor: default;
+  }
+}

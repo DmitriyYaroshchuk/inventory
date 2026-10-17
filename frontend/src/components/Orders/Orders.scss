@@ -40,4 +40,15 @@
     padding: 0;
     list-style: none;
   }
+
+  &__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 16px;
+
+    &--open {
+      grid-template-columns: 470px minmax(0, 1fr);
+    }
+  }
 }

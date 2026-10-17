@@ -6,16 +6,23 @@
   align-items: center;
   gap: 24px;
   padding: 16px 32px;
-  border: 1px solid $text-muted;
+  border: 1px solid $border;
   border-radius: 7px;
   background: #fff;
   transition: box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
 
   &:hover {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
   }
 
   &__title {
+    padding: 0;
+    border: 0;
+    background: none;
+    text-align: left;
+    cursor: pointer;
     overflow: hidden;
     color: #6d7a87;
     font-size: 18px;
@@ -24,6 +31,10 @@
     text-overflow: ellipsis;
     text-underline-offset: 4px;
     white-space: nowrap;
+
+    &:hover {
+      color: $text-dark;
+    }
   }
 
   &__open {
@@ -33,7 +44,7 @@
     width: 40px;
     height: 40px;
     padding: 0;
-    border: 1px solid #d9e0e6;
+    border: 1px solid $border;
     border-radius: 50%;
     background: #fff;
     color: $text-dark;
@@ -93,5 +104,28 @@
     &:hover {
       color: #e04b4b;
     }
+  }
+
+  &--compact {
+    grid-template-columns: 40px 100px minmax(0, 1fr);
+    padding-right: 64px;
+  }
+
+  &--active {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  &__arrow {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    background: #dfe5ea;
+    color: #fff;
+    font-size: 28px;
   }
 }
