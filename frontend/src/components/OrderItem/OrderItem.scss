@@ -31,6 +31,8 @@
     text-overflow: ellipsis;
     text-underline-offset: 4px;
     white-space: nowrap;
+    justify-self: start;
+    max-width: 100%;
 
     &:hover {
       color: $text-dark;
