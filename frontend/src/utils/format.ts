@@ -14,6 +14,11 @@ export const formatLongDate = (data: string) => {
     return `${pad(date.getDate())} / ${MONTHS[date.getMonth()]} / ${date.getFullYear()}`;
 }
 
+export const formatFullDate = (iso: string) => {
+    const date = new Date(iso);
+    return `${pad(date.getDate())} / ${pad(date.getMonth() + 1)} / ${date.getFullYear()}`;
+};
+
 export const getPrice = (prices: Price[], symbol: string) => {
     return prices.find((price) => price.symbol === symbol)?.value ?? 0;
 }
