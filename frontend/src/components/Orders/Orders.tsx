@@ -6,11 +6,22 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { selectOrder } from '@/store/ordersSlice';
 import type { OrderSummary } from '@/types';
 import OrderItem from '@/components/OrderItem/OrderItem';
-import OrderDetails from '@/components/OrderDetails/OrderDetails';
-import DeleteOrderModal from '@/components/DeleteOrderModal/DeleteOrderModal';
-import AddOrderModal from '@/components/AddOrderModal/AddOrderModal';
 import Loader from '@/components/Loader/Loader';
+import dynamic from 'next/dynamic';
 import './Orders.scss';
+
+const OrderDetails = dynamic(() => import('@/components/OrderDetails/OrderDetails'), {
+    loading: () => <Loader />,
+});
+
+const DeleteOrderModal = dynamic(
+    () => import('@/components/DeleteOrderModal/DeleteOrderModal'),
+    { ssr: false },
+);
+
+const AddOrderModal = dynamic(() => import('@/components/AddOrderModal/AddOrderModal'), {
+    ssr: false,
+});
 
 const Orders = () => {
     const dispatch = useAppDispatch();
