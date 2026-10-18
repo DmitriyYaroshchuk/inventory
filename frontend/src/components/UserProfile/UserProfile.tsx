@@ -10,6 +10,7 @@ const UserProfile = () => {
         alt="User avatar"
         width={96}
         height={96}
+        loading="eager"
       />
       <button className="user-profile__settings" type="button" aria-label="Settings">
         ⚙

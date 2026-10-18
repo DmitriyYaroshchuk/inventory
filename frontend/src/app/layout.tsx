@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: LayoutProps<'/'>) => {
   return (
     <html lang="ru">
-      <body>
+      <body suppressHydrationWarning data-scroll-behavior="smooth">
         <Providers>
           <TopMenu />
           <div className="app__body">
