@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { deleteOrder, getOrder, listOrders } from '../services/orders.service';
+import { createOrder, deleteOrder, getOrder, listOrders } from '../services/orders.service';
 import { parseId } from '../utils';
 
 export const ordersRouter = Router();
@@ -24,6 +24,25 @@ ordersRouter.get('/:id', async (req, res) => {
   }
 
   res.json(order);
+});
+
+// POST /api/orders — создать приход
+ordersRouter.post('/', async (req, res) => {
+  const title = typeof req.body?.title === 'string' ? req.body.title.trim() : '';
+  const description =
+    typeof req.body?.description === 'string' ? req.body.description.trim() : '';
+
+  if (title.length < 3 || title.length > 255) {
+    res.status(400).json({ error: 'Title must be 3-255 characters' });
+    return;
+  }
+  if (description.length > 1000) {
+    res.status(400).json({ error: 'Description must be at most 1000 characters' });
+    return;
+  }
+
+  const order = await createOrder(title, description || null);
+  res.status(201).json(order);
 });
 
 // DELETE /api/orders/:id — удалить приход вместе с продуктами

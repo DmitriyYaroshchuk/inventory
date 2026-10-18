@@ -1,0 +1,70 @@
+@use 'sass:color';
+@use '@/styles/variables' as *;
+
+.add-order-modal {
+  position: fixed;
+  top: $header-height;
+  right: 0;
+  bottom: 0;
+  left: $sidebar-width;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(43, 52, 64, 0.5);
+  animation: fade-in 0.2s ease both;
+  cursor: pointer;
+
+  &__window {
+    width: 100%;
+    max-width: 520px;
+    padding: 32px 36px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    animation: zoom-in 0.25s ease both;
+    cursor: pointer;
+  }
+
+  &__title {
+    margin: 0 0 24px;
+    font-size: 20px;
+    font-weight: 700;
+    color: $text-dark;
+  }
+
+  &__form {
+    .form-label {
+      font-size: 14px;
+      color: $text-muted;
+    }
+
+    .form-control:focus {
+      border-color: $green;
+      box-shadow: 0 0 0 3px rgba($green, 0.2);
+    }
+
+    .form-control.is-invalid:focus {
+      border-color: var(--bs-form-invalid-border-color);
+      box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.2);
+    }
+
+    .btn-success {
+      --bs-btn-bg: #{$green};
+      --bs-btn-border-color: #{$green};
+      --bs-btn-hover-bg: #{color.adjust($green, $lightness: -8%)};
+      --bs-btn-hover-border-color: #{color.adjust($green, $lightness: -8%)};
+      --bs-btn-active-bg: #{color.adjust($green, $lightness: -12%)};
+      --bs-btn-active-border-color: #{color.adjust($green, $lightness: -12%)};
+      --bs-btn-disabled-bg: #{$green};
+      --bs-btn-disabled-border-color: #{$green};
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+  }
+}

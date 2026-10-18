@@ -25,6 +25,11 @@ export const api = createApi({
       invalidatesTags: ['Orders', 'Products'],
     }),
 
+    createOrder: build.mutation<OrderDetails, { title: string; description: string }>({
+      query: (body) => ({ url: '/orders', method: 'POST', body }),
+      invalidatesTags: ['Orders'],
+    }),
+
     getProducts: build.query<Product[], string | void>({
       query: (type) => (type ? `/products?type=${encodeURIComponent(type)}` : '/products'),
       providesTags: ['Products'],
@@ -34,6 +39,7 @@ export const api = createApi({
       query: () => '/products/types',
       providesTags: ['Products'],
     }),
+
   }),
 });
 
@@ -41,6 +47,7 @@ export const {
   useGetOrdersQuery,
   useGetOrderQuery,
   useDeleteOrderMutation,
+  useCreateOrderMutation,
   useGetProductsQuery,
   useGetProductTypesQuery,
 } = api;
