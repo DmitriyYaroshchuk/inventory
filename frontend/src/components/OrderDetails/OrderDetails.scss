@@ -5,6 +5,7 @@
   border: 1px solid $border;
   border-radius: 4px;
   background: #fff;
+  animation: slide-in-right 0.3s ease both;
 
   &__close {
     position: absolute;

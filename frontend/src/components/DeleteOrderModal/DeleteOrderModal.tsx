@@ -3,6 +3,7 @@ import type { OrderSummary } from "@/types"
 import { useEffect } from "react"
 import Image from "next/image"
 import './DeleteOrderModal.scss'
+import { createPortal } from "react-dom"
 
 type DeleteOrderModalProps = {
     order: OrderSummary,
@@ -32,7 +33,7 @@ const DeleteOrderModal = ({
         return () => document.removeEventListener('keydown', handleKeyDown);
     }, [onCancel]);
 
-    return (
+    return createPortal(
         <div className="delete-order-modal" onClick={onCancel}>
             <div className="delete-order-modal__window"
                 role="dialog"
@@ -99,7 +100,8 @@ const DeleteOrderModal = ({
 
             </div>
 
-        </div>
+        </div>,
+        document.body
     )
 }
 

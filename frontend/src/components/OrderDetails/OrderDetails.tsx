@@ -1,7 +1,7 @@
 import { useGetOrderQuery } from "@/services/api";
 import { useAppDispatch } from "@/store/hooks"
 import { selectOrder } from "@/store/ordersSlice";
-import { Fragment } from "react/jsx-runtime";
+import { Fragment } from 'react';
 import Image from "next/image";
 import './OrderDetails.scss';
 
@@ -9,7 +9,7 @@ type OrderDetailsProps = {
     orderId: number
 }
 
-const OrderDetails = (({ orderId }: OrderDetailsProps) => {
+const OrderDetails = ({ orderId }: OrderDetailsProps) => {
     const dispatch = useAppDispatch();
     const { data: order, isLoading, isError } = useGetOrderQuery(orderId);
 
@@ -60,7 +60,7 @@ const OrderDetails = (({ orderId }: OrderDetailsProps) => {
                                             {product.isNew ? 'Новый' : 'Б/У'}
                                         </span>
 
-                                        <button className="order-details__delete" type="button" aria-label="Удалить продукт">
+                                        <button className="order-details__delete" type="button" arial-label="Удалить продукт">
                                             <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
                                                 <path d="M6 2h4l1 1h3v2H2V3h3l1-1zM3 6h10l-1 8H4L3 6z" fill="currentColor" />
                                             </svg>
@@ -75,5 +75,5 @@ const OrderDetails = (({ orderId }: OrderDetailsProps) => {
         </section>
 
     )
-});
+};
 export default OrderDetails;

@@ -70,7 +70,7 @@ const Orders = () => {
                     ))}
                 </ul>
 
-                {selectedOrderId !== null && <OrderDetails orderId={selectedOrderId} />}
+                {selectedOrderId !== null && <OrderDetails key={selectedOrderId} orderId={selectedOrderId} />}
             </div>
 
             {orderToDelete && (
