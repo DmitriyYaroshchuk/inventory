@@ -13,6 +13,7 @@
   justify-content: center;
   background: rgba(43, 52, 64, 0.5);
   animation: fade-in 0.2s ease both;
+  cursor: pointer;
 
   &__window {
     width: 100%;
@@ -22,6 +23,7 @@
     border-radius: 4px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     animation: zoom-in 0.25s ease both;
+    cursor: pointer;
   }
 
   &__title {
