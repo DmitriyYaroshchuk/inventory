@@ -4,6 +4,7 @@ import { useGetProductsQuery, useGetProductTypesQuery } from '@/services/api';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setProductType } from '@/store/productsSlice';
 import ProductItem from '@/components/ProductItem/ProductItem';
+import Loader from '@/components/Loader/Loader';
 import './Products.scss';
 
 const Products = () => {
@@ -39,8 +40,15 @@ const Products = () => {
                 </label>
             </div>
 
-            {isLoading && <p>Загрузка...</p>}
-            {isError && <p>Не удалось загрузить продукты</p>}
+            {isLoading && <Loader />}
+            {isError && (
+                <div className="alert alert-danger" role="alert">
+                    Не удалось загрузить продукты. Проверьте, что сервер запущен.
+                </div>
+            )}
+            {!isLoading && !isError && products.length === 0 && (
+                <p className="text-muted">Продуктов нет</p>
+            )}
 
             <ul className="products__list">
                 {products.map((product) => (
