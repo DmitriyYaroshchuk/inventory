@@ -1,4 +1,6 @@
+import Orders from "@/components/Orders/Orders";
+
 const OrdersPage = () => {
-  return <h1>Приходы</h1>;
+  return <Orders />
 };
 export default OrdersPage;

@@ -1,0 +1,152 @@
+@use '@/styles/variables' as *;
+
+.delete-order-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(43, 52, 64, 0.5);
+
+  &__window {
+    position: relative;
+    width: 100%;
+    max-width: 760px;
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+  }
+
+  &__close {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 40px;
+    height: 40px;
+    padding: 0 0 2px;
+    border: 0;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    color: $text-muted;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+
+    &:hover {
+      color: $text-dark;
+    }
+  }
+
+  &__title {
+    margin: 0;
+    padding: 32px 36px 24px;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  &__list {
+    max-height: 240px;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    list-style: none;
+  }
+
+  &__product {
+    display: grid;
+    grid-template-columns: 10px 48px minmax(0, 1fr);
+    align-items: center;
+    gap: 24px;
+    padding: 12px 36px;
+    border-top: 1px solid $border;
+  }
+
+  &__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #c9d1d9;
+
+    &--new {
+      background: $green;
+    }
+  }
+
+  &__photo {
+    width: 48px;
+    height: 36px;
+    object-fit: contain;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  &__name {
+    overflow: hidden;
+    color: $text-dark;
+    text-decoration: underline;
+    text-decoration-color: #c9d1d9;
+    text-overflow: ellipsis;
+    text-underline-offset: 4px;
+    white-space: nowrap;
+  }
+
+  &__serial {
+    color: $text-muted;
+    font-size: 12px;
+  }
+
+  &__error {
+    margin: 0;
+    padding: 12px 36px;
+    color: #e04b4b;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 32px;
+    padding: 24px 36px;
+    border-radius: 0 0 4px 4px;
+    background: $green;
+  }
+
+  &__cancel {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  &__confirm {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 36px;
+    border: 0;
+    border-radius: 24px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    color: #e04b4b;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+  }
+}
