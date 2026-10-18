@@ -6,10 +6,11 @@ type OrderItemProps = {
     order: OrderSummary,
     isCompact: boolean,
     isActive: boolean,
-    onOpen: () => void
+    onOpen: () => void,
+    onDelete: () => void
 }
 
-const OrderItem = ({ order, isCompact, isActive, onOpen }: OrderItemProps) => {
+const OrderItem = ({ order, isCompact, isActive, onOpen, onDelete }: OrderItemProps) => {
     const usd = getPrice(order.total, 'USD');
     const uah = getPrice(order.total, 'UAH');
 
@@ -64,7 +65,7 @@ const OrderItem = ({ order, isCompact, isActive, onOpen }: OrderItemProps) => {
                         </span>
                     </div>
 
-                    <button className="order-item__delete" type="button" aria-label="Удалить приход">
+                    <button className="order-item__delete" type="button" aria-label="Удалить приход" onClick={onDelete}>
                         <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
                             <path d="M6 2h4l1 1h3v2H2V3h3l1-1zM3 6h10l-1 8H4L3 6z" fill="currentColor" />
                         </svg>
