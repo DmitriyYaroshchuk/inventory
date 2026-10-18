@@ -1,14 +1,15 @@
 'use client';
 
+import { useState } from 'react';
 import { useDeleteOrderMutation, useGetOrdersQuery } from '@/services/api';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { selectOrder } from '@/store/ordersSlice';
+import type { OrderSummary } from '@/types';
 import OrderItem from '@/components/OrderItem/OrderItem';
 import OrderDetails from '@/components/OrderDetails/OrderDetails';
+import DeleteOrderModal from '@/components/DeleteOrderModal/DeleteOrderModal';
+import AddOrderModal from '@/components/AddOrderModal/AddOrderModal';
 import './Orders.scss';
-import { useState } from 'react';
-import { OrderSummary } from '@/types';
-import DeleteOrderModal from '../DeleteOrderModal/DeleteOrderModal';
 
 const Orders = () => {
     const dispatch = useAppDispatch();
@@ -17,6 +18,8 @@ const Orders = () => {
 
     const [deleteOrder, { isLoading: isDeleting, isError: isDeleteError, reset }] = useDeleteOrderMutation();
     const [orderToDelete, setOrderToDelete] = useState<OrderSummary | null>(null);
+
+    const [isAddOpen, setIsAddOpen] = useState(false);
 
     const handleCancelDelete = () => {
         setOrderToDelete(null);
@@ -50,7 +53,12 @@ const Orders = () => {
     return (
         <section className="orders">
             <div className="orders__header">
-                <button className="orders__add" type="button" aria-label="Добавить приход">
+                <button
+                    className="orders__add"
+                    type="button"
+                    aria-label="Добавить приход"
+                    onClick={() => setIsAddOpen(true)}
+                >
                     +
                 </button>
                 <h1 className="orders__title">Приходы / {orders.length}</h1>
@@ -82,6 +90,8 @@ const Orders = () => {
                     onConfirm={handleConfirmDelete}
                 />
             )}
+
+            {isAddOpen && <AddOrderModal onClose={() => setIsAddOpen(false)} />}
         </section>
     )
 }
