@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import type { Product } from '@/types';
 import {
-    formatFullDate,
     formatLongDate,
     formatMoney,
     formatShortDate,
@@ -36,10 +35,21 @@ const ProductItem = ({ product }: ProductItemProps) => {
             <span className="product-item__type">{type}</span>
 
             <div className="product-item__guarantee">
-                <span className="product-item__muted">с</span>
-                <span>{formatFullDate(guarantee.start)}</span>
-                <span className="product-item__muted">по</span>
-                <span>{formatFullDate(guarantee.end)}</span>
+                <div className="product-item__guarantee-item">
+                    <span className="product-item__muted">с</span>
+                    <div className="product-item__date">
+                        <span className="product-item__muted">{formatShortDate(guarantee.start)}</span>
+                        <span>{formatLongDate(guarantee.start)}</span>
+                    </div>
+                </div>
+
+                <div className="product-item__guarantee-item">
+                    <span className="product-item__muted">по</span>
+                    <div className="product-item__date">
+                        <span className="product-item__muted">{formatShortDate(guarantee.end)}</span>
+                        <span>{formatLongDate(guarantee.end)}</span>
+                    </div>
+                </div>
             </div>
 
             <span className="product-item__state">{isNew ? 'новый' : 'Б / У'}</span>

@@ -2,7 +2,7 @@
 
 .product-item {
   display: grid;
-  grid-template-columns: 8px 40px 300px 110px 130px 60px 120px 260px 180px 260px 110px 16px;
+  grid-template-columns: 8px 40px 300px 110px 230px 60px 120px 260px 180px 260px 110px 16px;
   justify-content: space-between;
   align-items: center;
   gap: 24px;
@@ -62,10 +62,14 @@
   }
 
   &__guarantee {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: baseline;
-    column-gap: 8px;
+    display: flex;
+    gap: 16px;
+  }
+
+  &__guarantee-item {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
   }
 
   &__currency {
