@@ -6,17 +6,29 @@ import { setProductType } from '@/store/productsSlice';
 import ProductItem from '@/components/ProductItem/ProductItem';
 import Loader from '@/components/Loader/Loader';
 import './Products.scss';
+import { useEffect } from 'react';
+import { loadProductTypeFromLS, saveProductTypeToLS } from '@/utils/storage';
 
 const Products = () => {
     const dispatch = useAppDispatch();
-    const productsType = useAppSelector((state) => state.products.productType);
+    const productType = useAppSelector((state) => state.products.productType);
+
+    useEffect(() => {
+        const savedType = loadProductTypeFromLS();
+        if (savedType) dispatch(setProductType(savedType));
+    }, [dispatch]);
+
+    const handleTypeChange = (type: string) => {
+        dispatch(setProductType(type));
+        saveProductTypeToLS(type);
+    }
 
     const { data: types = [] } = useGetProductTypesQuery();
     const {
         data: products = [],
         isLoading,
         isError,
-    } = useGetProductsQuery(productsType || undefined);
+    } = useGetProductsQuery(productType || undefined);
 
     return (
         <section className="products">
@@ -27,8 +39,8 @@ const Products = () => {
                     <span className="products__filter-label">Тип:</span>
                     <select
                         className="products__select"
-                        value={productsType}
-                        onChange={(e) => dispatch(setProductType(e.target.value))}
+                        value={productType}
+                        onChange={(e) => handleTypeChange(e.target.value)}
                     >
                         <option value="">Все</option>
                         {types.map((type) => (
