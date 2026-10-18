@@ -1,6 +1,7 @@
 import { useGetOrderQuery } from "@/services/api";
 import { useAppDispatch } from "@/store/hooks"
 import { selectOrder } from "@/store/ordersSlice";
+import Loader from '@/components/Loader/Loader';
 import { Fragment } from 'react';
 import Image from "next/image";
 import './OrderDetails.scss';
@@ -24,8 +25,12 @@ const OrderDetails = ({ orderId }: OrderDetailsProps) => {
                 ×
             </button>
 
-            {isLoading && <p className="order-details__status">Загрузка...</p>}
-            {isError && <p className="order-details__status">Не удалось загрузить приход</p>}
+            {isLoading && <Loader />}
+            {isError && (
+                <div className="alert alert-danger m-3" role="alert">
+                    Не удалось загрузить приход
+                </div>
+            )}
 
             {
                 order && (

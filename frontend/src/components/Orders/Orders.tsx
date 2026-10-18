@@ -9,6 +9,7 @@ import OrderItem from '@/components/OrderItem/OrderItem';
 import OrderDetails from '@/components/OrderDetails/OrderDetails';
 import DeleteOrderModal from '@/components/DeleteOrderModal/DeleteOrderModal';
 import AddOrderModal from '@/components/AddOrderModal/AddOrderModal';
+import Loader from '@/components/Loader/Loader';
 import './Orders.scss';
 
 const Orders = () => {
@@ -24,7 +25,7 @@ const Orders = () => {
     const handleCancelDelete = () => {
         setOrderToDelete(null);
         reset();
-    }
+    };
 
     const handleConfirmDelete = async () => {
         if (!orderToDelete) return;
@@ -39,14 +40,11 @@ const Orders = () => {
         } catch (error) {
             console.error('Не удалось удалить приход', error);
         }
-    }
+    };
 
     const handleOpen = (id: number) => {
         dispatch(selectOrder(id === selectedOrderId ? null : id));
-    }
-
-    if (isLoading) return <p>Загрузка...</p>;
-    if (isError) return <p>Не удалось загрузить приходы</p>;
+    };
 
     const isOpen = selectedOrderId !== null;
 
@@ -64,22 +62,36 @@ const Orders = () => {
                 <h1 className="orders__title">Приходы / {orders.length}</h1>
             </div>
 
-            <div className={`orders__body${isOpen ? ' orders__body--open' : ''}`}>
-                <ul className="orders__list">
-                    {orders.map((order) => (
-                        <OrderItem
-                            key={order.id}
-                            order={order}
-                            isCompact={isOpen}
-                            isActive={order.id === selectedOrderId}
-                            onOpen={() => handleOpen(order.id)}
-                            onDelete={() => setOrderToDelete(order)}
-                        />
-                    ))}
-                </ul>
+            {isLoading && <Loader />}
 
-                {selectedOrderId !== null && <OrderDetails key={selectedOrderId} orderId={selectedOrderId} />}
-            </div>
+            {isError && (
+                <div className="alert alert-danger" role="alert">
+                    Не удалось загрузить приходы. Проверьте, что сервер запущен.
+                </div>
+            )}
+
+            {!isLoading && !isError && orders.length === 0 && (
+                <p className="text-muted">Приходов пока нет</p>
+            )}
+
+            {orders.length > 0 && (
+                <div className={`orders__body${isOpen ? ' orders__body--open' : ''}`}>
+                    <ul className="orders__list">
+                        {orders.map((order) => (
+                            <OrderItem
+                                key={order.id}
+                                order={order}
+                                isCompact={isOpen}
+                                isActive={order.id === selectedOrderId}
+                                onOpen={() => handleOpen(order.id)}
+                                onDelete={() => setOrderToDelete(order)}
+                            />
+                        ))}
+                    </ul>
+
+                    {isOpen && <OrderDetails key={selectedOrderId} orderId={selectedOrderId} />}
+                </div>
+            )}
 
             {orderToDelete && (
                 <DeleteOrderModal
@@ -93,6 +105,7 @@ const Orders = () => {
 
             {isAddOpen && <AddOrderModal onClose={() => setIsAddOpen(false)} />}
         </section>
-    )
-}
+    );
+};
+
 export default Orders;
