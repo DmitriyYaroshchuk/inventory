@@ -64,3 +64,14 @@ export async function deleteOrder(id: number): Promise<boolean> {
   const [result] = await pool.query<ResultSetHeader>('DELETE FROM orders WHERE id = ?', [id]);
   return result.affectedRows > 0;
 }
+
+export async function createOrder(
+  title: string,
+  description: string | null,
+): Promise<OrderDetails | null> {
+  const [result] = await pool.query<ResultSetHeader>(
+    'INSERT INTO orders (title, description) VALUES (?, ?)',
+    [title, description],
+  );
+  return getOrder(result.insertId);
+}
