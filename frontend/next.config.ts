@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
     quietDeps: true,
     silenceDeprecations: ['import', 'global-builtin', 'color-functions', 'if-function'],
   },
+  output: 'standalone',
 };
 
 export default nextConfig;
