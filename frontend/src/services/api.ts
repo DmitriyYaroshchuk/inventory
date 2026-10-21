@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { OrderDetails, OrderSummary, Product } from '@/types';
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000';
+
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
@@ -17,7 +18,6 @@ export const api = createApi({
 
     getOrder: build.query<OrderDetails, number>({
       query: (id) => `/orders/${id}`,
-      providesTags: ['Orders'],
     }),
 
     deleteOrder: build.mutation<void, number>({
@@ -39,7 +39,6 @@ export const api = createApi({
       query: () => '/products/types',
       providesTags: ['Products'],
     }),
-
   }),
 });
 
