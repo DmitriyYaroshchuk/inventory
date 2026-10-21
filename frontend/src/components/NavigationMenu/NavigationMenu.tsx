@@ -9,6 +9,7 @@ const items: NavigationItem[] = [
   { href: '/orders', label: 'Приход' },
   { label: 'Группы' },
   { href: '/products', label: 'Продукты' },
+  { href: '/statistics', label: 'Статистика' },
   { label: 'Пользователи' },
   { label: 'Настройки' },
 ];
