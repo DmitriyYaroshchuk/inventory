@@ -1,0 +1,14 @@
+@use '@/styles/variables' as *;
+
+.warehouses-map {
+  height: 520px;
+  border: 1px solid $border;
+  border-radius: 4px;
+
+  &__marker {
+    background: $green;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  }
+}
