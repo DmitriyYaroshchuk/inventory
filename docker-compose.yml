@@ -41,6 +41,7 @@ services:
     environment:
       PORT: 4000
       CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000,http://localhost:5173}
+      JWT_SECRET: ${JWT_SECRET:-dev-secret-change-me}
       # внутри сети Docker база доступна по имени сервиса
       DB_HOST: mysql
       DB_PORT: 3306

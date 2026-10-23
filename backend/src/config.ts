@@ -11,6 +11,8 @@ export const config = {
     .split(',')
     .map((origin) => origin.trim())
     .filter(Boolean),
+  jwtSecret: process.env.JWT_SECRET ?? 'dev-secret-change-me',
+  jwtExpiresIn: '7d' as const,
   db: {
     host: process.env.DB_HOST ?? 'localhost',
     port: toNumber(process.env.DB_PORT, 3306),
