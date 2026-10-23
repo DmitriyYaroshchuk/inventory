@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import Loader from '@/components/Loader/Loader';
 import './Warehouses.scss';
@@ -25,11 +26,40 @@ const WarehousesMap = dynamic(() => import('@/components/WarehousesMap/Warehouse
 });
 
 const Warehouses = () => {
+    const [selectedId, setSelectedId] = useState<number | null>(null);
+    const selectedWarehouse = WAREHOUSES.find((warehouse) => warehouse.id === selectedId) ?? null;
+
+    const handleToggle = (id: number) => {
+        setSelectedId((prevId) => (prevId === id ? null : id));
+    };
+
 
     return (
         <section className="warehouses">
             <h1 className="warehouses__title">Склады</h1>
-            <WarehousesMap warehouses={WAREHOUSES} />
+
+            <div className="warehouses__body">
+                <ul className="warehouses__list">
+                    {WAREHOUSES.map((warehouse) => (
+                        <li key={warehouse.id}>
+                            <button
+                                type="button"
+                                className={`warehouses__item${warehouse.id === selectedId ? ' warehouses__item--active' : ''}`}
+                                onClick={() => handleToggle(warehouse.id)}
+                            >
+                                <span className="warehouses__name">{warehouse.title}</span>
+                                <span className="warehouses__address">{warehouse.address}</span>
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+
+                <WarehousesMap
+                    warehouses={WAREHOUSES}
+                    selectedWarehouse={selectedWarehouse}
+                    onSelect={setSelectedId}
+                />
+            </div>
         </section>
     );
 };

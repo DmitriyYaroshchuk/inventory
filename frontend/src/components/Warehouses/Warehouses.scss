@@ -6,4 +6,54 @@
     font-size: 28px;
     font-weight: 700;
   }
+
+  &__body {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+    padding: 14px 18px;
+    text-align: left;
+    background: #fff;
+    border: 1px solid $border;
+    border-radius: 4px;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+
+    &:hover {
+      border-color: $green;
+    }
+
+    &--active {
+      border-color: $green;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+  }
+
+  &__name {
+    font-weight: 700;
+    color: $text-dark;
+  }
+
+  &__address {
+    font-size: 13px;
+    color: $text-muted;
+  }
 }
