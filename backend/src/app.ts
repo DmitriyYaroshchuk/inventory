@@ -5,6 +5,7 @@ import { pool } from './db';
 import { errorHandler } from './middleware/error-handler';
 import { ordersRouter } from './routes/orders';
 import { productsRouter } from './routes/products';
+import { authRouter } from './routes/auth';
 
 export function createApp() {
   const app = express();
@@ -22,6 +23,7 @@ export function createApp() {
     }
   });
 
+  app.use('/api/auth', authRouter);
   app.use('/api/orders', ordersRouter);
   app.use('/api/products', productsRouter);
 
