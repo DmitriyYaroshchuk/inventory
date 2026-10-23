@@ -31,3 +31,10 @@ export interface OrderSummary {
 export interface OrderDetails extends OrderSummary {
   products: ProductDto[];
 }
+
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
