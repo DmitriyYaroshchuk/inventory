@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useDeleteOrderMutation, useGetOrdersQuery } from '@/services/api';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { selectOrder } from '@/store/ordersSlice';
@@ -27,6 +28,9 @@ const Orders = () => {
     const dispatch = useAppDispatch();
     const selectedOrderId = useAppSelector((state) => state.orders.selectedOrderId);
     const { data: orders = [], isLoading, isError } = useGetOrdersQuery();
+
+    const router = useRouter();
+    const token = useAppSelector((state) => state.auth.token);
 
     const [deleteOrder, { isLoading: isDeleting, isError: isDeleteError, reset }] = useDeleteOrderMutation();
     const [orderToDelete, setOrderToDelete] = useState<OrderSummary | null>(null);
@@ -57,6 +61,23 @@ const Orders = () => {
         dispatch(selectOrder(id === selectedOrderId ? null : id));
     };
 
+    const handleAddClick = () => {
+        if (!token) {
+            router.push('/login');
+            return;
+        }
+        setIsAddOpen(true);
+    };
+
+    const handleDeleteClick = (order: OrderSummary) => {
+        if (!token) {
+            router.push('/login');
+            return;
+        }
+        setOrderToDelete(order);
+    };
+
+
     const isOpen = selectedOrderId !== null;
 
     return (
@@ -66,7 +87,7 @@ const Orders = () => {
                     className="orders__add"
                     type="button"
                     aria-label="Добавить приход"
-                    onClick={() => setIsAddOpen(true)}
+                    onClick={handleAddClick}
                 >
                     +
                 </button>
@@ -95,7 +116,7 @@ const Orders = () => {
                                 isCompact={isOpen}
                                 isActive={order.id === selectedOrderId}
                                 onOpen={() => handleOpen(order.id)}
-                                onDelete={() => setOrderToDelete(order)}
+                                onDelete={() => handleDeleteClick(order)}
                             />
                         ))}
                     </ul>
