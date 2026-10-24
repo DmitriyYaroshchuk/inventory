@@ -29,7 +29,7 @@ export const loadTokenFromLS = (): string | null => {
     }
 }
 
-export const saveTokeenToLS = (token: string | null) => {
+export const saveTokenToLS = (token: string | null) => {
     try {
         if (token) {
             localStorage.setItem(TOKEN_KEY, token);
