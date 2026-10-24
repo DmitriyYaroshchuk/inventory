@@ -8,14 +8,13 @@ import { useLoginMutation } from '@/services/api';
 import { setToken } from '@/store/authSlice';
 import { useAppDispatch } from '@/store/hooks';
 import { saveTokenToLS } from '@/utils/storage';
+import { EMAIL_PATTERN } from '@/utils/validation';
 import AuthCard from '@/components/AuthCard/AuthCard';
 
 type FormErrors = {
     email?: string;
     password?: string;
 }
-
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const validate = (email: string, password: string): FormErrors => {
     const errors: FormErrors = {};
