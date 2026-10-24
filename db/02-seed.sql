@@ -18,3 +18,8 @@ INSERT INTO products (id, order_id, serial_number, is_new, photo, title, type, s
   (10, 3, 4001, 1, 'monitor.png', 'iPhone 15', 'Phones', '128 GB', '2017-04-06 16:40:12', '2019-04-06 16:40:12', '2017-04-06 16:40:12', '[{"value": 800, "symbol": "USD", "isDefault": 0},{"value": 20800, "symbol": "UAH", "isDefault": 1}]'),
   (11, 3, 4002, 1, 'monitor.png', 'Samsung Galaxy S24', 'Phones', '256 GB', '2017-04-06 16:40:12', '2019-04-06 16:40:12', '2017-04-06 16:40:12', '[{"value": 750, "symbol": "USD", "isDefault": 0},{"value": 19500, "symbol": "UAH", "isDefault": 1}]'),
   (12, 3, 2003, 1, 'monitor.png', 'Keychron K2', 'Keyboards', 'Механическая, 75%', '2017-04-06 16:40:12', '2019-04-06 16:40:12', '2017-04-06 16:40:12', '[{"value": 90, "symbol": "USD", "isDefault": 0},{"value": 2340, "symbol": "UAH", "isDefault": 1}]');
+
+
+-- тестовый пользователь: admin@inventory.com / password123
+INSERT INTO users (id, name, email, password_hash) VALUES
+  (1, 'Admin', 'admin@inventory.com', '$2b$10$tNumNw4VmaytFA0DaJ.ROelpLEEhZtmzTs.Zp4wxc1baAXWcl3TTu');

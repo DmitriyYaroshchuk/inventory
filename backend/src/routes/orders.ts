@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { createOrder, deleteOrder, getOrder, listOrders } from '../services/orders.service';
 import { parseId } from '../utils';
+import { requireAuth } from '../middleware/auth';
 
 export const ordersRouter = Router();
 
@@ -27,7 +28,7 @@ ordersRouter.get('/:id', async (req, res) => {
 });
 
 // POST /api/orders — создать приход
-ordersRouter.post('/', async (req, res) => {
+ordersRouter.post('/', requireAuth, async (req, res) => {
   const title = typeof req.body?.title === 'string' ? req.body.title.trim() : '';
   const description =
     typeof req.body?.description === 'string' ? req.body.description.trim() : '';
@@ -46,7 +47,7 @@ ordersRouter.post('/', async (req, res) => {
 });
 
 // DELETE /api/orders/:id — удалить приход вместе с продуктами
-ordersRouter.delete('/:id', async (req, res) => {
+ordersRouter.delete('/:id', requireAuth, async (req, res) => {
   const id = parseId(req.params.id);
   if (id === null) {
     res.status(400).json({ error: 'Invalid order id' });

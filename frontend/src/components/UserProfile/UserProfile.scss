@@ -1,10 +1,14 @@
 @use '@/styles/variables' as *;
 
 .user-profile {
-  position: relative;
-  width: 96px;
-  height: 96px;
   margin: 48px auto 0;
+
+  &__photo {
+    position: relative;
+    width: 96px;
+    height: 96px;
+    margin: 0 auto;
+  }
 
   &__avatar {
     display: block;
@@ -19,13 +23,45 @@
     position: absolute;
     right: -16px;
     bottom: -8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 40px;
     height: 40px;
+    padding: 0;
     border: 0;
     border-radius: 50%;
     background: #fff;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    color: $text-muted;
+    color: $text-dark;
     cursor: default;
+  }
+
+  &__account {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin-top: 20px;
+  }
+
+  &__name {
+    font-size: 14px;
+    font-weight: 700;
+    color: $text-dark;
+  }
+
+  &__action {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: $green;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }

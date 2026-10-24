@@ -2,11 +2,14 @@ import { api } from '@/services/api';
 import { configureStore } from '@reduxjs/toolkit';
 import ordersReducer from './ordersSlice';
 import productsReducer from './productsSlice';
+import authReducer from './authSlice';
+
 
 export const makeStore = () =>
   configureStore({
     reducer: {
       [api.reducerPath]: api.reducer,
+      auth: authReducer,
       orders: ordersReducer,
       products: productsReducer,
     },
