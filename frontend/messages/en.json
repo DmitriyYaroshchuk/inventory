@@ -21,7 +21,8 @@
     "new": "New",
     "used": "Used",
     "deleteProduct": "Delete product",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "comingSoon": "Coming soon"
   },
   "validation": {
     "titleRequired": "Enter the order title",

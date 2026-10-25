@@ -20,11 +20,15 @@ const ProductsByTypeChart = dynamic(
 
 const Statistics = () => {
     const t = useTranslations('statistics');
-    const { data: orders = [], isLoading, isError } = useGetOrdersQuery();
+
+    const { data: orders = [], isLoading: isOrdersLoading, isError: isOrdersError } = useGetOrdersQuery();
     const orderTotals = useMemo(() => getOrderTotals(orders), [orders]);
 
-    const { data: products = [] } = useGetProductsQuery();
+    const { data: products = [], isLoading: isProductsLoading, isError: isProductsError } = useGetProductsQuery();
     const productsByType = useMemo(() => countProductsByType(products), [products]);
+
+    const isLoading = isOrdersLoading || isProductsLoading;
+    const isError = isOrdersError || isProductsError;
 
     return (
         <section className="statistics">

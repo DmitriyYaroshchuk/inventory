@@ -25,12 +25,19 @@ const Products = () => {
         saveProductTypeToLS(type);
     }
 
-    const { data: types = [] } = useGetProductTypesQuery();
+    const { data: types = [], isSuccess: isTypesLoaded } = useGetProductTypesQuery();
     const {
         data: products = [],
         isLoading,
         isError,
     } = useGetProductsQuery(productType || undefined);
+
+    useEffect(() => {
+        if (isTypesLoaded && productType && !types.includes(productType)) {
+            dispatch(setProductType(''));
+            saveProductTypeToLS('');
+        }
+    }, [isTypesLoaded, types, productType, dispatch]);
 
     return (
         <section className="products">
