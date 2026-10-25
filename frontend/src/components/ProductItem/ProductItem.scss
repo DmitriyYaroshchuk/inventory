@@ -100,10 +100,6 @@
     border: 0;
     background: none;
     color: $text-muted;
-    cursor: pointer;
-
-    &:hover {
-      color: $text-dark;
-    }
+    cursor: default;
   }
 }

@@ -38,7 +38,7 @@ const OrderDetails = ({ orderId }: OrderDetailsProps) => {
         <>
           <h2 className="order-details__title">{order.title}</h2>
 
-          <button className="order-details__add" type="button">
+          <button className="order-details__add" type="button" disabled title={tCommon('comingSoon')}>
             <span className="order-details__add-icon">+</span>
             {t('addProduct')}
           </button>
@@ -69,7 +69,13 @@ const OrderDetails = ({ orderId }: OrderDetailsProps) => {
                   {product.isNew ? tCommon('new') : tCommon('used')}
                 </span>
 
-                <button className="order-details__delete" type="button" aria-label={tCommon('deleteProduct')}>
+                <button
+                  className="order-details__delete"
+                  type="button"
+                  aria-label={tCommon('deleteProduct')}
+                  title={tCommon('comingSoon')}
+                  disabled
+                >
                   <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
                     <path d="M6 2h4l1 1h3v2H2V3h3l1-1zM3 6h10l-1 8H4L3 6z" fill="currentColor" />
                   </svg>

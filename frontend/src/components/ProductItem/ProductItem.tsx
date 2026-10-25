@@ -76,7 +76,13 @@ const ProductItem = ({ product }: ProductItemProps) => {
                 <span>{formatLongDate(date, locale)}</span>
             </div>
 
-            <button type="button" className="product-item__delete" aria-label={tCommon('deleteProduct')}>
+            <button
+                type="button"
+                className="product-item__delete"
+                aria-label={tCommon('deleteProduct')}
+                title={tCommon('comingSoon')}
+                disabled
+            >
                 <svg width="12" height="14" viewBox="0 0 12 14" fill="currentColor" aria-hidden="true">
                     <path d="M4 0h4l.5 1H12v2H0V1h3.5L4 0ZM1 4h10l-.8 10H1.8L1 4Z" />
                 </svg>

@@ -21,7 +21,8 @@
     "new": "Новый",
     "used": "Б/У",
     "deleteProduct": "Удалить продукт",
-    "loading": "Загрузка..."
+    "loading": "Загрузка...",
+    "comingSoon": "Скоро будет доступно"
   },
   "validation": {
     "titleRequired": "Введите название прихода",
