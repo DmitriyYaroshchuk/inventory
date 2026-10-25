@@ -1,5 +1,6 @@
+import { useLocale, useTranslations } from 'next-intl';
 import type { OrderSummary } from '@/types';
-import { formatLongDate, formatMoney, formatShortDate, getPrice, pluralize } from "@/utils/format"
+import { formatLongDate, formatMoney, formatShortDate, getPrice } from '@/utils/format';
 import './OrderItem.scss'
 
 type OrderItemProps = {
@@ -11,6 +12,9 @@ type OrderItemProps = {
 }
 
 const OrderItem = ({ order, isCompact, isActive, onOpen, onDelete }: OrderItemProps) => {
+    const locale = useLocale();
+    const t = useTranslations('orders');
+
     const usd = getPrice(order.total, 'USD');
     const uah = getPrice(order.total, 'UAH');
 
@@ -30,7 +34,7 @@ const OrderItem = ({ order, isCompact, isActive, onOpen, onDelete }: OrderItemPr
 
             <button className="order-item__open"
                 type="button"
-                aria-label="Показать продукты прихода"
+                aria-label={t('showProducts')}
                 onClick={onOpen}>
                 <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true">
                     <circle cx="3" cy="5" r="1.6" fill="currentColor" />
@@ -45,27 +49,25 @@ const OrderItem = ({ order, isCompact, isActive, onOpen, onDelete }: OrderItemPr
             <div className="order-item__count">
                 <span className="order-item__count-value">{order.productsCount}</span>
                 <span className="order-item__count-label">
-                    {
-                        pluralize(order.productsCount, ['Продукт', 'Продукта', 'Продуктов'])
-                    }
+                    {t('productsLabel', { count: order.productsCount })}
                 </span>
             </div>
 
             <div className="order-item__date">
                 <span className="order-item__date-short">{formatShortDate(order.date)}</span>
-                <span className="order-item__date-long">{formatLongDate(order.date)}</span>
+                <span className="order-item__date-long">{formatLongDate(order.date, locale)}</span>
             </div>
 
             {!isCompact && (
                 <>
                     <div className="order-item__total">
-                        <span className="order-item__total-usd">{formatMoney(usd)} $</span>
+                        <span className="order-item__total-usd">{formatMoney(usd, locale)} $</span>
                         <span className="order-item__total-uah">
-                            {formatMoney(uah)} <span className="order-item__currency">UAH</span>
+                            {formatMoney(uah, locale)} <span className="order-item__currency">UAH</span>
                         </span>
                     </div>
 
-                    <button className="order-item__delete" type="button" aria-label="Удалить приход" onClick={onDelete}>
+                    <button className="order-item__delete" type="button" aria-label={t('delete')} onClick={onDelete}>
                         <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
                             <path d="M6 2h4l1 1h3v2H2V3h3l1-1zM3 6h10l-1 8H4L3 6z" fill="currentColor" />
                         </svg>

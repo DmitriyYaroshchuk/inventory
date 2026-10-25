@@ -1,14 +1,15 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import { describe, expect, it, vi } from 'vitest';
 import { makeStore } from '@/store';
+import { renderWithIntl } from '@/test-utils';
 import AddOrderModal from './AddOrderModal';
 
 const renderModal = () => {
     const onClose = vi.fn();
 
-    render(
+    renderWithIntl(
         <Provider store={makeStore()}>
             <AddOrderModal onClose={onClose} />
         </Provider>

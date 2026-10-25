@@ -1,0 +1,21 @@
+@use '@/styles/variables' as *;
+
+.locale-switcher {
+  display: flex;
+  gap: 4px;
+
+  &__button {
+    padding: 2px 8px;
+    border: 0;
+    border-radius: 4px;
+    background: none;
+    color: $text-muted;
+    font-size: 13px;
+    font-weight: 700;
+
+    &--active {
+      background: $green;
+      color: #fff;
+    }
+  }
+}

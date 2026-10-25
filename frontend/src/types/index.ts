@@ -1,3 +1,5 @@
+import type messages from '../../messages/ru.json';
+
 export type Price = {
   value: number;
   symbol: string;
@@ -41,7 +43,7 @@ export type OrderDetails = OrderSummary & {
   products: Product[];
 };
 
-export type NavigationItem = { href?: string; label: string };
+export type NavigationItem = { href?: string; labelKey: keyof typeof messages.nav };
 
 export type User = {
   id: number;

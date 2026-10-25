@@ -1,7 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import type { OrderSummary } from '@/types';
+import { renderWithIntl } from '@/test-utils';
 import OrderItem from './OrderItem';
 
 
@@ -21,7 +22,7 @@ const renderItem = ({ isCompact = false, isActive = false } = {}) => {
     const onOpen = vi.fn();
     const onDelete = vi.fn();
 
-    render(
+    renderWithIntl(
         <ul>
             <OrderItem
                 order={order}

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import type { SubmitEvent } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useLoginMutation } from '@/services/api';
 import { setToken } from '@/store/authSlice';
 import { useAppDispatch } from '@/store/hooks';
@@ -11,18 +12,20 @@ import { saveTokenToLS } from '@/utils/storage';
 import { EMAIL_PATTERN } from '@/utils/validation';
 import AuthCard from '@/components/AuthCard/AuthCard';
 
+type ValidationTranslator = ReturnType<typeof useTranslations<'validation'>>;
+
 type FormErrors = {
     email?: string;
     password?: string;
 }
 
-const validate = (email: string, password: string): FormErrors => {
+const validate = (email: string, password: string, t: ValidationTranslator): FormErrors => {
     const errors: FormErrors = {};
 
-    if (!email.trim()) errors.email = 'Введите email';
-    else if (!EMAIL_PATTERN.test(email.trim())) errors.email = 'Некорректный email';
+    if (!email.trim()) errors.email = t('emailRequired');
+    else if (!EMAIL_PATTERN.test(email.trim())) errors.email = t('emailInvalid');
 
-    if (!password) errors.password = 'Введите пароль';
+    if (!password) errors.password = t('passwordRequired');
 
     return errors;
 };
@@ -34,8 +37,10 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [login, { isLoading, isError }] = useLoginMutation();
+    const t = useTranslations('auth');
+    const tValidation = useTranslations('validation');
 
-    const errors = validate(email, password);
+    const errors = validate(email, password, tValidation);
     const hasErrors = Object.keys(errors).length > 0;
 
     const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
@@ -55,15 +60,15 @@ const Login = () => {
     }
 
     return (
-        <AuthCard title="Вход" footer={
+        <AuthCard title={t('loginTitle')} footer={
             <>
-                Нет аккаунта? <Link href="/register">Зарегистрироваться</Link>
+                {t('noAccount')} <Link href="/register">{t('register')}</Link>
             </>
         }>
             <form onSubmit={handleSubmit} noValidate>
                 <div className="mb-3">
                     <label htmlFor="login-email" className="form-label">
-                        Email
+                        {t('email')}
                     </label>
                     <input
                         id="login-email"
@@ -79,7 +84,7 @@ const Login = () => {
 
                 <div className="mb-3">
                     <label htmlFor="login-password" className="form-label">
-                        Пароль
+                        {t('password')}
                     </label>
                     <input
                         id="login-password"
@@ -94,10 +99,10 @@ const Login = () => {
                     )}
                 </div>
 
-                {isError && <div className="alert alert-danger">Неверный email или пароль</div>}
+                {isError && <div className="alert alert-danger">{t('invalidCredentials')}</div>}
 
                 <button type="submit" className="btn btn-success w-100" disabled={isLoading}>
-                    {isLoading ? 'Вход...' : 'Войти'}
+                    {isLoading ? t('loggingIn') : t('login')}
                 </button>
             </form>
         </AuthCard>

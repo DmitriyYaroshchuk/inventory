@@ -2,6 +2,7 @@
 
 import { useMemo } from 'react';
 import dynamic from 'next/dynamic';
+import { useTranslations } from 'next-intl';
 import { useGetOrdersQuery, useGetProductsQuery } from '@/services/api';
 import { countProductsByType, getOrderTotals } from '@/utils/statistics';
 import Loader from '@/components/Loader/Loader';
@@ -18,6 +19,7 @@ const ProductsByTypeChart = dynamic(
 );
 
 const Statistics = () => {
+    const t = useTranslations('statistics');
     const { data: orders = [], isLoading, isError } = useGetOrdersQuery();
     const orderTotals = useMemo(() => getOrderTotals(orders), [orders]);
 
@@ -26,26 +28,26 @@ const Statistics = () => {
 
     return (
         <section className="statistics">
-            <h1 className="statistics__title">Статистика</h1>
+            <h1 className="statistics__title">{t('title')}</h1>
 
             {isLoading && <Loader />}
             {isError && (
                 <div className="alert alert-danger" role="alert">
-                    Не удалось загрузить данные. Проверьте, что сервер запущен.
+                    {t('loadError')}
                 </div>
             )}
 
             <div className='statistics__grid'>
                 {orderTotals.length > 0 && (
                     <div className="statistics__card">
-                        <h2 className="statistics__subtitle">Сумма приходов, UAH</h2>
+                        <h2 className="statistics__subtitle">{t('ordersTotal')}</h2>
                         <OrdersTotalChart data={orderTotals} />
                     </div>
                 )}
 
                 {productsByType.length > 0 && (
                     <div className="statistics__card">
-                        <h2 className="statistics__subtitle">Продукты по типам</h2>
+                        <h2 className="statistics__subtitle">{t('productsByType')}</h2>
                         <ProductsByTypeChart data={productsByType} />
                     </div>
                 )}

@@ -1,7 +1,7 @@
 'use client';
 
 import { Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
-import { pluralize } from '@/utils/format';
+import { useTranslations } from 'next-intl';
 import type { TypeCountPoint } from '@/utils/statistics';
 
 const COLORS = ['#7ab648', '#4fc3f7', '#ffb74d', '#ba68c8', '#e57373', '#90a4ae'];
@@ -11,6 +11,7 @@ type ProductsByTypeChartProps = {
 };
 
 const ProductsByTypeChart = ({ data }: ProductsByTypeChartProps) => {
+    const t = useTranslations('statistics');
     const coloredData = data.map((item, index) => ({
         ...item,
         fill: COLORS[index % COLORS.length],
@@ -27,10 +28,7 @@ const ProductsByTypeChart = ({ data }: ProductsByTypeChartProps) => {
                     paddingAngle={2}
                 />
                 <Tooltip
-                    formatter={(value, name) => {
-                        const count = Number(value);
-                        return [`${count} ${pluralize(count, ['продукт', 'продукта', 'продуктов'])}`, name];
-                    }}
+                    formatter={(value, name) => [t('productsCount', { count: Number(value) }), name]}
                 />
                 <Legend position="right" layout="vertical" />
             </PieChart>

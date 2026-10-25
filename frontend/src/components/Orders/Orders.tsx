@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useDeleteOrderMutation, useGetOrdersQuery } from '@/services/api';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { selectOrder } from '@/store/ordersSlice';
@@ -30,6 +31,7 @@ const Orders = () => {
     const { data: orders = [], isLoading, isError } = useGetOrdersQuery();
 
     const router = useRouter();
+    const t = useTranslations('orders')
     const token = useAppSelector((state) => state.auth.token);
 
     const [deleteOrder, { isLoading: isDeleting, isError: isDeleteError, reset }] = useDeleteOrderMutation();
@@ -86,24 +88,24 @@ const Orders = () => {
                 <button
                     className="orders__add"
                     type="button"
-                    aria-label="Добавить приход"
+                    aria-label={t('add')}
                     onClick={handleAddClick}
                 >
                     +
                 </button>
-                <h1 className="orders__title">Приходы / {orders.length}</h1>
+                <h1 className="orders__title">{t('title', { count: orders.length })}</h1>
             </div>
 
             {isLoading && <Loader />}
 
             {isError && (
                 <div className="alert alert-danger" role="alert">
-                    Не удалось загрузить приходы. Проверьте, что сервер запущен.
+                    {t('loadError')}
                 </div>
             )}
 
             {!isLoading && !isError && orders.length === 0 && (
-                <p className="text-muted">Приходов пока нет</p>
+                <p className="text-muted">{t('empty')}</p>
             )}
 
             {orders.length > 0 && (

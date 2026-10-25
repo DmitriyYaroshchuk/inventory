@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatLongDate, formatMoney, formatShortDate, getPrice, pluralize } from './format';
+import { formatLongDate, formatMoney, formatShortDate, getPrice } from './format';
 
 describe('getPrice', () => {
     const prices = [
@@ -18,25 +18,6 @@ describe('getPrice', () => {
 
     it('returns 0 for an empty list', () => {
         expect(getPrice([], 'USD')).toBe(0);
-    });
-});
-
-describe('pluralize', () => {
-    const forms: [string, string, string] = ['Продукт', 'Продукта', 'Продуктов'];
-
-    it.each([
-        [1, 'Продукт'],
-        [21, 'Продукт'],
-        [2, 'Продукта'],
-        [4, 'Продукта'],
-        [22, 'Продукта'],
-        [0, 'Продуктов'],
-        [5, 'Продуктов'],
-        [11, 'Продуктов'],
-        [12, 'Продуктов'],
-        [25, 'Продуктов'],
-    ])('%i → %s', (count, expected) => {
-        expect(pluralize(count, forms)).toBe(expected);
     });
 });
 
@@ -59,6 +40,10 @@ describe('formatLongDate', () => {
         expect(formatLongDate('2026-01-15T12:00:00')).toBe('15 / Янв / 2026');
         expect(formatLongDate('2026-12-31T12:00:00')).toBe('31 / Дек / 2026');
     });
+
+    it('uses English month names for the en locale', () => {
+        expect(formatLongDate('2017-09-06T12:00:00', 'en')).toBe('06 / Sep / 2017');
+    });
 });
 
 describe('formatMoney', () => {
@@ -76,5 +61,9 @@ describe('formatMoney', () => {
 
     it('formats zero', () => {
         expect(formatMoney(0)).toBe('0');
+    });
+
+    it('uses a comma and a dot for the en locale', () => {
+        expect(formatMoney(1234567.5, 'en')).toBe('1,234,567.5');
     });
 })

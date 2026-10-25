@@ -1,18 +1,20 @@
 'use client';
 
 import { io } from 'socket.io-client';
-import { API_URL } from '@/services/api';
+import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { API_URL } from '@/services/api';
+import { getMonthName, pad } from '@/utils/format';
+import LocaleSwitcher from '@/components/LocaleSwitcher/LocaleSwitcher';
 import './TopMenu.scss';
-
-const MONTHS = ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
-
-const pad = (value: number) => String(value).padStart(2, '0');
 
 const TopMenu = () => {
   const [now, setNow] = useState<Date | null>(null);
   const [sessions, setSessions] = useState<number | null>(null);
+
+  const locale = useLocale();
+  const t = useTranslations('topMenu');
 
   useEffect(() => {
     const tick = () => setNow(new Date());
@@ -46,11 +48,12 @@ const TopMenu = () => {
         INVENTORY
       </Link>
 
-      <input className="top-menu__search" type="search" placeholder="Поиск" aria-label="Поиск" />
+      <input className="top-menu__search" type="search" placeholder={t('search')} aria-label={t('search')} />
 
       <div className="top-menu__info">
+        <LocaleSwitcher />
         {sessions !== null && (
-          <div className="top-menu__sessions" title="Активные сессии">
+          <div className="top-menu__sessions" title={t('sessions')}>
             <svg
               className="top-menu__sessions-icon"
               viewBox="0 0 20 20"
@@ -68,11 +71,11 @@ const TopMenu = () => {
         {now && (
           <div className="top-menu__clock">
             <div className="top-menu__weekday">
-              {now.toLocaleDateString('ru-RU', { weekday: 'long' })}
+              {now.toLocaleDateString(locale, { weekday: 'long' })}
             </div>
             <div className="top-menu__datetime">
               <span className="top-menu__date">
-                {pad(now.getDate())} {MONTHS[now.getMonth()]}, {now.getFullYear()}
+                {pad(now.getDate())} {getMonthName(now.getMonth(), locale)}, {now.getFullYear()}
               </span>
               <span className="top-menu__time">
                 <svg
@@ -92,7 +95,7 @@ const TopMenu = () => {
                     strokeLinejoin="round"
                   />
                 </svg>
-                {now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}
+                {now.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })}
               </span>
             </div>
           </div>

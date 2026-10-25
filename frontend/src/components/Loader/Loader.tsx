@@ -1,11 +1,16 @@
+import { useTranslations } from 'next-intl';
 import './Loader.scss';
 
-const Loader = () => (
-    <div className="loader">
-        <div className="spinner-border loader__spinner" role="status">
-            <span className="visually-hidden">Загрузка...</span>
+const Loader = () => {
+    const t = useTranslations('common');
+
+    return (
+        <div className="loader">
+            <div className="spinner-border loader__spinner" role="status">
+                <span className="visually-hidden">{t('loading')}</span>
+            </div>
         </div>
-    </div>
-);
+    );
+};
 
 export default Loader;
