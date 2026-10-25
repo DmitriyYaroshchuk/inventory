@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatLongDate, formatMoney, formatShortDate, getPrice, pluralize } from './format';
+import { formatLongDate, formatMoney, formatShortDate, getPrice } from './format';
 
 describe('getPrice', () => {
     const prices = [
@@ -18,25 +18,6 @@ describe('getPrice', () => {
 
     it('returns 0 for an empty list', () => {
         expect(getPrice([], 'USD')).toBe(0);
-    });
-});
-
-describe('pluralize', () => {
-    const forms: [string, string, string] = ['Продукт', 'Продукта', 'Продуктов'];
-
-    it.each([
-        [1, 'Продукт'],
-        [21, 'Продукт'],
-        [2, 'Продукта'],
-        [4, 'Продукта'],
-        [22, 'Продукта'],
-        [0, 'Продуктов'],
-        [5, 'Продуктов'],
-        [11, 'Продуктов'],
-        [12, 'Продуктов'],
-        [25, 'Продуктов'],
-    ])('%i → %s', (count, expected) => {
-        expect(pluralize(count, forms)).toBe(expected);
     });
 });
 

@@ -28,13 +28,3 @@ export const getPrice = (prices: Price[], symbol: string) => {
 export const formatMoney = (value: number, locale: Locale = 'ru') => {
     return value.toLocaleString(locale, { maximumFractionDigits: 2 });
 }
-
-const pluralRules = new Intl.PluralRules('ru-RU');
-
-export const pluralize = (count: number, [one, few, many]: [string, string, string]) => {
-    const rule = pluralRules.select(count);
-
-    if (rule === 'one') return one;
-    if (rule === 'few') return few;
-    return many;
-};

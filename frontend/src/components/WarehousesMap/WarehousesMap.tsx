@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import L from 'leaflet';
 import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet';
+import { useTranslations } from 'next-intl';
 import type { Warehouse } from '@/components/Warehouses/Warehouses';
 import 'leaflet/dist/leaflet.css';
 import './WarehousesMap.scss';
@@ -41,6 +42,7 @@ const FlyToWarehouse = ({ warehouse }: FlyToWarehouseProps) => {
 }
 
 const WarehousesMap = ({ warehouses, selectedWarehouse, onSelect }: WarehousesMapProps) => {
+    const t = useTranslations('warehouses');
     return (
         <MapContainer className="warehouses-map" center={UKRAINE_CENTER} zoom={UKRAINE_ZOOM} scrollWheelZoom={false}>
             <TileLayer
@@ -52,9 +54,9 @@ const WarehousesMap = ({ warehouses, selectedWarehouse, onSelect }: WarehousesMa
                 warehouses.map((warehouse) => (
                     <Marker key={warehouse.id} position={warehouse.position} icon={markerIcon} eventHandlers={{ click: () => onSelect(warehouse.id) }}>
                         <Popup>
-                            <strong>{warehouse.title}</strong>
+                            <strong>{t(`items.${warehouse.key}.title`)}</strong>
                             <br />
-                            {warehouse.address}
+                            {t(`items.${warehouse.key}.address`)}
                         </Popup>
 
                     </Marker>

@@ -20,12 +20,17 @@
     "deleting": "Удаление...",
     "new": "Новый",
     "used": "Б/У",
-    "deleteProduct": "Удалить продукт"
+    "deleteProduct": "Удалить продукт",
+    "loading": "Загрузка..."
   },
   "validation": {
     "titleRequired": "Введите название прихода",
     "minLength": "Минимум {count, plural, one {# символ} few {# символа} many {# символов} other {# символа}}",
-    "maxLength": "Максимум {count, plural, one {# символ} few {# символа} many {# символов} other {# символа}}"
+    "maxLength": "Максимум {count, plural, one {# символ} few {# символа} many {# символов} other {# символа}}",
+    "emailRequired": "Введите email",
+    "emailInvalid": "Некорректный email",
+    "passwordRequired": "Введите пароль",
+    "passwordsMismatch": "Пароли не совпадают"
   },
   "orders": {
     "title": "Приходы / {count}",
@@ -62,5 +67,64 @@
     "to": "по",
     "new": "новый",
     "used": "Б / У"
+  },
+  "meta": {
+    "description": "Приходы и продукты"
+  },
+  "profile": {
+    "login": "Войти",
+    "logout": "Выйти",
+    "settings": "Настройки",
+    "avatar": "Аватар пользователя"
+  },
+  "auth": {
+    "loginTitle": "Вход",
+    "registerTitle": "Регистрация",
+    "name": "Имя",
+    "email": "Email",
+    "password": "Пароль",
+    "confirmPassword": "Повторите пароль",
+    "noAccount": "Нет аккаунта?",
+    "haveAccount": "Уже есть аккаунт?",
+    "login": "Войти",
+    "loggingIn": "Вход...",
+    "register": "Зарегистрироваться",
+    "registering": "Регистрация...",
+    "invalidCredentials": "Неверный email или пароль",
+    "emailTaken": "Этот email уже зарегистрирован",
+    "registerError": "Не удалось зарегистрироваться"
+  },
+  "statistics": {
+    "title": "Статистика",
+    "loadError": "Не удалось загрузить данные. Проверьте, что сервер запущен.",
+    "ordersTotal": "Сумма приходов, UAH",
+    "productsByType": "Продукты по типам",
+    "sum": "Сумма",
+    "productsCount": "{count, plural, one {# продукт} few {# продукта} many {# продуктов} other {# продукта}}"
+  },
+  "warehouses": {
+    "title": "Склады",
+    "items": {
+      "central": {
+        "title": "Центральный склад",
+        "address": "Киев, ул. Крещатик, 22"
+      },
+      "west": {
+        "title": "Склад «Запад»",
+        "address": "Львов, пл. Рынок, 1"
+      },
+      "south": {
+        "title": "Склад «Юг»",
+        "address": "Одесса, ул. Дерибасовская, 1"
+      },
+      "east": {
+        "title": "Склад «Восток»",
+        "address": "Харьков, пл. Свободы, 5"
+      },
+      "dnipro": {
+        "title": "Склад «Днепр»",
+        "address": "Днепр, пр. Яворницкого, 1"
+      }
+    }
   }
 }

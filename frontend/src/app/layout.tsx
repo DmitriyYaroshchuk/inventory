@@ -1,15 +1,19 @@
 import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
-import { getLocale } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 import Providers from '@/components/Providers/Providers';
 import NavigationMenu from '@/components/NavigationMenu/NavigationMenu';
 import UserProfile from '@/components/UserProfile/UserProfile';
 import TopMenu from '@/components/TopMenu/TopMenu';
 import './globals.scss';
 
-export const metadata: Metadata = {
-  title: 'Inventory',
-  description: 'Приходы и продукты',
+export const generateMetadata = async (): Promise<Metadata> => {
+  const t = await getTranslations('meta');
+
+  return {
+    title: 'Inventory',
+    description: t('description'),
+  };
 };
 
 const RootLayout = async ({ children }: LayoutProps<'/'>) => {

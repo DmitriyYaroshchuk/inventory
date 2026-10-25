@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { skipToken } from '@reduxjs/toolkit/query';
 import { useGetMeQuery } from '@/services/api';
 import { setToken } from '@/store/authSlice';
@@ -13,6 +14,7 @@ import './UserProfile.scss';
 const UserProfile = () => {
   const dispatch = useAppDispatch();
   const token = useAppSelector((state) => state.auth.token);
+  const t = useTranslations('profile');
   const { currentData: user, error } = useGetMeQuery(token ?? skipToken);
 
   useEffect(() => {
@@ -40,12 +42,12 @@ const UserProfile = () => {
         <Image
           className="user-profile__avatar"
           src="/avatar.jpg"
-          alt="User avatar"
+          alt={t('avatar')}
           width={96}
           height={96}
           loading="eager"
         />
-        <button className="user-profile__settings" type="button" aria-label="Settings">
+        <button className="user-profile__settings" type="button" aria-label={t('settings')}>
           <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
             <path
               fill="currentColor"
@@ -61,12 +63,12 @@ const UserProfile = () => {
           <>
             <span className="user-profile__name">{user.name}</span>
             <button className="user-profile__action" type="button" onClick={handleLogout}>
-              Выйти
+              {t('logout')}
             </button>
           </>
         ) : (
           <Link className="user-profile__action" href="/login">
-            Войти
+            {t('login')}
           </Link>
         )}
       </div>

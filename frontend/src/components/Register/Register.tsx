@@ -4,6 +4,7 @@ import { useState } from 'react';
 import type { SubmitEvent } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useRegisterMutation } from '@/services/api';
 import { setToken } from '@/store/authSlice';
 import { useAppDispatch } from '@/store/hooks';
@@ -20,21 +21,27 @@ type FormValues = {
 
 type FormErrors = Partial<Record<keyof FormValues, string>>;
 
+type ValidationTranslator = ReturnType<typeof useTranslations<'validation'>>;
+
+const NAME_MIN = 2;
 const PASSWORD_MIN = 6;
 
 const INITIAL_VALUES: FormValues = { name: '', email: '', password: '', confirmPassword: '' };
 
-const validate = ({ name, email, password, confirmPassword }: FormValues): FormErrors => {
+const validate = (
+    { name, email, password, confirmPassword }: FormValues,
+    t: ValidationTranslator,
+): FormErrors => {
     const errors: FormErrors = {};
 
-    if (name.trim().length < 2) errors.name = 'Минимум 2 символа';
+    if (name.trim().length < NAME_MIN) errors.name = t('minLength', { count: NAME_MIN });
 
-    if (!email.trim()) errors.email = 'Введите email';
-    else if (!EMAIL_PATTERN.test(email.trim())) errors.email = 'Некорректный email';
+    if (!email.trim()) errors.email = t('emailRequired');
+    else if (!EMAIL_PATTERN.test(email.trim())) errors.email = t('emailInvalid');
 
-    if (password.length < PASSWORD_MIN) errors.password = `Минимум ${PASSWORD_MIN} символов`;
+    if (password.length < PASSWORD_MIN) errors.password = t('minLength', { count: PASSWORD_MIN });
 
-    if (confirmPassword !== password) errors.confirmPassword = 'Пароли не совпадают';
+    if (confirmPassword !== password) errors.confirmPassword = t('passwordsMismatch');
 
     return errors;
 };
@@ -45,14 +52,16 @@ const Register = () => {
     const [values, setValues] = useState<FormValues>(INITIAL_VALUES);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [register, { isLoading, error: registerError }] = useRegisterMutation();
+    const t = useTranslations('auth');
+    const tValidation = useTranslations('validation');
 
-    const errors = validate(values);
+    const errors = validate(values, tValidation);
     const hasErrors = Object.keys(errors).length > 0;
 
     const serverError = registerError
         ? 'status' in registerError && registerError.status === 409
-            ? 'Этот email уже зарегистрирован'
-            : 'Не удалось зарегистрироваться'
+            ? t('emailTaken')
+            : t('registerError')
         : null;
 
     const handleChange = (field: keyof FormValues, value: string) => {
@@ -83,17 +92,17 @@ const Register = () => {
 
     return (
         <AuthCard
-            title="Регистрация"
+            title={t('registerTitle')}
             footer={
                 <>
-                    Уже есть аккаунт? <Link href="/login">Войти</Link>
+                    {t('haveAccount')} <Link href="/login">{t('login')}</Link>
                 </>
             }
         >
             <form onSubmit={handleSubmit} noValidate>
                 <div className="mb-3">
                     <label htmlFor="register-name" className="form-label">
-                        Имя
+                        {t('name')}
                     </label>
                     <input
                         id="register-name"
@@ -108,7 +117,7 @@ const Register = () => {
 
                 <div className="mb-3">
                     <label htmlFor="register-email" className="form-label">
-                        Email
+                        {t('email')}
                     </label>
                     <input
                         id="register-email"
@@ -123,7 +132,7 @@ const Register = () => {
 
                 <div className="mb-3">
                     <label htmlFor="register-password" className="form-label">
-                        Пароль
+                        {t('password')}
                     </label>
                     <input
                         id="register-password"
@@ -141,7 +150,7 @@ const Register = () => {
 
                 <div className="mb-3">
                     <label htmlFor="register-confirm" className="form-label">
-                        Повторите пароль
+                        {t('confirmPassword')}
                     </label>
                     <input
                         id="register-confirm"
@@ -159,7 +168,7 @@ const Register = () => {
                 {serverError && <div className="alert alert-danger">{serverError}</div>}
 
                 <button type="submit" className="btn btn-success w-100" disabled={isLoading}>
-                    {isLoading ? 'Регистрация...' : 'Зарегистрироваться'}
+                    {isLoading ? t('registering') : t('register')}
                 </button>
             </form>
         </AuthCard>

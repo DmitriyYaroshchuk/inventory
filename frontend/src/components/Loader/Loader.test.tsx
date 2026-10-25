@@ -1,10 +1,11 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
+import { renderWithIntl } from '@/test-utils';
 import Loader from './Loader';
 
 describe('Loader', () => {
     it('renders an accessible loading status', () => {
-        render(
+        renderWithIntl(
             <Loader />
         )
 

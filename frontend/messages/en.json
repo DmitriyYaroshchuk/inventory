@@ -20,12 +20,17 @@
     "deleting": "Deleting...",
     "new": "New",
     "used": "Used",
-    "deleteProduct": "Delete product"
+    "deleteProduct": "Delete product",
+    "loading": "Loading..."
   },
   "validation": {
     "titleRequired": "Enter the order title",
     "minLength": "At least {count, plural, one {# character} other {# characters}}",
-    "maxLength": "At most {count, plural, one {# character} other {# characters}}"
+    "maxLength": "At most {count, plural, one {# character} other {# characters}}",
+    "emailRequired": "Enter your email",
+    "emailInvalid": "Invalid email",
+    "passwordRequired": "Enter your password",
+    "passwordsMismatch": "Passwords do not match"
   },
   "orders": {
     "title": "Orders / {count}",
@@ -62,5 +67,64 @@
     "to": "to",
     "new": "new",
     "used": "used"
+  },
+  "meta": {
+    "description": "Orders and products"
+  },
+  "profile": {
+    "login": "Sign in",
+    "logout": "Sign out",
+    "settings": "Settings",
+    "avatar": "User avatar"
+  },
+  "auth": {
+    "loginTitle": "Sign in",
+    "registerTitle": "Sign up",
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Repeat password",
+    "noAccount": "No account?",
+    "haveAccount": "Already have an account?",
+    "login": "Sign in",
+    "loggingIn": "Signing in...",
+    "register": "Sign up",
+    "registering": "Signing up...",
+    "invalidCredentials": "Invalid email or password",
+    "emailTaken": "This email is already registered",
+    "registerError": "Failed to sign up"
+  },
+  "statistics": {
+    "title": "Statistics",
+    "loadError": "Failed to load data. Make sure the server is running.",
+    "ordersTotal": "Order totals, UAH",
+    "productsByType": "Products by type",
+    "sum": "Total",
+    "productsCount": "{count, plural, one {# product} other {# products}}"
+  },
+  "warehouses": {
+    "title": "Warehouses",
+    "items": {
+      "central": {
+        "title": "Central warehouse",
+        "address": "Kyiv, 22 Khreshchatyk St."
+      },
+      "west": {
+        "title": "West warehouse",
+        "address": "Lviv, 1 Rynok Sq."
+      },
+      "south": {
+        "title": "South warehouse",
+        "address": "Odesa, 1 Derybasivska St."
+      },
+      "east": {
+        "title": "East warehouse",
+        "address": "Kharkiv, 5 Svobody Sq."
+      },
+      "dnipro": {
+        "title": "Dnipro warehouse",
+        "address": "Dnipro, 1 Yavornytskoho Ave."
+      }
+    }
   }
 }
