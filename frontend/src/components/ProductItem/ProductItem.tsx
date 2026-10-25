@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useLocale, useTranslations } from 'next-intl';
 import type { Product } from '@/types';
 import {
     formatLongDate,
@@ -14,6 +15,9 @@ type ProductItemProps = {
 
 const ProductItem = ({ product }: ProductItemProps) => {
     const { title, serialNumber, isNew, photo, type, guarantee, price, order, date } = product;
+    const locale = useLocale();
+    const t = useTranslations('products');
+    const tCommon = useTranslations('common');
 
     return (
         <li className="product-item">
@@ -36,28 +40,28 @@ const ProductItem = ({ product }: ProductItemProps) => {
 
             <div className="product-item__guarantee">
                 <div className="product-item__guarantee-item">
-                    <span className="product-item__muted">с</span>
+                    <span className="product-item__muted">{t('from')}</span>
                     <div className="product-item__date">
                         <span className="product-item__muted">{formatShortDate(guarantee.start)}</span>
-                        <span>{formatLongDate(guarantee.start)}</span>
+                        <span>{formatLongDate(guarantee.start, locale)}</span>
                     </div>
                 </div>
 
                 <div className="product-item__guarantee-item">
-                    <span className="product-item__muted">по</span>
+                    <span className="product-item__muted">{t('to')}</span>
                     <div className="product-item__date">
                         <span className="product-item__muted">{formatShortDate(guarantee.end)}</span>
-                        <span>{formatLongDate(guarantee.end)}</span>
+                        <span>{formatLongDate(guarantee.end, locale)}</span>
                     </div>
                 </div>
             </div>
 
-            <span className="product-item__state">{isNew ? 'новый' : 'Б / У'}</span>
+            <span className="product-item__state">{isNew ? t('new') : t('used')}</span>
 
             <div className="product-item__price">
-                <span className="product-item__muted">{formatMoney(getPrice(price, 'USD'))} $</span>
+                <span className="product-item__muted">{formatMoney(getPrice(price, 'USD'), locale)} $</span>
                 <span>
-                    {formatMoney(getPrice(price, 'UAH'))}{' '}
+                    {formatMoney(getPrice(price, 'UAH'), locale)}{' '}
                     <small className="product-item__currency">UAH</small>
                 </span>
             </div>
@@ -69,10 +73,10 @@ const ProductItem = ({ product }: ProductItemProps) => {
 
             <div className="product-item__date">
                 <span className="product-item__muted">{formatShortDate(date)}</span>
-                <span>{formatLongDate(date)}</span>
+                <span>{formatLongDate(date, locale)}</span>
             </div>
 
-            <button type="button" className="product-item__delete" aria-label="Удалить продукт">
+            <button type="button" className="product-item__delete" aria-label={tCommon('deleteProduct')}>
                 <svg width="12" height="14" viewBox="0 0 12 14" fill="currentColor" aria-hidden="true">
                     <path d="M4 0h4l.5 1H12v2H0V1h3.5L4 0ZM1 4h10l-.8 10H1.8L1 4Z" />
                 </svg>

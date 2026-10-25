@@ -25,8 +25,8 @@ export const getPrice = (prices: Price[], symbol: string) => {
     return prices.find((price) => price.symbol === symbol)?.value ?? 0;
 }
 
-export const formatMoney = (value: number) => {
-    return value.toLocaleString('ru-RU', { maximumFractionDigits: 2 });
+export const formatMoney = (value: number, locale: Locale = 'ru') => {
+    return value.toLocaleString(locale, { maximumFractionDigits: 2 });
 }
 
 const pluralRules = new Intl.PluralRules('ru-RU');

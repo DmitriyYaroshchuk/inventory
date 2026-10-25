@@ -59,6 +59,10 @@ describe('formatLongDate', () => {
         expect(formatLongDate('2026-01-15T12:00:00')).toBe('15 / Янв / 2026');
         expect(formatLongDate('2026-12-31T12:00:00')).toBe('31 / Дек / 2026');
     });
+
+    it('uses English month names for the en locale', () => {
+        expect(formatLongDate('2017-09-06T12:00:00', 'en')).toBe('06 / Sep / 2017');
+    });
 });
 
 describe('formatMoney', () => {
@@ -76,5 +80,9 @@ describe('formatMoney', () => {
 
     it('formats zero', () => {
         expect(formatMoney(0)).toBe('0');
+    });
+
+    it('uses a comma and a dot for the en locale', () => {
+        expect(formatMoney(1234567.5, 'en')).toBe('1,234,567.5');
     });
 })

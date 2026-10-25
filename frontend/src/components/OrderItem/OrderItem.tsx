@@ -61,9 +61,9 @@ const OrderItem = ({ order, isCompact, isActive, onOpen, onDelete }: OrderItemPr
             {!isCompact && (
                 <>
                     <div className="order-item__total">
-                        <span className="order-item__total-usd">{formatMoney(usd)} $</span>
+                        <span className="order-item__total-usd">{formatMoney(usd, locale)} $</span>
                         <span className="order-item__total-uah">
-                            {formatMoney(uah)} <span className="order-item__currency">UAH</span>
+                            {formatMoney(uah, locale)} <span className="order-item__currency">UAH</span>
                         </span>
                     </div>
 

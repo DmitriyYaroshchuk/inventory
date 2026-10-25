@@ -51,5 +51,16 @@
     "error": "Failed to create the order",
     "submit": "Add",
     "saving": "Saving..."
+  },
+  "products": {
+    "title": "Products / {count}",
+    "type": "Type:",
+    "all": "All",
+    "loadError": "Failed to load products. Make sure the server is running.",
+    "empty": "No products",
+    "from": "from",
+    "to": "to",
+    "new": "new",
+    "used": "used"
   }
 }
