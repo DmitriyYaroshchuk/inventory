@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import { useGetOrderQuery } from '@/services/api';
 import { useAppDispatch } from '@/store/hooks';
 import { selectOrder } from '@/store/ordersSlice';
@@ -11,6 +12,8 @@ type OrderDetailsProps = {
 
 const OrderDetails = ({ orderId }: OrderDetailsProps) => {
   const dispatch = useAppDispatch();
+  const t = useTranslations('orderDetails');
+  const tCommon = useTranslations('common');
   const { data: order, isLoading, isError } = useGetOrderQuery(orderId);
 
   return (
@@ -18,7 +21,7 @@ const OrderDetails = ({ orderId }: OrderDetailsProps) => {
       <button
         className="order-details__close"
         type="button"
-        aria-label="Закрыть"
+        aria-label={tCommon('close')}
         onClick={() => dispatch(selectOrder(null))}
       >
         ×
@@ -27,7 +30,7 @@ const OrderDetails = ({ orderId }: OrderDetailsProps) => {
       {isLoading && <Loader />}
       {isError && (
         <div className="alert alert-danger m-3" role="alert">
-          Не удалось загрузить приход
+          {t('loadError')}
         </div>
       )}
 
@@ -37,7 +40,7 @@ const OrderDetails = ({ orderId }: OrderDetailsProps) => {
 
           <button className="order-details__add" type="button">
             <span className="order-details__add-icon">+</span>
-            Добавить продукт
+            {t('addProduct')}
           </button>
 
           <ul className="order-details__list">
@@ -63,10 +66,10 @@ const OrderDetails = ({ orderId }: OrderDetailsProps) => {
                 <span
                   className={`order-details__state${product.isNew ? ' order-details__state--new' : ''}`}
                 >
-                  {product.isNew ? 'Новый' : 'Б/У'}
+                  {product.isNew ? tCommon('new') : tCommon('used')}
                 </span>
 
-                <button className="order-details__delete" type="button" aria-label="Удалить продукт">
+                <button className="order-details__delete" type="button" aria-label={tCommon('deleteProduct')}>
                   <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
                     <path d="M6 2h4l1 1h3v2H2V3h3l1-1zM3 6h10l-1 8H4L3 6z" fill="currentColor" />
                   </svg>

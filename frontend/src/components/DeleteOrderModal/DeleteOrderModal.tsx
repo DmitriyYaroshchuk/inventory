@@ -1,9 +1,10 @@
-import { useGetOrderQuery } from "@/services/api"
-import type { OrderSummary } from "@/types"
-import { useEffect } from "react"
-import Image from "next/image"
-import './DeleteOrderModal.scss'
-import { createPortal } from "react-dom"
+import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import Image from 'next/image';
+import { useTranslations } from 'next-intl';
+import { useGetOrderQuery } from '@/services/api';
+import type { OrderSummary } from '@/types';
+import './DeleteOrderModal.scss';
 
 type DeleteOrderModalProps = {
     order: OrderSummary,
@@ -21,6 +22,8 @@ const DeleteOrderModal = ({
     onConfirm,
 }: DeleteOrderModalProps) => {
     const { data: details } = useGetOrderQuery(order.id);
+    const t = useTranslations('deleteOrder');
+    const tCommon = useTranslations('common');
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
@@ -44,14 +47,14 @@ const DeleteOrderModal = ({
                 <button
                     className="delete-order-modal__close"
                     type="button"
-                    aria-label="Закрыть"
+                    aria-label={tCommon('close')}
                     onClick={onCancel}
                 >
                     ×
                 </button>
 
                 <h2 id="delete-order-modal-title" className="delete-order-modal__title">
-                    Вы уверены, что хотите удалить этот приход?
+                    {t('title')}
                 </h2>
 
                 <ul className="delete-order-modal__list">
@@ -78,12 +81,12 @@ const DeleteOrderModal = ({
                 </ul>
 
                 {isError && (
-                    <p className="delete-order-modal__error">Не удалось удалить приход. Попробуйте ещё раз.</p>
+                    <p className="delete-order-modal__error">{t('error')}</p>
                 )}
 
                 <div className="delete-order-modal__actions">
                     <button className="delete-order-modal__cancel" type="button" onClick={onCancel}>
-                        Отменить
+                        {tCommon('cancel')}
                     </button>
                     <button
                         className="delete-order-modal__confirm"
@@ -94,7 +97,7 @@ const DeleteOrderModal = ({
                         <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
                             <path d="M6 2h4l1 1h3v2H2V3h3l1-1zM3 6h10l-1 8H4L3 6z" fill="currentColor" />
                         </svg>
-                        {isDeleting ? 'Удаление...' : 'Удалить'}
+                        {isDeleting ? tCommon('deleting') : tCommon('delete')}
                     </button>
                 </div>
 
