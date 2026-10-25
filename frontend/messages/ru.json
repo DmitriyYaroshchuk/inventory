@@ -1,0 +1,16 @@
+{
+  "nav": {
+    "orders": "Приход",
+    "groups": "Группы",
+    "products": "Продукты",
+    "statistics": "Статистика",
+    "warehouses": "Склады",
+    "users": "Пользователи",
+    "settings": "Настройки"
+  },
+  "topMenu": {
+    "search": "Поиск",
+    "sessions": "Активные сессии",
+    "language": "Язык"
+  }
+}

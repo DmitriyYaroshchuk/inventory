@@ -1,0 +1,16 @@
+{
+  "nav": {
+    "orders": "Orders",
+    "groups": "Groups",
+    "products": "Products",
+    "statistics": "Statistics",
+    "warehouses": "Warehouses",
+    "users": "Users",
+    "settings": "Settings"
+  },
+  "topMenu": {
+    "search": "Search",
+    "sessions": "Active sessions",
+    "language": "Language"
+  }
+}
