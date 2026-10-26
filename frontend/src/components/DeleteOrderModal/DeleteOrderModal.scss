@@ -1,0 +1,190 @@
+@use '@/styles/variables' as *;
+@use '@/styles/breakpoints' as *;
+
+.delete-order-modal {
+  position: fixed;
+  top: $header-height;
+  right: 0;
+  bottom: 0;
+  left: $sidebar-width;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(43, 52, 64, 0.5);
+  animation: fade-in 0.2s ease both;
+  cursor: pointer;
+
+  // на телефоне сайдбара слева нет — оверлей на весь экран
+  @include mobile {
+    top: 0;
+    left: 0;
+  }
+
+  &__window {
+    position: relative;
+    width: 100%;
+    max-width: 760px;
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+    animation: zoom-in 0.25s ease both;
+    cursor: pointer;
+  }
+
+  &__close {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 40px;
+    height: 40px;
+    padding: 0 0 2px;
+    border: 0;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    color: $text-muted;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+
+    &:hover {
+      color: $text-dark;
+    }
+
+    @include mobile {
+      top: 8px;
+      right: 8px;
+    }
+  }
+
+  &__title {
+    margin: 0;
+    padding: 32px 36px 24px;
+    font-size: 20px;
+    font-weight: 700;
+
+    @include mobile {
+      padding: 20px 56px 16px 16px;
+      font-size: 17px;
+    }
+  }
+
+  &__list {
+    max-height: 240px;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    list-style: none;
+  }
+
+  &__product {
+    display: grid;
+    grid-template-columns: 10px 48px minmax(0, 1fr);
+    align-items: center;
+    gap: 24px;
+    padding: 12px 36px;
+    border-top: 1px solid $border;
+
+    @include mobile {
+      gap: 12px;
+      padding: 12px 16px;
+    }
+  }
+
+  &__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #c9d1d9;
+
+    &--new {
+      background: $green;
+    }
+  }
+
+  &__photo {
+    width: 48px;
+    height: 36px;
+    object-fit: contain;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  &__name {
+    overflow: hidden;
+    color: $text-dark;
+    text-decoration: underline;
+    text-decoration-color: #c9d1d9;
+    text-overflow: ellipsis;
+    text-underline-offset: 4px;
+    white-space: nowrap;
+  }
+
+  &__serial {
+    color: $text-muted;
+    font-size: 12px;
+  }
+
+  &__error {
+    margin: 0;
+    padding: 12px 36px;
+    color: #e04b4b;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 32px;
+    padding: 24px 36px;
+    border-radius: 0 0 4px 4px;
+    background: $green;
+
+    @include mobile {
+      gap: 16px;
+      padding: 16px;
+    }
+  }
+
+  &__cancel {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  &__confirm {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 36px;
+    border: 0;
+    border-radius: 24px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    color: #e04b4b;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+
+    @include mobile {
+      padding: 10px 20px;
+    }
+  }
+}

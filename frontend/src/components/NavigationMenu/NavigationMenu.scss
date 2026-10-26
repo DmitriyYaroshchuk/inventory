@@ -1,0 +1,65 @@
+@use '@/styles/variables' as *;
+@use '@/styles/breakpoints' as *;
+
+.navigation-menu {
+  padding: 32px 0;
+
+  @include mobile {
+    padding: 8px 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @include mobile {
+      flex-direction: row;
+      gap: 16px;
+      width: max-content;
+      padding: 0 16px;
+    }
+  }
+
+  &__link {
+    display: inline-block;
+    padding: 4px 6px;
+    border-bottom: 3px solid transparent;
+    color: $text-dark;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition:
+      color 0.2s,
+      border-color 0.2s;
+
+    &:hover {
+      color: $green;
+    }
+
+    &--active {
+      border-bottom-color: $green;
+    }
+
+    &--disabled {
+      cursor: default;
+
+      &:hover {
+        color: $text-dark;
+      }
+    }
+  }
+}

@@ -1,0 +1,73 @@
+@use '@/styles/variables' as *;
+@use '@/styles/breakpoints' as *;
+
+.orders {
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 40px;
+    margin-bottom: 50px;
+
+    @include mobile {
+      margin: 8px 0 24px;
+    }
+  }
+
+  &__add {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0 0 2px;
+    border: 0;
+    border-radius: 50%;
+    background: $green;
+    box-shadow: 0 4px 10px rgba(122, 182, 72, 0.4);
+    color: #fff;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+
+    @include mobile {
+      font-size: 22px;
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @include tablet {
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+  }
+
+  &__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 16px;
+
+    &--open {
+      grid-template-columns: 470px minmax(0, 1fr);
+
+      @include tablet {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 32px;
+      }
+    }
+  }
+}
