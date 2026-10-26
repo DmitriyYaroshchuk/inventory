@@ -5,6 +5,7 @@
 body {
   background: $background;
   color: $text-dark;
+  font-family: var(--font-montserrat), $font-fallback;
 }
 
 .app {
@@ -30,10 +31,11 @@ body {
   &__content {
     flex: 1;
     min-width: 0;
-    padding: 32px $page-gutter 32px 48px;
+    padding: 32px $page-gutter 32px $content-offset;
 
     @include laptop {
       padding-right: 48px;
+      padding-left: 48px;
     }
 
     @include tablet {
