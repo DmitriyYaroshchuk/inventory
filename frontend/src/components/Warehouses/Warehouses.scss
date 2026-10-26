@@ -1,10 +1,16 @@
 @use '@/styles/variables' as *;
+@use '@/styles/breakpoints' as *;
 
 .warehouses {
   &__title {
     margin: 50px 0 40px;
     font-size: 28px;
     font-weight: 700;
+
+    @include mobile {
+      margin: 8px 0 24px;
+      font-size: 22px;
+    }
   }
 
   &__body {
@@ -12,6 +18,10 @@
     grid-template-columns: 280px 1fr;
     gap: 24px;
     align-items: start;
+
+    @include mobile {
+      grid-template-columns: minmax(0, 1fr);
+    }
   }
 
   &__list {

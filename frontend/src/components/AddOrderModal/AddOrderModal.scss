@@ -1,5 +1,6 @@
 @use 'sass:color';
 @use '@/styles/variables' as *;
+@use '@/styles/breakpoints' as *;
 
 .add-order-modal {
   position: fixed;
@@ -15,6 +16,12 @@
   animation: fade-in 0.2s ease both;
   cursor: pointer;
 
+  @include mobile {
+    top: 0;
+    left: 0;
+    padding: 16px;
+  }
+
   &__window {
     width: 100%;
     max-width: 520px;
@@ -24,6 +31,10 @@
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     animation: zoom-in 0.25s ease both;
     cursor: pointer;
+
+    @include mobile {
+      padding: 24px 20px;
+    }
   }
 
   &__title {
