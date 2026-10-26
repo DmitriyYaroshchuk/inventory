@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
+import { useProductTypeLabel } from '@/hooks/useProductTypeLabel';
 import { useGetProductsQuery, useGetProductTypesQuery } from '@/services/api';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setProductType } from '@/store/productsSlice';
@@ -14,6 +15,7 @@ const Products = () => {
   const dispatch = useAppDispatch();
   const productType = useAppSelector((state) => state.products.productType);
   const t = useTranslations('products');
+  const typeLabel = useProductTypeLabel();
 
   useEffect(() => {
     const savedType = loadProductTypeFromLS();
@@ -50,7 +52,7 @@ const Products = () => {
             <option value="">{t('all')}</option>
             {types.map((type) => (
               <option key={type} value={type}>
-                {type}
+                {typeLabel(type)}
               </option>
             ))}
           </select>

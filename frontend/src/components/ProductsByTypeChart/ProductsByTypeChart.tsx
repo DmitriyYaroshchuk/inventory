@@ -2,6 +2,7 @@
 
 import { Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 import { useTranslations } from 'next-intl';
+import { useProductTypeLabel } from '@/hooks/useProductTypeLabel';
 import type { TypeCountPoint } from '@/utils/statistics';
 
 const COLORS = ['#7ab648', '#4fc3f7', '#ffb74d', '#ba68c8', '#e57373', '#90a4ae'];
@@ -12,10 +13,14 @@ type ProductsByTypeChartProps = {
 
 const ProductsByTypeChart = ({ data }: ProductsByTypeChartProps) => {
   const t = useTranslations('statistics');
+  const typeLabel = useProductTypeLabel();
+
   const coloredData = data.map((item, index) => ({
     ...item,
+    type: typeLabel(item.type),
     fill: COLORS[index % COLORS.length],
   }));
+
   return (
     <ResponsiveContainer width="100%" height={320}>
       <PieChart>
