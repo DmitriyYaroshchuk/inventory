@@ -1,4 +1,5 @@
 @use '@/styles/variables' as *;
+@use '@/styles/breakpoints' as *;
 
 .order-details {
   position: relative;
@@ -26,6 +27,11 @@
     &:hover {
       color: $text-dark;
     }
+
+    @include mobile {
+      top: 8px;
+      right: 8px;
+    }
   }
 
   &__status {
@@ -40,6 +46,11 @@
     font-size: 22px;
     letter-spacing: 0.02em;
     font-weight: 700;
+
+    @include mobile {
+      padding: 20px 56px 12px 16px;
+      font-size: 18px;
+    }
   }
 
   &__add {
@@ -53,6 +64,10 @@
     color: $green;
     font-size: 14px;
     cursor: default;
+
+    @include mobile {
+      margin: 0 16px 12px;
+    }
   }
 
   &__add-icon {
@@ -81,6 +96,12 @@
     gap: 24px;
     padding: 12px 36px;
     border-top: 1px solid #e3e8ec;
+
+    @include mobile {
+      grid-template-columns: 10px 48px minmax(0, 1fr) auto;
+      gap: 12px;
+      padding: 12px 16px;
+    }
   }
 
   &__dot {
@@ -141,5 +162,9 @@
     background: none;
     color: $text-muted;
     cursor: default;
+
+    @include mobile {
+      display: none;
+    }
   }
 }

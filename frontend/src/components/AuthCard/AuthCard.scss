@@ -1,4 +1,5 @@
 @use '@/styles/variables' as *;
+@use '@/styles/breakpoints' as *;
 
 .auth-card {
   max-width: 420px;
@@ -7,6 +8,11 @@
   background: #fff;
   border: 1px solid $border;
   border-radius: 4px;
+
+  @include mobile {
+    margin-top: 8px;
+    padding: 24px 20px;
+  }
 
   &__title {
     margin: 0 0 24px;

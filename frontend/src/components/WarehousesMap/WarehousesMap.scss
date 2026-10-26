@@ -1,9 +1,14 @@
 @use '@/styles/variables' as *;
+@use '@/styles/breakpoints' as *;
 
 .warehouses-map {
   height: 520px;
   border: 1px solid $border;
   border-radius: 4px;
+
+  @include mobile {
+    height: 360px;
+  }
 
   &__marker {
     background: $green;

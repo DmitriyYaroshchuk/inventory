@@ -1,10 +1,16 @@
 @use '@/styles/variables' as *;
+@use '@/styles/breakpoints' as *;
 
 .statistics {
   &__title {
     margin: 50px 0 40px;
     font-size: 28px;
     font-weight: 700;
+
+    @include mobile {
+      margin: 8px 0 24px;
+      font-size: 22px;
+    }
   }
 
   &__card {
@@ -13,6 +19,10 @@
     background: #fff;
     border: 1px solid $border;
     border-radius: 4px;
+
+    @include mobile {
+      padding: 16px;
+    }
   }
 
   &__subtitle {
@@ -27,5 +37,9 @@
     grid-template-columns: 2fr 1fr;
     gap: 24px;
     align-items: start;
+
+    @include tablet {
+      grid-template-columns: minmax(0, 1fr);
+    }
   }
 }
