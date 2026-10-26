@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
+import { useProductTypeLabel } from '@/hooks/useProductTypeLabel';
 import type { Product } from '@/types';
 import { formatLongDate, formatMoney, formatShortDate, getPrice } from '@/utils/format';
 import './ProductItem.scss';
@@ -13,6 +14,7 @@ const ProductItem = ({ product }: ProductItemProps) => {
   const locale = useLocale();
   const t = useTranslations('products');
   const tCommon = useTranslations('common');
+  const typeLabel = useProductTypeLabel();
 
   return (
     <li className="product-item">
@@ -31,7 +33,7 @@ const ProductItem = ({ product }: ProductItemProps) => {
         <span className="product-item__muted">SN-{serialNumber}</span>
       </div>
 
-      <span className="product-item__type">{type}</span>
+      <span className="product-item__type">{typeLabel(type)}</span>
 
       <div className="product-item__guarantee">
         <div className="product-item__guarantee-item">
