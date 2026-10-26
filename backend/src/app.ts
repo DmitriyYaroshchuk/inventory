@@ -7,7 +7,7 @@ import { ordersRouter } from './routes/orders';
 import { productsRouter } from './routes/products';
 import { authRouter } from './routes/auth';
 
-export function createApp() {
+export const createApp = () => {
   const app = express();
 
   app.use(cors({ origin: config.corsOrigins }));
@@ -33,4 +33,4 @@ export function createApp() {
   app.use(errorHandler);
 
   return app;
-}
+};

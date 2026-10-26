@@ -6,7 +6,7 @@ import { config } from './config';
  * Счётчик активных сессий: каждая открытая вкладка приложения держит одно
  * Socket.io-соединение. При подключении и отключении рассылаем всем текущее число.
  */
-export function setupSockets(httpServer: HttpServer): Server {
+export const setupSockets = (httpServer: HttpServer): Server => {
   const io = new Server(httpServer, {
     cors: { origin: config.corsOrigins },
   });
@@ -21,4 +21,4 @@ export function setupSockets(httpServer: HttpServer): Server {
   });
 
   return io;
-}
+};
