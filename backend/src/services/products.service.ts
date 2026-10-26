@@ -28,17 +28,21 @@ interface TypeRow extends RowDataPacket {
   type: string;
 }
 
-function parsePrices(raw: RawPrice[] | string): Price[] {
+const parsePrices = (raw: RawPrice[] | string): Price[] => {
   const list: RawPrice[] = typeof raw === 'string' ? JSON.parse(raw) : raw;
-  return list.map((x) => ({ value: Number(x.value), symbol: x.symbol, isDefault: Boolean(x.isDefault) }));
-}
+  return list.map((x) => ({
+    value: Number(x.value),
+    symbol: x.symbol,
+    isDefault: Boolean(x.isDefault),
+  }));
+};
 
 export interface ProductsFilter {
   type?: string;
   orderId?: number;
 }
 
-export async function getProducts(filter: ProductsFilter = {}): Promise<ProductDto[]> {
+export const getProducts = async (filter: ProductsFilter = {}): Promise<ProductDto[]> => {
   const conditions: string[] = [];
   const params: Array<string | number> = [];
 
@@ -78,9 +82,9 @@ export async function getProducts(filter: ProductsFilter = {}): Promise<ProductD
     order: { id: p.order_id, title: p.order_title },
     date: p.date.toISOString(),
   }));
-}
+};
 
-export async function getProductTypes(): Promise<string[]> {
+export const getProductTypes = async (): Promise<string[]> => {
   const [rows] = await pool.query<TypeRow[]>('SELECT DISTINCT type FROM products ORDER BY type');
   return rows.map((row) => row.type);
-}
+};

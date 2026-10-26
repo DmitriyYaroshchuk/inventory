@@ -4,13 +4,10 @@ import { renderWithIntl } from '@/test-utils';
 import Loader from './Loader';
 
 describe('Loader', () => {
-    it('renders an accessible loading status', () => {
-        renderWithIntl(
-            <Loader />
-        )
+  it('renders an accessible loading status', () => {
+    renderWithIntl(<Loader />);
 
-        expect(screen.getByRole('status')).toBeInTheDocument();
-        expect(screen.getByText('Загрузка...')).toBeInTheDocument();
-    });
-
-})
+    expect(screen.getByRole('status')).toBeInTheDocument();
+    expect(screen.getByText('Загрузка...')).toBeInTheDocument();
+  });
+});

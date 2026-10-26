@@ -1,9 +1,8 @@
-import { api } from '@/services/api';
 import { configureStore } from '@reduxjs/toolkit';
+import { api } from '@/services/api';
+import authReducer from './authSlice';
 import ordersReducer from './ordersSlice';
 import productsReducer from './productsSlice';
-import authReducer from './authSlice';
-
 
 export const makeStore = () =>
   configureStore({

@@ -4,8 +4,8 @@ import type { ReactElement } from 'react';
 import messages from '../messages/ru.json';
 
 export const renderWithIntl = (children: ReactElement) =>
-    render(
-        <NextIntlClientProvider locale="ru" messages={messages}>
-            {children}
-        </NextIntlClientProvider>,
-    );
+  render(
+    <NextIntlClientProvider locale="ru" messages={messages}>
+      {children}
+    </NextIntlClientProvider>,
+  );

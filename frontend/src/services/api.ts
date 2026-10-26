@@ -13,7 +13,7 @@ export const api = createApi({
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
       }
-      return headers
+      return headers;
     },
   }),
   tagTypes: ['Orders', 'Products'],
@@ -48,12 +48,12 @@ export const api = createApi({
       providesTags: ['Products'],
     }),
 
-    login: build.mutation<AuthResponse, { email: string, password: string }>({
-      query: (body) => ({ url: '/auth/login', method: 'POST', body })
+    login: build.mutation<AuthResponse, { email: string; password: string }>({
+      query: (body) => ({ url: '/auth/login', method: 'POST', body }),
     }),
 
-    register: build.mutation<AuthResponse, { name: string, email: string, password: string }>({
-      query: (body) => ({ url: '/auth/register', method: 'POST', body })
+    register: build.mutation<AuthResponse, { name: string; email: string; password: string }>({
+      query: (body) => ({ url: '/auth/register', method: 'POST', body }),
     }),
 
     getMe: build.query<User, string>({
@@ -73,4 +73,3 @@ export const {
   useRegisterMutation,
   useGetMeQuery,
 } = api;
-

@@ -12,7 +12,7 @@ interface OrderRow extends RowDataPacket {
 
 const round2 = (n: number): number => Math.round(n * 100) / 100;
 
-function sumPrices(products: ProductDto[]): Price[] {
+const sumPrices = (products: ProductDto[]): Price[] => {
   const sums = new Map<string, Price>();
   for (const product of products) {
     for (const price of product.price) {
@@ -22,9 +22,9 @@ function sumPrices(products: ProductDto[]): Price[] {
     }
   }
   return [...sums.values()].sort((a, b) => a.symbol.localeCompare(b.symbol));
-}
+};
 
-async function fetchOrders(orderId?: number): Promise<OrderDetails[]> {
+const fetchOrders = async (orderId?: number): Promise<OrderDetails[]> => {
   const where = orderId !== undefined ? 'WHERE id = ?' : '';
   const params = orderId !== undefined ? [orderId] : [];
 
@@ -48,30 +48,30 @@ async function fetchOrders(orderId?: number): Promise<OrderDetails[]> {
       products: own,
     };
   });
-}
+};
 
-export async function listOrders(): Promise<OrderSummary[]> {
+export const listOrders = async (): Promise<OrderSummary[]> => {
   const orders = await fetchOrders();
   return orders.map(({ products: _products, ...summary }) => summary);
-}
+};
 
-export async function getOrder(id: number): Promise<OrderDetails | null> {
+export const getOrder = async (id: number): Promise<OrderDetails | null> => {
   const [order] = await fetchOrders(id);
   return order ?? null;
-}
+};
 
-export async function deleteOrder(id: number): Promise<boolean> {
+export const deleteOrder = async (id: number): Promise<boolean> => {
   const [result] = await pool.query<ResultSetHeader>('DELETE FROM orders WHERE id = ?', [id]);
   return result.affectedRows > 0;
-}
+};
 
-export async function createOrder(
+export const createOrder = async (
   title: string,
   description: string | null,
-): Promise<OrderDetails | null> {
+): Promise<OrderDetails | null> => {
   const [result] = await pool.query<ResultSetHeader>(
     'INSERT INTO orders (title, description) VALUES (?, ?)',
     [title, description],
   );
   return getOrder(result.insertId);
-}
+};

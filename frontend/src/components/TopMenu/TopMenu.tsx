@@ -48,7 +48,12 @@ const TopMenu = () => {
         INVENTORY
       </Link>
 
-      <input className="top-menu__search" type="search" placeholder={t('search')} aria-label={t('search')} />
+      <input
+        className="top-menu__search"
+        type="search"
+        placeholder={t('search')}
+        aria-label={t('search')}
+      />
 
       <div className="top-menu__info">
         <LocaleSwitcher />
@@ -95,7 +100,11 @@ const TopMenu = () => {
                     strokeLinejoin="round"
                   />
                 </svg>
-                {now.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })}
+                {now.toLocaleTimeString(locale, {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  hourCycle: 'h23',
+                })}
               </span>
             </div>
           </div>

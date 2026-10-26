@@ -55,7 +55,6 @@ const UserProfile = () => {
             />
           </svg>
         </button>
-
       </div>
 
       <div className="user-profile__account">

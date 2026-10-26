@@ -3,12 +3,12 @@ import { getRequestConfig } from 'next-intl/server';
 import { DEFAULT_LOCALE, isLocale, LOCALE_COOKIE } from './config';
 
 export default getRequestConfig(async () => {
-    const cookieStore = await cookies();
-    const saved = cookieStore.get(LOCALE_COOKIE)?.value;
-    const locale = isLocale(saved) ? saved : DEFAULT_LOCALE;
+  const cookieStore = await cookies();
+  const saved = cookieStore.get(LOCALE_COOKIE)?.value;
+  const locale = isLocale(saved) ? saved : DEFAULT_LOCALE;
 
-    return {
-        locale,
-        messages: (await import(`../../messages/${locale}.json`)).default,
-    };
-})
+  return {
+    locale,
+    messages: (await import(`../../messages/${locale}.json`)).default,
+  };
+});
