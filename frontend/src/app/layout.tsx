@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Montserrat } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getTranslations } from 'next-intl/server';
 import Providers from '@/components/Providers/Providers';
@@ -6,6 +7,12 @@ import NavigationMenu from '@/components/NavigationMenu/NavigationMenu';
 import UserProfile from '@/components/UserProfile/UserProfile';
 import TopMenu from '@/components/TopMenu/TopMenu';
 import './globals.scss';
+
+const montserrat = Montserrat({
+  subsets: ['latin', 'cyrillic'],
+  weight: ['400', '500', '700'],
+  variable: '--font-montserrat',
+});
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const t = await getTranslations('meta');
@@ -20,7 +27,12 @@ const RootLayout = async ({ children }: LayoutProps<'/'>) => {
   const locale = await getLocale();
 
   return (
-    <html lang={locale} data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html
+      lang={locale}
+      className={montserrat.variable}
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+    >
       <body suppressHydrationWarning>
         <NextIntlClientProvider>
           <Providers>
