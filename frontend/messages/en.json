@@ -127,5 +127,10 @@
         "address": "Dnipro, 1 Yavornytskoho Ave."
       }
     }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "This page does not exist or has been removed.",
+    "home": "Back to home"
   }
 }

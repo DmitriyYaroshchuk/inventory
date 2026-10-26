@@ -1,0 +1,55 @@
+@use '@/styles/variables' as *;
+@use '@/styles/breakpoints' as *;
+
+.not-found {
+  max-width: 480px;
+  margin: 80px auto 0;
+  text-align: center;
+
+  @include mobile {
+    margin-top: 32px;
+  }
+
+  &__code {
+    margin: 0;
+    color: $green;
+    font-size: 96px;
+    font-weight: 700;
+    line-height: 1;
+
+    @include mobile {
+      font-size: 64px;
+    }
+  }
+
+  &__title {
+    margin: 16px 0 8px;
+    font-size: 28px;
+    font-weight: 700;
+
+    @include mobile {
+      font-size: 22px;
+    }
+  }
+
+  &__text {
+    margin: 0 0 32px;
+    color: $text-muted;
+  }
+
+  &__link {
+    display: inline-block;
+    padding: 12px 32px;
+    border-radius: 24px;
+    background: $green;
+    box-shadow: 0 4px 10px rgba(122, 182, 72, 0.4);
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+
+    &:hover {
+      color: #fff;
+      opacity: 0.9;
+    }
+  }
+}
