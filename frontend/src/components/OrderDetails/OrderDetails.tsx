@@ -38,7 +38,12 @@ const OrderDetails = ({ orderId }: OrderDetailsProps) => {
         <>
           <h2 className="order-details__title">{order.title}</h2>
 
-          <button className="order-details__add" type="button" disabled title={tCommon('comingSoon')}>
+          <button
+            className="order-details__add"
+            type="button"
+            disabled
+            title={tCommon('comingSoon')}
+          >
             <span className="order-details__add-icon">+</span>
             {t('addProduct')}
           </button>

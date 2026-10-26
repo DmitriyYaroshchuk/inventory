@@ -30,8 +30,7 @@ ordersRouter.get('/:id', async (req, res) => {
 // POST /api/orders — создать приход
 ordersRouter.post('/', requireAuth, async (req, res) => {
   const title = typeof req.body?.title === 'string' ? req.body.title.trim() : '';
-  const description =
-    typeof req.body?.description === 'string' ? req.body.description.trim() : '';
+  const description = typeof req.body?.description === 'string' ? req.body.description.trim() : '';
 
   if (title.length < 3 || title.length > 255) {
     res.status(400).json({ error: 'Title must be 3-255 characters' });

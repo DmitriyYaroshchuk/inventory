@@ -7,7 +7,9 @@ const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function main() {
   const first = io(url);
-  first.on('activeSessions', (count: number) => console.log(`[клиент 1] активных сессий: ${count}`));
+  first.on('activeSessions', (count: number) =>
+    console.log(`[клиент 1] активных сессий: ${count}`),
+  );
   await wait(500);
 
   console.log('→ открываем вторую «вкладку»');

@@ -30,7 +30,11 @@ interface TypeRow extends RowDataPacket {
 
 function parsePrices(raw: RawPrice[] | string): Price[] {
   const list: RawPrice[] = typeof raw === 'string' ? JSON.parse(raw) : raw;
-  return list.map((x) => ({ value: Number(x.value), symbol: x.symbol, isDefault: Boolean(x.isDefault) }));
+  return list.map((x) => ({
+    value: Number(x.value),
+    symbol: x.symbol,
+    isDefault: Boolean(x.isDefault),
+  }));
 }
 
 export interface ProductsFilter {
