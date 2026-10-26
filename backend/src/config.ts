@@ -19,5 +19,8 @@ export const config = {
     user: process.env.DB_USER ?? 'inventory',
     password: process.env.DB_PASSWORD ?? 'inventory',
     database: process.env.DB_NAME ?? 'inventory',
+    // CA-сертификат облачной MySQL; если не задан — подключение без SSL (локальный Docker).
+    // В переменной окружения переносы строк могут прийти как "\n" — превращаем их обратно
+    sslCa: process.env.DB_SSL_CA?.replace(/\\n/g, '\n'),
   },
 };
