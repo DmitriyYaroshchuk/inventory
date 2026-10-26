@@ -2,8 +2,9 @@
 
 SPA для учёта приходов (Orders) и продуктов (Products): список приходов с деталями, удаление и создание приходов, продукты с фильтром по типу, статистика, карта складов, авторизация, онлайн-счётчик вкладок и два языка интерфейса.
 
-**Демо:** <https://inventory-olive-two.vercel.app>
-Тестовый пользователь: `admin@inventory.com` / `password123`
+- **Демо:** <https://inventory-olive-two.vercel.app>
+- **Видео:** <https://drive.google.com/file/d/1H42JUcoylA1qlUC7dROydgn0eQgqhICk/view?usp=sharing>
+- **Тестовый пользователь:** `admin@inventory.com` / `password123`
 
 > Демо работает на бесплатных тарифах: backend «засыпает» после 15 минут без запросов, поэтому первое открытие может занять до минуты.
 
