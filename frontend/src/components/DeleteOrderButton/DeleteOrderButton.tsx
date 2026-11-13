@@ -23,7 +23,7 @@ const DeleteOrderButton = ({ order }: DeleteOrderButtonProps) => {
   const token = useAppSelector((state) => state.auth.token);
 
   const [isOpen, setIsOpen] = useState(false);
-  const [deleteOrderm, { isLoading, isError, reset }] = useDeleteOrderMutation();
+  const [deleteOrder, { isLoading, isError, reset }] = useDeleteOrderMutation();
 
   const handleClick = () => {
     if (!token) {
@@ -40,7 +40,7 @@ const DeleteOrderButton = ({ order }: DeleteOrderButtonProps) => {
 
   const handleConfirm = async () => {
     try {
-      await deleteOrderm(order.id).unwrap();
+      await deleteOrder(order.id).unwrap();
       setIsOpen(false);
 
       if (searchParams.get('id') === String(order.id)) {
