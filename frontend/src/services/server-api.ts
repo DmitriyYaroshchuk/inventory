@@ -1,5 +1,5 @@
 import { API_URL } from '@/services/api';
-import type { Product } from '@/types';
+import type { OrderDetails, OrderSummary, Product } from '@/types';
 
 export const apiGet = async <T>(path: string): Promise<T> => {
   const response = await fetch(`${API_URL}/api${path}`, {
@@ -19,4 +19,12 @@ export const fetchProducts = (type?: string) => {
 
 export const fetchProductsTypes = () => {
   return apiGet<string[]>('/products/types');
+};
+
+export const fetchOrders = () => {
+  return apiGet<OrderSummary[]>('/orders');
+};
+
+export const fetchOrder = (id: number) => {
+  return apiGet<OrderDetails>(`/orders/${id}`);
 };

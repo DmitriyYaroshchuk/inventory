@@ -23,6 +23,10 @@
     font-size: 22px;
     line-height: 1;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
 
     &:hover {
       color: $text-dark;
