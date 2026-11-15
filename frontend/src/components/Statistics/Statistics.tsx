@@ -1,53 +1,21 @@
-'use client';
-
-import { useMemo } from 'react';
-import dynamic from 'next/dynamic';
-import { useTranslations } from 'next-intl';
-import { useGetOrdersQuery, useGetProductsQuery } from '@/services/api';
+import { getTranslations } from 'next-intl/server';
+import { fetchOrders, fetchProducts } from '@/services/server-api';
 import { countProductsByType, getOrderTotals } from '@/utils/statistics';
-import Loader from '@/components/Loader/Loader';
+import OrdersTotalChart from '@/components/OrdersTotalChart/OrdersTotalChart';
+import ProductsByTypeChart from '@/components/ProductsByTypeChart/ProductsByTypeChart';
 import './Statistics.scss';
 
-const OrdersTotalChart = dynamic(() => import('@/components/OrdersTotalChart/OrdersTotalChart'), {
-  ssr: false,
-  loading: () => <Loader />,
-});
+const Statistics = async () => {
+  const t = await getTranslations('statistics');
 
-const ProductsByTypeChart = dynamic(
-  () => import('@/components/ProductsByTypeChart/ProductsByTypeChart'),
-  { ssr: false, loading: () => <Loader /> },
-);
+  const [orders, products] = await Promise.all([fetchOrders(), fetchProducts()]);
 
-const Statistics = () => {
-  const t = useTranslations('statistics');
-
-  const {
-    data: orders = [],
-    isLoading: isOrdersLoading,
-    isError: isOrdersError,
-  } = useGetOrdersQuery();
-  const orderTotals = useMemo(() => getOrderTotals(orders), [orders]);
-
-  const {
-    data: products = [],
-    isLoading: isProductsLoading,
-    isError: isProductsError,
-  } = useGetProductsQuery();
-  const productsByType = useMemo(() => countProductsByType(products), [products]);
-
-  const isLoading = isOrdersLoading || isProductsLoading;
-  const isError = isOrdersError || isProductsError;
+  const orderTotals = getOrderTotals(orders);
+  const productsByType = countProductsByType(products);
 
   return (
     <section className="statistics">
       <h1 className="statistics__title">{t('title')}</h1>
-
-      {isLoading && <Loader />}
-      {isError && (
-        <div className="alert alert-danger" role="alert">
-          {t('loadError')}
-        </div>
-      )}
 
       <div className="statistics__grid">
         {orderTotals.length > 0 && (

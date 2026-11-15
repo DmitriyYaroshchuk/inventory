@@ -9,6 +9,7 @@ import './AddOrderModal.scss';
 
 type AddOrderModalProps = {
   onClose: () => void;
+  onSuccess?: () => void;
 };
 
 type FormErrors = {
@@ -37,11 +38,13 @@ const validate = (title: string, description: string, t: ValidationTranslator): 
   return errors;
 };
 
-const AddOrderModal = ({ onClose }: AddOrderModalProps) => {
+const AddOrderModal = ({ onClose, onSuccess }: AddOrderModalProps) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+
   const [createOrder, { isLoading, isError }] = useCreateOrderMutation();
+
   const t = useTranslations('addOrder');
   const tCommon = useTranslations('common');
   const tValidation = useTranslations('validation');
@@ -64,6 +67,7 @@ const AddOrderModal = ({ onClose }: AddOrderModalProps) => {
 
     try {
       await createOrder({ title: title.trim(), description: description.trim() }).unwrap();
+      onSuccess?.();
       onClose();
     } catch (error) {
       console.error('Не удалось создать приход:', error);

@@ -1,9 +1,17 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { Provider } from 'react-redux';
 import { describe, expect, it, vi } from 'vitest';
+import { makeStore } from '@/store';
 import type { OrderSummary } from '@/types';
 import { renderWithIntl } from '@/test-utils';
 import OrderItem from './OrderItem';
+
+const push = vi.fn();
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({ push, refresh: vi.fn() }),
+  useSearchParams: () => new URLSearchParams(),
+}));
 
 const order: OrderSummary = {
   id: 1,
@@ -17,33 +25,20 @@ const order: OrderSummary = {
   ],
 };
 
-const renderItem = ({ isCompact = false, isActive = false } = {}) => {
-  const onOpen = vi.fn();
-  const onDelete = vi.fn();
-
+const renderItem = ({ isCompact = false, isActive = false } = {}) =>
   renderWithIntl(
-    <ul>
-      <OrderItem
-        order={order}
-        isCompact={isCompact}
-        isActive={isActive}
-        onOpen={onOpen}
-        onDelete={onDelete}
-      />
-    </ul>,
+    <Provider store={makeStore()}>
+      <ul>
+        <OrderItem order={order} isCompact={isCompact} isActive={isActive} />
+      </ul>
+    </Provider>,
   );
-
-  return {
-    onOpen,
-    onDelete,
-  };
-};
 
 describe('OrderItem', () => {
   it('shows order title, products count and dates', () => {
     renderItem();
 
-    expect(screen.getByRole('button', { name: 'Приход 1: мониторы' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Приход 1: мониторы' })).toBeInTheDocument();
     expect(screen.getByText('5')).toBeInTheDocument();
     expect(screen.getByText('Продуктов')).toBeInTheDocument();
     expect(screen.getByText('29 / 06')).toBeInTheDocument();
@@ -51,37 +46,41 @@ describe('OrderItem', () => {
     expect(screen.getByText('875 $')).toBeInTheDocument();
   });
 
-  it('calls onOpen when the titles is clicked', async () => {
-    const user = userEvent.setup();
-    const { onOpen } = renderItem();
+  it('links to the order details', () => {
+    renderItem();
 
-    await user.click(screen.getByRole('button', { name: 'Приход 1: мониторы' }));
-    expect(onOpen).toHaveBeenCalledTimes(1);
+    expect(screen.getByRole('link', { name: 'Приход 1: мониторы' })).toHaveAttribute(
+      'href',
+      '/orders?id=1',
+    );
+    expect(screen.getByRole('link', { name: 'Показать продукты прихода' })).toHaveAttribute(
+      'href',
+      '/orders?id=1',
+    );
   });
 
-  it('calls onOpen when the list icon is clicked', async () => {
-    const user = userEvent.setup();
-    const { onOpen } = renderItem();
+  it('links back to /orders when the order is already open', () => {
+    renderItem({ isActive: true });
 
-    await user.click(screen.getByRole('button', { name: 'Показать продукты прихода' }));
-
-    expect(onOpen).toHaveBeenCalledTimes(1);
+    expect(screen.getByRole('link', { name: 'Показать продукты прихода' })).toHaveAttribute(
+      'href',
+      '/orders',
+    );
   });
 
-  it('calls onDelete (not open) when the trash icon is clicked', async () => {
+  it('redirects to login when deleting without a token', async () => {
     const user = userEvent.setup();
-    const { onOpen, onDelete } = renderItem();
+    renderItem();
 
     await user.click(screen.getByRole('button', { name: 'Удалить приход' }));
 
-    expect(onDelete).toHaveBeenCalledTimes(1);
-    expect(onOpen).not.toHaveBeenCalled();
+    expect(push).toHaveBeenCalledWith('/login');
   });
 
   it('hides title and delete button in compact mode', () => {
     renderItem({ isCompact: true });
 
-    expect(screen.queryByRole('button', { name: 'Приход 1: мониторы' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: 'Приход 1: мониторы' })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Удалить приход' })).not.toBeInTheDocument();
     expect(screen.getByText('Продуктов')).toBeInTheDocument();
   });
