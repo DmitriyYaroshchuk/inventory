@@ -1,27 +1,27 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { loadProductTypeFromLS, saveProductTypeToLS } from './storage';
+import { loadTokenFromLS, saveTokenToLS } from './storage';
 
-const KEY = 'inventory:productType';
+const KEY = 'inventory:token';
 
 describe('storage', () => {
   beforeEach(() => {
     localStorage.clear();
   });
 
-  it('returns empty string when nothing is saved', () => {
-    expect(loadProductTypeFromLS()).toBe('');
+  it('returns null when no token is saved', () => {
+    expect(loadTokenFromLS()).toBeNull();
   });
 
-  it('saves the product type and loads it back', () => {
-    saveProductTypeToLS('Monitors');
+  it('saves the token and loads it back', () => {
+    saveTokenToLS('abc');
 
-    expect(localStorage.getItem(KEY)).toBe('Monitors');
-    expect(loadProductTypeFromLS()).toBe('Monitors');
+    expect(localStorage.getItem(KEY)).toBe('abc');
+    expect(loadTokenFromLS()).toBe('abc');
   });
 
-  it('removes the key when "all types" is selected', () => {
-    saveProductTypeToLS('Monitors');
-    saveProductTypeToLS('');
+  it('removes the token on logout', () => {
+    saveTokenToLS('abc');
+    saveTokenToLS(null);
 
     expect(localStorage.getItem(KEY)).toBeNull();
   });
