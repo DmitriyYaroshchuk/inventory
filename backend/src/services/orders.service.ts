@@ -24,9 +24,20 @@ const sumPrices = (products: ProductDto[]): Price[] => {
   return [...sums.values()].sort((a, b) => a.symbol.localeCompare(b.symbol));
 };
 
-const fetchOrders = async (orderId?: number): Promise<OrderDetails[]> => {
-  const where = orderId !== undefined ? 'WHERE id = ?' : '';
-  const params = orderId !== undefined ? [orderId] : [];
+const fetchOrders = async (orderId?: number, search?: string): Promise<OrderDetails[]> => {
+  const conditions: string[] = [];
+  const params: Array<string | number> = [];
+
+  if (orderId !== undefined) {
+    conditions.push('id = ?');
+    params.push(orderId);
+  }
+  if (search) {
+    conditions.push('title LIKE ?');
+    params.push(`%${search}%`);
+  }
+
+  const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
 
   const [orders] = await pool.query<OrderRow[]>(
     `SELECT id, title, description, date FROM orders ${where} ORDER BY date DESC, id DESC`,
@@ -50,8 +61,8 @@ const fetchOrders = async (orderId?: number): Promise<OrderDetails[]> => {
   });
 };
 
-export const listOrders = async (): Promise<OrderSummary[]> => {
-  const orders = await fetchOrders();
+export const listOrders = async (search?: string): Promise<OrderSummary[]> => {
+  const orders = await fetchOrders(undefined, search);
   return orders.map(({ products: _products, ...summary }) => summary);
 };
 

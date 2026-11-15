@@ -8,8 +8,15 @@ productsRouter.get('/types', async (_req, res) => {
   res.json(await getProductTypes());
 });
 
-// GET /api/products?type=Monitors — все продукты, опционально по типу
+// GET /api/products?type=Monitors&q=dell — продукты, опционально по типу и поиску
 productsRouter.get('/', async (req, res) => {
   const type = typeof req.query.type === 'string' ? req.query.type.trim() : '';
-  res.json(await getProducts({ type: type || undefined }));
+  const q = typeof req.query.q === 'string' ? req.query.q.trim() : '';
+
+  res.json(
+    await getProducts({
+      type: type || undefined,
+      search: q || undefined,
+    }),
+  );
 });
