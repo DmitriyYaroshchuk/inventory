@@ -1,9 +1,9 @@
 import Orders from '@/components/Orders/Orders';
+import { parseId } from '@/utils/searchParams';
 
 const OrdersPage = async ({ searchParams }: PageProps<'/orders'>) => {
   const { id } = await searchParams;
-  const parsedId = typeof id === 'string' ? Number(id) : NaN;
-  const selectedOrderId = Number.isInteger(parsedId) && parsedId > 0 ? parsedId : null;
+  const selectedOrderId = parseId(id);
 
   return <Orders selectedOrderId={selectedOrderId} />;
 };
