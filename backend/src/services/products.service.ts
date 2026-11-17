@@ -40,6 +40,7 @@ const parsePrices = (raw: RawPrice[] | string): Price[] => {
 export interface ProductsFilter {
   type?: string;
   orderId?: number;
+  search?: string;
 }
 
 export const getProducts = async (filter: ProductsFilter = {}): Promise<ProductDto[]> => {
@@ -53,6 +54,10 @@ export const getProducts = async (filter: ProductsFilter = {}): Promise<ProductD
   if (filter.orderId !== undefined) {
     conditions.push('p.order_id = ?');
     params.push(filter.orderId);
+  }
+  if (filter.search) {
+    conditions.push('p.title LIKE ?');
+    params.push(`%${filter.search}%`);
   }
 
   const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';

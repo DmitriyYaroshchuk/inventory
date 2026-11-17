@@ -13,16 +13,29 @@ export const apiGet = async <T>(path: string): Promise<T> => {
   return response.json();
 };
 
-export const fetchProducts = (type?: string) => {
-  return apiGet<Product[]>(type ? `/products?type=${encodeURIComponent(type)}` : '/products');
+const withQuery = (path: string, query: Record<string, string | undefined>) => {
+  const params = new URLSearchParams();
+
+  for (const [key, value] of Object.entries(query)) {
+    if (value) {
+      params.set(key, value);
+    }
+  }
+
+  const queryString = params.toString();
+  return queryString ? `${path}?${queryString}` : path;
+};
+
+export const fetchProducts = (type?: string, q?: string) => {
+  return apiGet<Product[]>(withQuery('/products', { type, q }));
 };
 
 export const fetchProductsTypes = () => {
   return apiGet<string[]>('/products/types');
 };
 
-export const fetchOrders = () => {
-  return apiGet<OrderSummary[]>('/orders');
+export const fetchOrders = (q?: string) => {
+  return apiGet<OrderSummary[]>(withQuery('/orders', { q }));
 };
 
 export const fetchOrder = (id: number) => {
