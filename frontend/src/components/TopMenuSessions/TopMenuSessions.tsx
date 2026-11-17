@@ -11,9 +11,12 @@ const TopMenuSessions = () => {
 
   useEffect(() => {
     const socket = io(API_URL);
-    socket.on('activeSessions', (count: number) => setSessions(count));
+
+    const handleActiveSessions = (count: number) => setSessions(count);
+    socket.on('activeSessions', handleActiveSessions);
 
     return () => {
+      socket.off('activeSessions', handleActiveSessions);
       socket.disconnect();
     };
   }, []);
