@@ -6,13 +6,14 @@ import './Products.scss';
 
 type ProductsProps = {
   productType: string;
+  search: string;
 };
 
-const Products = async ({ productType }: ProductsProps) => {
+const Products = async ({ productType, search }: ProductsProps) => {
   const t = await getTranslations('products');
 
   const [products, types] = await Promise.all([
-    fetchProducts(productType || undefined),
+    fetchProducts(productType || undefined, search || undefined),
     fetchProductsTypes(),
   ]);
 

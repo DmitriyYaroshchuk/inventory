@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Suspense } from 'react';
 import LocaleSwitcher from '@/components/LocaleSwitcher/LocaleSwitcher';
 import TopMenuClock from '@/components/TopMenuClock/TopMenuClock';
 import TopMenuSearch from '@/components/TopMenuSearch/TopMenuSearch';
@@ -19,7 +20,9 @@ const TopMenu = () => (
       INVENTORY
     </Link>
 
-    <TopMenuSearch />
+    <Suspense fallback={<input className="top-menu__search" type="search" disabled />}>
+      <TopMenuSearch />
+    </Suspense>
 
     <div className="top-menu__info">
       <LocaleSwitcher />

@@ -7,13 +7,14 @@ import './Orders.scss';
 
 type OrdersProps = {
   selectedOrderId: number | null;
+  search: string;
 };
 
-const Orders = async ({ selectedOrderId }: OrdersProps) => {
+const Orders = async ({ selectedOrderId, search }: OrdersProps) => {
   const t = await getTranslations('orders');
 
   const [orders, selectedOrder] = await Promise.all([
-    fetchOrders(),
+    fetchOrders(search || undefined),
     selectedOrderId ? fetchOrder(selectedOrderId).catch(() => null) : null,
   ]);
 
