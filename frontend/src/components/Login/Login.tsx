@@ -1,15 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 import type { SubmitEvent } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { useLoginMutation } from '@/services/api';
-import { setToken } from '@/store/authSlice';
-import { useAppDispatch } from '@/store/hooks';
-import { saveTokenToLS } from '@/utils/storage';
 import { EMAIL_PATTERN } from '@/utils/validation';
+import { loginAction } from '@/actions/auth';
 import AuthCard from '@/components/AuthCard/AuthCard';
 
 type ValidationTranslator = ReturnType<typeof useTranslations<'validation'>>;
@@ -31,31 +27,26 @@ const validate = (email: string, password: string, t: ValidationTranslator): For
 };
 
 const Login = () => {
-  const router = useRouter();
-  const dispatch = useAppDispatch();
+  const [isPending, startTransition] = useTransition();
+  const [isError, setIsError] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [login, { isLoading, isError }] = useLoginMutation();
   const t = useTranslations('auth');
   const tValidation = useTranslations('validation');
 
   const errors = validate(email, password, tValidation);
   const hasErrors = Object.keys(errors).length > 0;
 
-  const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsSubmitted(true);
     if (hasErrors) return;
 
-    try {
-      const { token } = await login({ email: email.trim(), password }).unwrap();
-      dispatch(setToken(token));
-      saveTokenToLS(token);
-      router.push('/orders');
-    } catch (error) {
-      console.error('Не удалось войти:', error);
-    }
+    startTransition(async () => {
+      const error = await loginAction(email.trim(), password);
+      setIsError(Boolean(error));
+    });
   };
 
   return (
@@ -103,8 +94,8 @@ const Login = () => {
 
         {isError && <div className="alert alert-danger">{t('invalidCredentials')}</div>}
 
-        <button type="submit" className="btn btn-success w-100" disabled={isLoading}>
-          {isLoading ? t('loggingIn') : t('login')}
+        <button type="submit" className="btn btn-success w-100" disabled={isPending}>
+          {isPending ? t('loggingIn') : t('login')}
         </button>
       </form>
     </AuthCard>
