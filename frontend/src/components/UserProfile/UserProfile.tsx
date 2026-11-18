@@ -1,40 +1,13 @@
-'use client';
-
-import { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
-import { skipToken } from '@reduxjs/toolkit/query';
-import { useGetMeQuery } from '@/services/api';
-import { setToken } from '@/store/authSlice';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { loadTokenFromLS, saveTokenToLS } from '@/utils/storage';
+import { getTranslations } from 'next-intl/server';
+import { getCurrentUser } from '@/lib/auth';
+import { logoutAction } from '@/actions/auth';
 import './UserProfile.scss';
 
-const UserProfile = () => {
-  const dispatch = useAppDispatch();
-  const token = useAppSelector((state) => state.auth.token);
-  const t = useTranslations('profile');
-  const { currentData: user, error } = useGetMeQuery(token ?? skipToken);
-
-  useEffect(() => {
-    const savedToken = loadTokenFromLS();
-    if (savedToken) {
-      dispatch(setToken(savedToken));
-    }
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (error && 'status' in error && error.status === 401) {
-      dispatch(setToken(null));
-      saveTokenToLS(null);
-    }
-  }, [error, dispatch]);
-
-  const handleLogout = () => {
-    dispatch(setToken(null));
-    saveTokenToLS(null);
-  };
+const UserProfile = async () => {
+  const t = await getTranslations('profile');
+  const user = await getCurrentUser();
 
   return (
     <div className="user-profile">
@@ -61,9 +34,11 @@ const UserProfile = () => {
         {user ? (
           <>
             <span className="user-profile__name">{user.name}</span>
-            <button className="user-profile__action" type="button" onClick={handleLogout}>
-              {t('logout')}
-            </button>
+            <form action={logoutAction}>
+              <button className="user-profile__action" type="submit">
+                {t('logout')}
+              </button>
+            </form>
           </>
         ) : (
           <Link className="user-profile__action" href="/login">

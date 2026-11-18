@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getTranslations } from 'next-intl/server';
-import Providers from '@/components/Providers/Providers';
 import NavigationMenu from '@/components/NavigationMenu/NavigationMenu';
 import UserProfile from '@/components/UserProfile/UserProfile';
 import TopMenu from '@/components/TopMenu/TopMenu';
@@ -35,16 +34,14 @@ const RootLayout = async ({ children }: LayoutProps<'/'>) => {
     >
       <body suppressHydrationWarning>
         <NextIntlClientProvider>
-          <Providers>
-            <TopMenu />
-            <div className="app__body">
-              <aside className="app__sidebar">
-                <UserProfile />
-                <NavigationMenu />
-              </aside>
-              <main className="app__content">{children}</main>
-            </div>
-          </Providers>
+          <TopMenu />
+          <div className="app__body">
+            <aside className="app__sidebar">
+              <UserProfile />
+              <NavigationMenu />
+            </aside>
+            <main className="app__content">{children}</main>
+          </div>
         </NextIntlClientProvider>
       </body>
     </html>

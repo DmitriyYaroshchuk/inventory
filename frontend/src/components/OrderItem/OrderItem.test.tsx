@@ -1,8 +1,6 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Provider } from 'react-redux';
 import { describe, expect, it, vi } from 'vitest';
-import { makeStore } from '@/store';
 import type { OrderSummary } from '@/types';
 import { renderWithIntl } from '@/test-utils';
 import OrderItem from './OrderItem';
@@ -12,6 +10,7 @@ vi.mock('next/navigation', () => ({
   useRouter: () => ({ push, refresh: vi.fn() }),
   useSearchParams: () => new URLSearchParams(),
 }));
+vi.mock('@/actions/orders', () => ({ deleteOrderAction: vi.fn() }));
 
 const order: OrderSummary = {
   id: 1,
@@ -27,11 +26,9 @@ const order: OrderSummary = {
 
 const renderItem = ({ isCompact = false, isActive = false } = {}) =>
   renderWithIntl(
-    <Provider store={makeStore()}>
-      <ul>
-        <OrderItem order={order} isCompact={isCompact} isActive={isActive} />
-      </ul>
-    </Provider>,
+    <ul>
+      <OrderItem order={order} isCompact={isCompact} isActive={isActive} isAuthenticated={false} />
+    </ul>,
   );
 
 describe('OrderItem', () => {

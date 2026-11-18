@@ -1,5 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import { fetchOrder, fetchOrders } from '@/services/server-api';
+import { getAuthToken } from '@/lib/auth';
 import OrderItem from '@/components/OrderItem/OrderItem';
 import OrderDetails from '@/components/OrderDetails/OrderDetails';
 import AddOrderModalButton from '@/components/AddOrderModalButton/AddOrderModalButton';
@@ -19,11 +20,12 @@ const Orders = async ({ selectedOrderId, search }: OrdersProps) => {
   ]);
 
   const isOpen = selectedOrder !== null;
+  const isAuthenticated = (await getAuthToken()) !== null;
 
   return (
     <section className="orders">
       <div className="orders__header">
-        <AddOrderModalButton />
+        <AddOrderModalButton isAuthenticated={isAuthenticated} />
         <h1 className="orders__title">{t('title', { count: orders.length })}</h1>
       </div>
 
@@ -38,6 +40,7 @@ const Orders = async ({ selectedOrderId, search }: OrdersProps) => {
                 order={order}
                 isCompact={isOpen}
                 isActive={order.id === selectedOrderId}
+                isAuthenticated={isAuthenticated}
               />
             ))}
           </ul>

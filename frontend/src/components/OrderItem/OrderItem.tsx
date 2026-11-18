@@ -9,9 +9,10 @@ type OrderItemProps = {
   order: OrderSummary;
   isCompact: boolean;
   isActive: boolean;
+  isAuthenticated: boolean;
 };
 
-const OrderItem = ({ order, isCompact, isActive }: OrderItemProps) => {
+const OrderItem = ({ order, isCompact, isActive, isAuthenticated }: OrderItemProps) => {
   const locale = useLocale();
   const t = useTranslations('orders');
 
@@ -68,7 +69,7 @@ const OrderItem = ({ order, isCompact, isActive }: OrderItemProps) => {
             </span>
           </div>
 
-          <DeleteOrderButton order={order} />
+          <DeleteOrderButton order={order} isAuthenticated={isAuthenticated} />
         </>
       )}
 
