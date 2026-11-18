@@ -10,14 +10,14 @@ SPA для учёта приходов (Orders) и продуктов (Products)
 
 ## Стек
 
-| Часть          | Технологии                                                                                                                                         |
-| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Frontend       | Next.js 16 (App Router), React 19, TypeScript, Redux Toolkit + RTK Query, SCSS (BEM) + Bootstrap 5, next-intl, Recharts, Leaflet, socket.io-client |
-| Backend        | Node.js 22, Express 5, TypeScript, Socket.io, mysql2, JWT (jsonwebtoken + bcryptjs)                                                                |
-| База данных    | MySQL 8.4                                                                                                                                          |
-| Тесты          | Vitest + React Testing Library                                                                                                                     |
-| Инфраструктура | Docker, Docker Compose                                                                                                                             |
-| Деплой         | Vercel (frontend), Render (backend), Aiven (MySQL)                                                                                                 |
+| Часть          | Технологии                                                                                                                                                  |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Frontend       | Next.js 16 (App Router, Server Components + Server Actions), React 19, TypeScript, SCSS (BEM) + Bootstrap 5, next-intl, Recharts, Leaflet, socket.io-client |
+| Backend        | Node.js 22, Express 5, TypeScript, Socket.io, mysql2, JWT (jsonwebtoken + bcryptjs)                                                                         |
+| База данных    | MySQL 8.4                                                                                                                                                   |
+| Тесты          | Vitest + React Testing Library                                                                                                                              |
+| Инфраструктура | Docker, Docker Compose                                                                                                                                      |
+| Деплой         | Vercel (frontend), Render (backend), Aiven (MySQL)                                                                                                          |
 
 ## Возможности
 
@@ -25,7 +25,7 @@ SPA для учёта приходов (Orders) и продуктов (Products)
 - **Продукты:** список с фильтром по типу.
 - **Статистика:** графики по приходам и по типам продуктов.
 - **Склады:** карта (Leaflet, OpenStreetMap).
-- **Авторизация:** регистрация и вход по JWT; создавать и удалять приходы может только вошедший пользователь.
+- **Авторизация:** регистрация и вход по JWT; токен хранится в httpOnly cookie, поэтому сервер сразу знает пользователя и нет мигания «Войти» при обновлении; создавать и удалять приходы может только вошедший пользователь.
 - **Онлайн-счётчик:** число открытых вкладок в шапке, обновляется в реальном времени через Socket.io.
 - **Мультиязычность:** русский и английский (next-intl), выбор сохраняется в cookie.
 - **Адаптивная вёрстка:** ноутбук, планшет, телефон.
