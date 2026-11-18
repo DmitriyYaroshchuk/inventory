@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { useGetOrderQuery } from '@/services/api';
-import type { OrderSummary } from '@/types';
+import { API_URL } from '@/services/api';
+import type { OrderDetails, OrderSummary } from '@/types';
 import './DeleteOrderModal.scss';
 
 type DeleteOrderModalProps = {
@@ -21,9 +21,20 @@ const DeleteOrderModal = ({
   onCancel,
   onConfirm,
 }: DeleteOrderModalProps) => {
-  const { data: details } = useGetOrderQuery(order.id);
+  const [details, setDetails] = useState<OrderDetails | null>(null);
   const t = useTranslations('deleteOrder');
   const tCommon = useTranslations('common');
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    fetch(`${API_URL}/api/orders/${order.id}`, { signal: controller.signal })
+      .then((response) => (response.ok ? response.json() : null))
+      .then(setDetails)
+      .catch(() => {});
+
+    return () => controller.abort();
+  }, [order.id]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {

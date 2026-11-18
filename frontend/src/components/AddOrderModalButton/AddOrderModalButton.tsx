@@ -4,20 +4,22 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { useAppSelector } from '@/store/hooks';
 
 const AddOrderModal = dynamic(() => import('@/components/AddOrderModal/AddOrderModal'), {
   ssr: false,
 });
 
-const AddOrderModalButton = () => {
+type AddOrderModalButtonProps = {
+  isAuthenticated: boolean;
+};
+
+const AddOrderModalButton = ({ isAuthenticated }: AddOrderModalButtonProps) => {
   const router = useRouter();
   const t = useTranslations('orders');
-  const token = useAppSelector((state) => state.auth.token);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = () => {
-    if (!token) {
+    if (!isAuthenticated) {
       router.push('/login');
       return;
     }
@@ -30,9 +32,7 @@ const AddOrderModalButton = () => {
         +
       </button>
 
-      {isOpen && (
-        <AddOrderModal onClose={() => setIsOpen(false)} onSuccess={() => router.refresh()} />
-      )}
+      {isOpen && <AddOrderModal onClose={() => setIsOpen(false)} />}
     </>
   );
 };

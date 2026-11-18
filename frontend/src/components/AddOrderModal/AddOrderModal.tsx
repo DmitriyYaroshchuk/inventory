@@ -1,15 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 import type { SubmitEvent } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslations } from 'next-intl';
-import { useCreateOrderMutation } from '@/services/api';
+import { createOrderAction } from '@/actions/orders';
 import './AddOrderModal.scss';
 
 type AddOrderModalProps = {
   onClose: () => void;
-  onSuccess?: () => void;
 };
 
 type FormErrors = {
@@ -38,12 +37,13 @@ const validate = (title: string, description: string, t: ValidationTranslator): 
   return errors;
 };
 
-const AddOrderModal = ({ onClose, onSuccess }: AddOrderModalProps) => {
+const AddOrderModal = ({ onClose }: AddOrderModalProps) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const [createOrder, { isLoading, isError }] = useCreateOrderMutation();
+  const [isPending, startTransition] = useTransition();
+  const [isError, setIsError] = useState(false);
 
   const t = useTranslations('addOrder');
   const tCommon = useTranslations('common');
@@ -60,18 +60,19 @@ const AddOrderModal = ({ onClose, onSuccess }: AddOrderModalProps) => {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [onClose]);
 
-  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitted(true);
     if (hasErrors) return;
 
-    try {
-      await createOrder({ title: title.trim(), description: description.trim() }).unwrap();
-      onSuccess?.();
-      onClose();
-    } catch (error) {
-      console.error('Не удалось создать приход:', error);
-    }
+    startTransition(async () => {
+      const isSuccess = await createOrderAction(title.trim(), description.trim());
+      if (isSuccess) {
+        onClose();
+      } else {
+        setIsError(true);
+      }
+    });
   };
 
   return createPortal(
@@ -127,8 +128,8 @@ const AddOrderModal = ({ onClose, onSuccess }: AddOrderModalProps) => {
             <button type="button" className="btn btn-outline-secondary" onClick={onClose}>
               {tCommon('cancel')}
             </button>
-            <button type="submit" className="btn btn-success" disabled={isLoading}>
-              {isLoading ? t('saving') : t('submit')}
+            <button type="submit" className="btn btn-success" disabled={isPending}>
+              {isPending ? t('saving') : t('submit')}
             </button>
           </div>
         </form>

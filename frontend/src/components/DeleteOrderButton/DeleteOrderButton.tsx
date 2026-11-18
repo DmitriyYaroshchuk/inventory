@@ -1,11 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { useDeleteOrderMutation } from '@/services/api';
-import { useAppSelector } from '@/store/hooks';
+import { deleteOrderAction } from '@/actions/orders';
 import type { OrderSummary } from '@/types';
 
 const DeleteOrderModal = dynamic(() => import('@/components/DeleteOrderModal/DeleteOrderModal'), {
@@ -14,19 +13,21 @@ const DeleteOrderModal = dynamic(() => import('@/components/DeleteOrderModal/Del
 
 type DeleteOrderButtonProps = {
   order: OrderSummary;
+  isAuthenticated: boolean;
 };
 
-const DeleteOrderButton = ({ order }: DeleteOrderButtonProps) => {
+const DeleteOrderButton = ({ order, isAuthenticated }: DeleteOrderButtonProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const t = useTranslations('orders');
-  const token = useAppSelector((state) => state.auth.token);
 
   const [isOpen, setIsOpen] = useState(false);
-  const [deleteOrder, { isLoading, isError, reset }] = useDeleteOrderMutation();
+
+  const [isPending, startTransition] = useTransition();
+  const [isError, setIsError] = useState(false);
 
   const handleClick = () => {
-    if (!token) {
+    if (!isAuthenticated) {
       router.push('/login');
       return;
     }
@@ -35,22 +36,22 @@ const DeleteOrderButton = ({ order }: DeleteOrderButtonProps) => {
 
   const handleCancel = () => {
     setIsOpen(false);
-    reset();
+    setIsError(false);
   };
 
-  const handleConfirm = async () => {
-    try {
-      await deleteOrder(order.id).unwrap();
-      setIsOpen(false);
+  const handleConfirm = () => {
+    startTransition(async () => {
+      const isSuccess = await deleteOrderAction(order.id);
+      if (!isSuccess) {
+        setIsError(true);
+        return;
+      }
 
+      setIsOpen(false);
       if (searchParams.get('id') === String(order.id)) {
         router.push('/orders');
-      } else {
-        router.refresh();
       }
-    } catch (error) {
-      console.error('Failed to delete order:', error);
-    }
+    });
   };
 
   return (
@@ -69,7 +70,7 @@ const DeleteOrderButton = ({ order }: DeleteOrderButtonProps) => {
       {isOpen && (
         <DeleteOrderModal
           order={order}
-          isDeleting={isLoading}
+          isDeleting={isPending}
           isError={isError}
           onCancel={handleCancel}
           onConfirm={handleConfirm}
