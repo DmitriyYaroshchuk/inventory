@@ -3,15 +3,16 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import type { OrderDetails as OrderDetailsType } from '@/types';
 import DeleteProductButton from '@/components/DeleteProductButton/DeleteProductButton';
+import AddProductButton from '@/components/AddProductButton/AddProductButton';
 import './OrderDetails.scss';
 
 type OrderDetailsProps = {
   order: OrderDetailsType;
   isAuthenticated: boolean;
+  types: string[];
 };
 
-const OrderDetails = ({ order, isAuthenticated }: OrderDetailsProps) => {
-  const t = useTranslations('orderDetails');
+const OrderDetails = ({ order, types, isAuthenticated }: OrderDetailsProps) => {
   const tCommon = useTranslations('common');
 
   return (
@@ -27,10 +28,7 @@ const OrderDetails = ({ order, isAuthenticated }: OrderDetailsProps) => {
 
       <h2 className="order-details__title">{order.title}</h2>
 
-      <button className="order-details__add" type="button" disabled title={tCommon('comingSoon')}>
-        <span className="order-details__add-icon">+</span>
-        {t('addProduct')}
-      </button>
+      <AddProductButton orderId={order.id} types={types} isAuthenticated={isAuthenticated} />
 
       <ul className="order-details__list">
         {order.products.map((product) => (
