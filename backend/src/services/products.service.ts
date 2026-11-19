@@ -1,4 +1,4 @@
-import type { RowDataPacket } from 'mysql2';
+import type { ResultSetHeader, RowDataPacket } from 'mysql2';
 import { pool } from '../db';
 import type { Price, ProductDto } from '../types';
 
@@ -92,4 +92,49 @@ export const getProducts = async (filter: ProductsFilter = {}): Promise<ProductD
 export const getProductTypes = async (): Promise<string[]> => {
   const [rows] = await pool.query<TypeRow[]>('SELECT DISTINCT type FROM products ORDER BY type');
   return rows.map((row) => row.type);
+};
+
+export const deleteProduct = async (id: number): Promise<boolean> => {
+  const [result] = await pool.query<ResultSetHeader>('DELETE FROM products WHERE id = ?', [id]);
+  return result.affectedRows > 0;
+};
+
+export interface NewProduct {
+  orderId: number;
+  title: string;
+  type: string;
+  serialNumber: number;
+  isNew: boolean;
+  specification: string | null;
+  guaranteeStart: string;
+  guaranteeEnd: string;
+  priceUsd: number;
+  priceUah: number;
+}
+
+export const createProduct = async (product: NewProduct): Promise<number> => {
+  const price = JSON.stringify([
+    { value: product.priceUsd, symbol: 'USD', isDefault: 0 },
+    { value: product.priceUah, symbol: 'UAH', isDefault: 1 },
+  ]);
+
+  const [result] = await pool.query<ResultSetHeader>(
+    `INSERT INTO products
+       (order_id, serial_number, is_new, photo, title, type, specification,
+        guarantee_start, guarantee_end, price)
+     VALUES (?, ?, ?, 'monitor.png', ?, ?, ?, ?, ?, ?)`,
+    [
+      product.orderId,
+      product.serialNumber,
+      product.isNew ? 1 : 0,
+      product.title,
+      product.type,
+      product.specification,
+      product.guaranteeStart,
+      product.guaranteeEnd,
+      price,
+    ],
+  );
+
+  return result.insertId;
 };
