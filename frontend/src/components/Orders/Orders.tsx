@@ -1,5 +1,5 @@
 import { getTranslations } from 'next-intl/server';
-import { fetchOrder, fetchOrders } from '@/services/server-api';
+import { fetchOrder, fetchOrders, fetchProductsTypes } from '@/services/server-api';
 import { getAuthToken } from '@/lib/auth';
 import OrderItem from '@/components/OrderItem/OrderItem';
 import OrderDetails from '@/components/OrderDetails/OrderDetails';
@@ -14,9 +14,10 @@ type OrdersProps = {
 const Orders = async ({ selectedOrderId, search }: OrdersProps) => {
   const t = await getTranslations('orders');
 
-  const [orders, selectedOrder] = await Promise.all([
+  const [orders, selectedOrder, types] = await Promise.all([
     fetchOrders(search || undefined),
     selectedOrderId ? fetchOrder(selectedOrderId).catch(() => null) : null,
+    fetchProductsTypes(),
   ]);
 
   const isOpen = selectedOrder !== null;
@@ -45,7 +46,9 @@ const Orders = async ({ selectedOrderId, search }: OrdersProps) => {
             ))}
           </ul>
 
-          {selectedOrder && <OrderDetails order={selectedOrder} />}
+          {selectedOrder && (
+            <OrderDetails order={selectedOrder} types={types} isAuthenticated={isAuthenticated} />
+          )}
         </div>
       )}
     </section>

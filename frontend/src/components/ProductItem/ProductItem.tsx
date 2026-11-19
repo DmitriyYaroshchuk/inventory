@@ -1,19 +1,20 @@
 import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 import { useProductTypeLabel } from '@/hooks/useProductTypeLabel';
+import DeleteProductButton from '@/components/DeleteProductButton/DeleteProductButton';
 import type { Product } from '@/types';
 import { formatLongDate, formatMoney, formatShortDate, getPrice } from '@/utils/format';
 import './ProductItem.scss';
 
 type ProductItemProps = {
   product: Product;
+  isAuthenticated: boolean;
 };
 
-const ProductItem = ({ product }: ProductItemProps) => {
+const ProductItem = ({ product, isAuthenticated }: ProductItemProps) => {
   const { title, serialNumber, isNew, photo, type, guarantee, price, order, date } = product;
   const locale = useLocale();
   const t = useTranslations('products');
-  const tCommon = useTranslations('common');
   const typeLabel = useProductTypeLabel();
 
   return (
@@ -73,17 +74,11 @@ const ProductItem = ({ product }: ProductItemProps) => {
         <span>{formatLongDate(date, locale)}</span>
       </div>
 
-      <button
-        type="button"
+      <DeleteProductButton
+        product={product}
+        isAuthenticated={isAuthenticated}
         className="product-item__delete"
-        aria-label={tCommon('deleteProduct')}
-        title={tCommon('comingSoon')}
-        disabled
-      >
-        <svg width="12" height="14" viewBox="0 0 12 14" fill="currentColor" aria-hidden="true">
-          <path d="M4 0h4l.5 1H12v2H0V1h3.5L4 0ZM1 4h10l-.8 10H1.8L1 4Z" />
-        </svg>
-      </button>
+      />
     </li>
   );
 };

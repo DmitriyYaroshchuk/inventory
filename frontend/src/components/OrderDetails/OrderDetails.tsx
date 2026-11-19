@@ -2,14 +2,17 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import type { OrderDetails as OrderDetailsType } from '@/types';
+import DeleteProductButton from '@/components/DeleteProductButton/DeleteProductButton';
+import AddProductButton from '@/components/AddProductButton/AddProductButton';
 import './OrderDetails.scss';
 
 type OrderDetailsProps = {
   order: OrderDetailsType;
+  isAuthenticated: boolean;
+  types: string[];
 };
 
-const OrderDetails = ({ order }: OrderDetailsProps) => {
-  const t = useTranslations('orderDetails');
+const OrderDetails = ({ order, types, isAuthenticated }: OrderDetailsProps) => {
   const tCommon = useTranslations('common');
 
   return (
@@ -25,10 +28,7 @@ const OrderDetails = ({ order }: OrderDetailsProps) => {
 
       <h2 className="order-details__title">{order.title}</h2>
 
-      <button className="order-details__add" type="button" disabled title={tCommon('comingSoon')}>
-        <span className="order-details__add-icon">+</span>
-        {t('addProduct')}
-      </button>
+      <AddProductButton orderId={order.id} types={types} isAuthenticated={isAuthenticated} />
 
       <ul className="order-details__list">
         {order.products.map((product) => (
@@ -56,17 +56,11 @@ const OrderDetails = ({ order }: OrderDetailsProps) => {
               {product.isNew ? tCommon('new') : tCommon('used')}
             </span>
 
-            <button
+            <DeleteProductButton
+              product={product}
+              isAuthenticated={isAuthenticated}
               className="order-details__delete"
-              type="button"
-              aria-label={tCommon('deleteProduct')}
-              title={tCommon('comingSoon')}
-              disabled
-            >
-              <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
-                <path d="M6 2h4l1 1h3v2H2V3h3l1-1zM3 6h10l-1 8H4L3 6z" fill="currentColor" />
-              </svg>
-            </button>
+            />
           </li>
         ))}
       </ul>

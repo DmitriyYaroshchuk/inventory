@@ -55,3 +55,16 @@ export type AuthResponse = {
   token: string;
   user: User;
 };
+
+export type NewProduct = {
+  orderId: number;
+  title: string;
+  type: string;
+  serialNumber: number;
+  isNew: boolean;
+  specification: string;
+  guaranteeStart: string;
+  guaranteeEnd: string;
+  priceUsd: number;
+  priceUah: number;
+};

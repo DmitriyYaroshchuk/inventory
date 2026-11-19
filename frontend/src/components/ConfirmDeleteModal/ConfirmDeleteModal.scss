@@ -1,7 +1,7 @@
 @use '@/styles/variables' as *;
 @use '@/styles/breakpoints' as *;
 
-.delete-order-modal {
+.confirm-delete-modal {
   position: fixed;
   top: $header-height;
   right: 0;
