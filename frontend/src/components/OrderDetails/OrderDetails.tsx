@@ -2,13 +2,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import type { OrderDetails as OrderDetailsType } from '@/types';
+import DeleteProductButton from '@/components/DeleteProductButton/DeleteProductButton';
 import './OrderDetails.scss';
 
 type OrderDetailsProps = {
   order: OrderDetailsType;
+  isAuthenticated: boolean;
 };
 
-const OrderDetails = ({ order }: OrderDetailsProps) => {
+const OrderDetails = ({ order, isAuthenticated }: OrderDetailsProps) => {
   const t = useTranslations('orderDetails');
   const tCommon = useTranslations('common');
 
@@ -56,17 +58,11 @@ const OrderDetails = ({ order }: OrderDetailsProps) => {
               {product.isNew ? tCommon('new') : tCommon('used')}
             </span>
 
-            <button
+            <DeleteProductButton
+              product={product}
+              isAuthenticated={isAuthenticated}
               className="order-details__delete"
-              type="button"
-              aria-label={tCommon('deleteProduct')}
-              title={tCommon('comingSoon')}
-              disabled
-            >
-              <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
-                <path d="M6 2h4l1 1h3v2H2V3h3l1-1zM3 6h10l-1 8H4L3 6z" fill="currentColor" />
-              </svg>
-            </button>
+            />
           </li>
         ))}
       </ul>

@@ -45,7 +45,9 @@ const Orders = async ({ selectedOrderId, search }: OrdersProps) => {
             ))}
           </ul>
 
-          {selectedOrder && <OrderDetails order={selectedOrder} />}
+          {selectedOrder && (
+            <OrderDetails order={selectedOrder} isAuthenticated={isAuthenticated} />
+          )}
         </div>
       )}
     </section>

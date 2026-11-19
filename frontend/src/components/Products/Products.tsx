@@ -1,5 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import { fetchProducts, fetchProductsTypes } from '@/services/server-api';
+import { getAuthToken } from '@/lib/auth';
 import ProductItem from '@/components/ProductItem/ProductItem';
 import ProductTypeFilter from '@/components/ProductTypeFilter/ProductTypeFilter';
 import './Products.scss';
@@ -16,6 +17,7 @@ const Products = async ({ productType, search }: ProductsProps) => {
     fetchProducts(productType || undefined, search || undefined),
     fetchProductsTypes(),
   ]);
+  const isAuthenticated = (await getAuthToken()) !== null;
 
   return (
     <section className="products">
@@ -28,7 +30,7 @@ const Products = async ({ productType, search }: ProductsProps) => {
 
       <ul className="products__list">
         {products.map((product) => (
-          <ProductItem key={product.id} product={product} />
+          <ProductItem key={product.id} product={product} isAuthenticated={isAuthenticated} />
         ))}
       </ul>
     </section>
