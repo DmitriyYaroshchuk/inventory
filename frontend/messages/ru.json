@@ -114,7 +114,14 @@
     "passwordChanged": "Пароль изменён",
     "wrongPassword": "Неверный текущий пароль",
     "passwordError": "Не удалось сменить пароль",
-    "language": "Язык интерфейса"
+    "language": "Язык интерфейса",
+    "theme": "Тема оформления"
+  },
+  "theme": {
+    "label": "Тема",
+    "light": "Светлая",
+    "dark": "Тёмная",
+    "auto": "Как в системе"
   },
   "products": {
     "title": "Продукты / {count}",

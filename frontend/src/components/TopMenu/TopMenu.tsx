@@ -4,9 +4,15 @@ import LocaleSwitcher from '@/components/LocaleSwitcher/LocaleSwitcher';
 import TopMenuClock from '@/components/TopMenuClock/TopMenuClock';
 import TopMenuSearch from '@/components/TopMenuSearch/TopMenuSearch';
 import TopMenuSessions from '@/components/TopMenuSessions/TopMenuSessions';
+import ThemeSwitcher from '@/components/ThemeSwitcher/ThemeSwitcher';
+import type { Theme } from '@/lib/theme';
 import './TopMenu.scss';
 
-const TopMenu = () => (
+type TopMenuProps = {
+  theme: Theme;
+};
+
+const TopMenu = ({ theme }: TopMenuProps) => (
   <header className="top-menu">
     <Link className="top-menu__brand" href="/">
       <svg className="top-menu__logo" viewBox="0 0 24 28" aria-hidden="true">
@@ -25,6 +31,7 @@ const TopMenu = () => (
     </Suspense>
 
     <div className="top-menu__info">
+      <ThemeSwitcher value={theme} />
       <LocaleSwitcher />
       <TopMenuSessions />
       <TopMenuClock />

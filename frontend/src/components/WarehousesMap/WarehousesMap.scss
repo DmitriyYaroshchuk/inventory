@@ -1,5 +1,6 @@
 @use '@/styles/variables' as *;
 @use '@/styles/breakpoints' as *;
+@use '@/styles/mixins' as *;
 
 .warehouses-map {
   height: 520px;
@@ -8,6 +9,20 @@
 
   @include mobile {
     height: 360px;
+  }
+
+  @include dark-theme {
+    .leaflet-tile-pane {
+      filter: invert(1) hue-rotate(180deg) brightness(0.95) contrast(0.9);
+    }
+
+    .leaflet-bar a,
+    .leaflet-control-attribution,
+    .leaflet-popup-content-wrapper,
+    .leaflet-popup-tip {
+      background: $surface;
+      color: $text-dark;
+    }
   }
 
   &__marker {

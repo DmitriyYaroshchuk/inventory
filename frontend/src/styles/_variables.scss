@@ -1,7 +1,14 @@
 $green: #7ab648;
-$background: #eef1f4;
-$text-dark: #2b3440;
-$text-muted: #8a95a3;
+$danger: #e04b4b;
+
+$background: var(--color-background);
+$surface: var(--color-surface);
+$text-dark: var(--color-text);
+$text-muted: var(--color-text-muted);
+$text-secondary: var(--color-text-secondary);
+$border: var(--color-border);
+$line: var(--color-line);
+
 $font-fallback:
   system-ui,
   -apple-system,
@@ -9,7 +16,6 @@ $font-fallback:
   Roboto,
   Arial,
   sans-serif;
-$border: #d9e0e6;
 $header-height: 72px;
 $sidebar-width: 200px;
 $page-gutter: $sidebar-width;
