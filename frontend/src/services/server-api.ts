@@ -1,5 +1,5 @@
 import { API_URL } from '@/services/api';
-import type { OrderDetails, OrderSummary, Product } from '@/types';
+import type { OrderDetails, OrderSummary, Product, ProductGroup } from '@/types';
 
 const buildHeaders = (token?: string | null, hasBody = false) => {
   const headers = new Headers();
@@ -55,6 +55,10 @@ export const fetchProducts = (type?: string, q?: string) => {
 
 export const fetchProductsTypes = () => {
   return apiGet<string[]>('/products/types');
+};
+
+export const fetchProductGroups = () => {
+  return apiGet<ProductGroup[]>('/products/groups');
 };
 
 export const fetchOrders = (q?: string) => {

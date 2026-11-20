@@ -4,6 +4,7 @@ import {
   deleteProduct,
   getProducts,
   getProductTypes,
+  getProductGroups,
   type NewProduct,
 } from '../services/products.service';
 import { getOrder } from '../services/orders.service';
@@ -61,6 +62,11 @@ const parseNewProduct = (body: unknown): NewProduct | null => {
 // GET /api/products/types — список типов для селекта-фильтра
 productsRouter.get('/types', async (_req, res) => {
   res.json(await getProductTypes());
+});
+
+// GET /api/products/groups — продукты, сгруппированные по типу
+productsRouter.get('/groups', async (_req, res) => {
+  res.json(await getProductGroups());
 });
 
 // GET /api/products?type=Monitors&q=dell — продукты, опционально по типу и поиску

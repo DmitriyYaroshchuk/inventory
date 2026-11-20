@@ -30,6 +30,13 @@ export type Product = {
   date: string;
 };
 
+export type ProductGroup = {
+  type: string;
+  productsCount: number;
+  newCount: number;
+  total: Price[];
+};
+
 export type OrderSummary = {
   id: number;
   title: string;
