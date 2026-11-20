@@ -22,7 +22,7 @@ export const apiGet = async <T>(path: string, token?: string | null): Promise<T>
 };
 
 type SendOptions = {
-  method: 'POST' | 'DELETE';
+  method: 'POST' | 'PATCH' | 'DELETE';
   body?: unknown;
   token?: string | null;
 };

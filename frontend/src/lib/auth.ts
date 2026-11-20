@@ -34,12 +34,19 @@ export const getCurrentUser = async (): Promise<User | null> => {
   return apiGet<User>('/auth/me', token).catch(() => null);
 };
 
-export const sendWithAuth = async (path: string, method: 'POST' | 'DELETE', body?: unknown) => {
+type Method = 'POST' | 'PATCH' | 'DELETE';
+
+export const requestWithAuth = async (path: string, method: Method, body?: unknown) => {
   const token = await getAuthToken();
   if (!token) redirect('/login');
 
   const response = await apiSend(path, { method, body, token });
   if (response.status === 401) redirect('/login');
 
+  return response;
+};
+
+export const sendWithAuth = async (path: string, method: Method, body?: unknown) => {
+  const response = await requestWithAuth(path, method, body);
   return response.ok;
 };
