@@ -58,6 +58,10 @@ export type User = {
   email: string;
 };
 
+export type UserListItem = User & {
+  createdAt: string;
+};
+
 export type AuthResponse = {
   token: string;
   user: User;
