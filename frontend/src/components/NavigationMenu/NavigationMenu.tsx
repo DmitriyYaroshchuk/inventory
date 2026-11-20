@@ -13,7 +13,7 @@ const items: NavigationItem[] = [
   { href: '/statistics', labelKey: 'statistics' },
   { href: '/warehouses', labelKey: 'warehouses' },
   { href: '/users', labelKey: 'users' },
-  { labelKey: 'settings' },
+  { href: '/settings', labelKey: 'settings' },
 ];
 
 const NavigationMenu = () => {
