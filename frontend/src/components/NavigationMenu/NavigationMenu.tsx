@@ -12,7 +12,7 @@ const items: NavigationItem[] = [
   { href: '/products', labelKey: 'products' },
   { href: '/statistics', labelKey: 'statistics' },
   { href: '/warehouses', labelKey: 'warehouses' },
-  { labelKey: 'users' },
+  { href: '/users', labelKey: 'users' },
   { labelKey: 'settings' },
 ];
 

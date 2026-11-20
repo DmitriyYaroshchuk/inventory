@@ -1,5 +1,5 @@
 import { API_URL } from '@/services/api';
-import type { OrderDetails, OrderSummary, Product, ProductGroup } from '@/types';
+import type { OrderDetails, OrderSummary, Product, ProductGroup, UserListItem } from '@/types';
 
 const buildHeaders = (token?: string | null, hasBody = false) => {
   const headers = new Headers();
@@ -67,4 +67,8 @@ export const fetchOrders = (q?: string) => {
 
 export const fetchOrder = (id: number) => {
   return apiGet<OrderDetails>(`/orders/${id}`);
+};
+
+export const fetchUsers = (token: string | null, q?: string) => {
+  return apiGet<UserListItem[]>(withQuery('/users', { q }), token);
 };
