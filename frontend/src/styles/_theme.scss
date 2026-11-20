@@ -1,0 +1,51 @@
+@mixin light-palette {
+  color-scheme: light;
+
+  --color-background: #eef1f4;
+  --color-surface: #fff;
+  --color-text: #2b3440;
+  --color-text-muted: #8a95a3;
+  --color-text-secondary: #6d7a87;
+  --color-border: #d9e0e6;
+  --color-line: #c9d1d9;
+}
+
+@mixin dark-palette {
+  color-scheme: dark;
+
+  --color-background: #15191e;
+  --color-surface: #1f252c;
+  --color-text: #e6e9ed;
+  --color-text-muted: #8b97a5;
+  --color-text-secondary: #aab4bf;
+  --color-border: #2f3740;
+  --color-line: #3d4752;
+
+  --bs-body-bg: #1f252c;
+  --bs-body-color: #e6e9ed;
+  --bs-emphasis-color: #fff;
+  --bs-secondary-color: #8b97a5;
+  --bs-secondary-bg: #2a3139;
+  --bs-tertiary-bg: #252b33;
+  --bs-border-color: #3d4752;
+  --bs-success-text-emphasis: #8fd0a8;
+  --bs-success-bg-subtle: #10261a;
+  --bs-success-border-subtle: #1d5a37;
+  --bs-danger-text-emphasis: #ea868f;
+  --bs-danger-bg-subtle: #2c0b0e;
+  --bs-danger-border-subtle: #842029;
+}
+
+:root {
+  @include light-palette;
+}
+
+[data-theme='dark'] {
+  @include dark-palette;
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-theme='auto'] {
+    @include dark-palette;
+  }
+}

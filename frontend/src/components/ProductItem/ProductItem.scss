@@ -11,7 +11,7 @@
   padding: 12px 24px;
   font-size: 12px;
   color: $text-dark;
-  background: #fff;
+  background: $surface;
   border: 1px solid $border;
   border-radius: 4px;
   transition: box-shadow 0.2s ease;
@@ -80,7 +80,7 @@
   &__order {
     font-size: 16px;
     line-height: 1.2;
-    color: #6c7983;
+    color: $text-secondary;
     text-decoration: underline;
     text-decoration-color: $border;
     text-underline-offset: 3px;

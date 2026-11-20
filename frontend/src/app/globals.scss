@@ -1,4 +1,5 @@
 @use 'bootstrap/scss/bootstrap';
+@use '@/styles/theme';
 @use '@/styles/variables' as *;
 @use '@/styles/breakpoints' as *;
 
@@ -20,7 +21,7 @@ body {
 
   &__sidebar {
     flex: 0 0 $sidebar-width;
-    background: #fff;
+    background: $surface;
 
     @include mobile {
       flex: none;
