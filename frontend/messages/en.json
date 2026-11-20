@@ -89,6 +89,13 @@
     "newCount": "New: {count}",
     "usedCount": "Used: {count}"
   },
+  "users": {
+    "title": "Users / {count}",
+    "loadError": "Failed to load users. Make sure the server is running.",
+    "empty": "No users found",
+    "you": "you",
+    "registered": "Registered"
+  },
   "products": {
     "title": "Products / {count}",
     "type": "Type:",
