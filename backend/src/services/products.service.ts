@@ -1,6 +1,7 @@
 import type { ResultSetHeader, RowDataPacket } from 'mysql2';
 import { pool } from '../db';
-import type { Price, ProductDto } from '../types';
+import type { Price, ProductDto, ProductGroup } from '../types';
+import { sumPrices } from '../utils';
 
 interface RawPrice {
   value: number;
@@ -137,4 +138,25 @@ export const createProduct = async (product: NewProduct): Promise<number> => {
   );
 
   return result.insertId;
+};
+
+// Группы продуктов по типу: количество, сколько новых и сумма в каждой валюте
+export const getProductGroups = async (): Promise<ProductGroup[]> => {
+  const products = await getProducts();
+
+  const byType = new Map<string, ProductDto[]>();
+  for (const product of products) {
+    const list = byType.get(product.type) ?? [];
+    list.push(product);
+    byType.set(product.type, list);
+  }
+
+  return [...byType.entries()]
+    .map(([type, list]) => ({
+      type,
+      productsCount: list.length,
+      newCount: list.filter((product) => product.isNew).length,
+      total: sumPrices(list),
+    }))
+    .sort((a, b) => a.type.localeCompare(b.type));
 };

@@ -1,6 +1,7 @@
 import type { ResultSetHeader, RowDataPacket } from 'mysql2';
 import { pool } from '../db';
-import type { OrderDetails, OrderSummary, Price, ProductDto } from '../types';
+import type { OrderDetails, OrderSummary } from '../types';
+import { sumPrices } from '../utils';
 import { getProducts } from './products.service';
 
 interface OrderRow extends RowDataPacket {
@@ -9,20 +10,6 @@ interface OrderRow extends RowDataPacket {
   description: string | null;
   date: Date;
 }
-
-const round2 = (n: number): number => Math.round(n * 100) / 100;
-
-const sumPrices = (products: ProductDto[]): Price[] => {
-  const sums = new Map<string, Price>();
-  for (const product of products) {
-    for (const price of product.price) {
-      const current = sums.get(price.symbol);
-      if (current) current.value = round2(current.value + price.value);
-      else sums.set(price.symbol, { ...price, value: round2(price.value) });
-    }
-  }
-  return [...sums.values()].sort((a, b) => a.symbol.localeCompare(b.symbol));
-};
 
 const fetchOrders = async (orderId?: number, search?: string): Promise<OrderDetails[]> => {
   const conditions: string[] = [];

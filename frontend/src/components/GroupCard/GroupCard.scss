@@ -1,0 +1,59 @@
+@use '@/styles/variables' as *;
+
+.group-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+  padding: 24px;
+  color: $text-dark;
+  text-decoration: none;
+  background: #fff;
+  border: 1px solid $border;
+  border-radius: 4px;
+  transition: box-shadow 0.2s ease;
+
+  &:hover {
+    color: $text-dark;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  &__count {
+    font-size: 14px;
+  }
+
+  &__states {
+    display: flex;
+    gap: 16px;
+    font-size: 12px;
+  }
+
+  &__state {
+    color: $text-muted;
+
+    &--new {
+      color: $green;
+    }
+  }
+
+  &__total {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+    padding-top: 12px;
+    font-weight: 700;
+    border-top: 1px solid $border;
+  }
+
+  &__muted {
+    font-size: 12px;
+    font-weight: 400;
+    color: $text-muted;
+  }
+}

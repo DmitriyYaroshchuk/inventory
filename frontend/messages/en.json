@@ -81,6 +81,14 @@
     "submit": "Add",
     "saving": "Saving..."
   },
+  "groups": {
+    "title": "Groups / {count}",
+    "loadError": "Failed to load groups. Make sure the server is running.",
+    "empty": "No groups",
+    "productsCount": "{count, plural, one {# product} other {# products}}",
+    "newCount": "New: {count}",
+    "usedCount": "Used: {count}"
+  },
   "products": {
     "title": "Products / {count}",
     "type": "Type:",

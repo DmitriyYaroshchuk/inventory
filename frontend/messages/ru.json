@@ -82,6 +82,14 @@
     "submit": "Добавить",
     "saving": "Сохранение..."
   },
+  "groups": {
+    "title": "Группы / {count}",
+    "loadError": "Не удалось загрузить группы. Проверьте, что сервер запущен.",
+    "empty": "Групп нет",
+    "productsCount": "{count, plural, one {# продукт} few {# продукта} many {# продуктов} other {# продукта}}",
+    "newCount": "Новых: {count}",
+    "usedCount": "Б/У: {count}"
+  },
   "products": {
     "title": "Продукты / {count}",
     "type": "Тип:",
