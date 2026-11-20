@@ -6,6 +6,7 @@ import { errorHandler } from './middleware/error-handler';
 import { ordersRouter } from './routes/orders';
 import { productsRouter } from './routes/products';
 import { authRouter } from './routes/auth';
+import { usersRouter } from './routes/users';
 
 export const createApp = () => {
   const app = express();
@@ -26,6 +27,7 @@ export const createApp = () => {
   app.use('/api/auth', authRouter);
   app.use('/api/orders', ordersRouter);
   app.use('/api/products', productsRouter);
+  app.use('/api/users', usersRouter);
 
   app.use((_req, res) => {
     res.status(404).json({ error: 'Not found' });

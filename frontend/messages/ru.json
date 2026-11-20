@@ -31,7 +31,11 @@
     "emailRequired": "Введите email",
     "emailInvalid": "Некорректный email",
     "passwordRequired": "Введите пароль",
-    "passwordsMismatch": "Пароли не совпадают"
+    "passwordsMismatch": "Пароли не совпадают",
+    "required": "Обязательное поле",
+    "positiveInteger": "Введите целое число больше 0",
+    "price": "Введите число не меньше 0",
+    "dateOrder": "Дата окончания раньше даты начала"
   },
   "orders": {
     "title": "Приходы / {count}",
@@ -50,6 +54,11 @@
     "title": "Вы уверены, что хотите удалить этот приход?",
     "error": "Не удалось удалить приход. Попробуйте ещё раз."
   },
+  "deleteProduct": {
+    "title": "Вы уверены, что хотите удалить этот продукт?",
+    "error": "Не удалось удалить продукт. Попробуйте ещё раз."
+  },
+
   "addOrder": {
     "title": "Новый приход",
     "name": "Название",
@@ -57,6 +66,62 @@
     "error": "Не удалось создать приход",
     "submit": "Добавить",
     "saving": "Сохранение..."
+  },
+  "addProduct": {
+    "title": "Новый продукт",
+    "name": "Название",
+    "type": "Тип",
+    "condition": "Состояние",
+    "serialNumber": "Серийный номер",
+    "priceUsd": "Цена, USD",
+    "priceUah": "Цена, UAH",
+    "guaranteeStart": "Гарантия с",
+    "guaranteeEnd": "Гарантия по",
+    "specification": "Характеристики",
+    "error": "Не удалось добавить продукт",
+    "submit": "Добавить",
+    "saving": "Сохранение..."
+  },
+  "groups": {
+    "title": "Группы / {count}",
+    "loadError": "Не удалось загрузить группы. Проверьте, что сервер запущен.",
+    "empty": "Групп нет",
+    "productsCount": "{count, plural, one {# продукт} few {# продукта} many {# продуктов} other {# продукта}}",
+    "newCount": "Новых: {count}",
+    "usedCount": "Б/У: {count}"
+  },
+  "users": {
+    "title": "Пользователи / {count}",
+    "loadError": "Не удалось загрузить пользователей. Проверьте, что сервер запущен.",
+    "empty": "Пользователи не найдены",
+    "you": "это вы",
+    "registered": "Регистрация"
+  },
+  "settings": {
+    "title": "Настройки",
+    "profile": "Профиль",
+    "name": "Имя",
+    "email": "Email",
+    "save": "Сохранить",
+    "saving": "Сохранение...",
+    "saved": "Изменения сохранены",
+    "saveError": "Не удалось сохранить изменения",
+    "password": "Пароль",
+    "currentPassword": "Текущий пароль",
+    "newPassword": "Новый пароль",
+    "confirmPassword": "Повторите новый пароль",
+    "changePassword": "Сменить пароль",
+    "passwordChanged": "Пароль изменён",
+    "wrongPassword": "Неверный текущий пароль",
+    "passwordError": "Не удалось сменить пароль",
+    "language": "Язык интерфейса",
+    "theme": "Тема оформления"
+  },
+  "theme": {
+    "label": "Тема",
+    "light": "Светлая",
+    "dark": "Тёмная",
+    "auto": "Как в системе"
   },
   "products": {
     "title": "Продукты / {count}",

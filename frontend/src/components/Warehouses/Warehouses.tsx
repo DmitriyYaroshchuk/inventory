@@ -1,10 +1,7 @@
-'use client';
-
-import { useState } from 'react';
-import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import type messages from '../../../messages/ru.json';
-import Loader from '@/components/Loader/Loader';
+import WarehousesMapLoader from '@/components/WarehousesMapLoader/WarehousesMapLoader';
 import './Warehouses.scss';
 
 export type WarehouseKey = keyof typeof messages.warehouses.items;
@@ -23,19 +20,13 @@ const WAREHOUSES: Warehouse[] = [
   { id: 5, key: 'dnipro', position: [48.4647, 35.0462] },
 ];
 
-const WarehousesMap = dynamic(() => import('@/components/WarehousesMap/WarehousesMap'), {
-  ssr: false,
-  loading: () => <Loader />,
-});
+type WarehousesProps = {
+  selectedId: number | null;
+};
 
-const Warehouses = () => {
+const Warehouses = ({ selectedId }: WarehousesProps) => {
   const t = useTranslations('warehouses');
-  const [selectedId, setSelectedId] = useState<number | null>(null);
   const selectedWarehouse = WAREHOUSES.find((warehouse) => warehouse.id === selectedId) ?? null;
-
-  const handleToggle = (id: number) => {
-    setSelectedId((prevId) => (prevId === id ? null : id));
-  };
 
   return (
     <section className="warehouses">
@@ -43,25 +34,25 @@ const Warehouses = () => {
 
       <div className="warehouses__body">
         <ul className="warehouses__list">
-          {WAREHOUSES.map((warehouse) => (
-            <li key={warehouse.id}>
-              <button
-                type="button"
-                className={`warehouses__item${warehouse.id === selectedId ? ' warehouses__item--active' : ''}`}
-                onClick={() => handleToggle(warehouse.id)}
-              >
-                <span className="warehouses__name">{t(`items.${warehouse.key}.title`)}</span>
-                <span className="warehouses__address">{t(`items.${warehouse.key}.address`)}</span>
-              </button>
-            </li>
-          ))}
+          {WAREHOUSES.map((warehouse) => {
+            const isActive = warehouse.id === selectedId;
+
+            return (
+              <li key={warehouse.id}>
+                <Link
+                  href={isActive ? '/warehouses' : `/warehouses?id=${warehouse.id}`}
+                  scroll={false}
+                  className={`warehouses__item${isActive ? ' warehouses__item--active' : ''}`}
+                >
+                  <span className="warehouses__name">{t(`items.${warehouse.key}.title`)}</span>
+                  <span className="warehouses__address">{t(`items.${warehouse.key}.address`)}</span>
+                </Link>
+              </li>
+            );
+          })}
         </ul>
 
-        <WarehousesMap
-          warehouses={WAREHOUSES}
-          selectedWarehouse={selectedWarehouse}
-          onSelect={setSelectedId}
-        />
+        <WarehousesMapLoader warehouses={WAREHOUSES} selectedWarehouse={selectedWarehouse} />
       </div>
     </section>
   );

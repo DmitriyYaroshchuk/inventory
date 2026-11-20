@@ -30,6 +30,13 @@ export type Product = {
   date: string;
 };
 
+export type ProductGroup = {
+  type: string;
+  productsCount: number;
+  newCount: number;
+  total: Price[];
+};
+
 export type OrderSummary = {
   id: number;
   title: string;
@@ -51,7 +58,24 @@ export type User = {
   email: string;
 };
 
+export type UserListItem = User & {
+  createdAt: string;
+};
+
 export type AuthResponse = {
   token: string;
   user: User;
+};
+
+export type NewProduct = {
+  orderId: number;
+  title: string;
+  type: string;
+  serialNumber: number;
+  isNew: boolean;
+  specification: string;
+  guaranteeStart: string;
+  guaranteeEnd: string;
+  priceUsd: number;
+  priceUah: number;
 };

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import L from 'leaflet';
 import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet';
 import { useTranslations } from 'next-intl';
@@ -20,7 +21,6 @@ const markerIcon = L.divIcon({
 type WarehousesMapProps = {
   warehouses: Warehouse[];
   selectedWarehouse: Warehouse | null;
-  onSelect: (id: number) => void;
 };
 
 type FlyToWarehouseProps = {
@@ -41,8 +41,10 @@ const FlyToWarehouse = ({ warehouse }: FlyToWarehouseProps) => {
   return null;
 };
 
-const WarehousesMap = ({ warehouses, selectedWarehouse, onSelect }: WarehousesMapProps) => {
+const WarehousesMap = ({ warehouses, selectedWarehouse }: WarehousesMapProps) => {
   const t = useTranslations('warehouses');
+  const router = useRouter();
+
   return (
     <MapContainer
       className="warehouses-map"
@@ -60,7 +62,9 @@ const WarehousesMap = ({ warehouses, selectedWarehouse, onSelect }: WarehousesMa
           key={warehouse.id}
           position={warehouse.position}
           icon={markerIcon}
-          eventHandlers={{ click: () => onSelect(warehouse.id) }}
+          eventHandlers={{
+            click: () => router.push(`/warehouses?id=${warehouse.id}`, { scroll: false }),
+          }}
         >
           <Popup>
             <strong>{t(`items.${warehouse.key}.title`)}</strong>

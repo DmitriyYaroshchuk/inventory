@@ -46,10 +46,9 @@
     padding: 0;
     border: 0;
     border-radius: 50%;
-    background: #fff;
+    background: $surface;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     color: $text-dark;
-    cursor: default;
 
     @include mobile {
       display: none;

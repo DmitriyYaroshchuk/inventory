@@ -1,14 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 import type { SubmitEvent } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { useRegisterMutation } from '@/services/api';
-import { setToken } from '@/store/authSlice';
-import { useAppDispatch } from '@/store/hooks';
-import { saveTokenToLS } from '@/utils/storage';
+import { registerAction } from '@/actions/auth';
 import { EMAIL_PATTERN } from '@/utils/validation';
 import AuthCard from '@/components/AuthCard/AuthCard';
 
@@ -47,11 +43,10 @@ const validate = (
 };
 
 const Register = () => {
-  const router = useRouter();
-  const dispatch = useAppDispatch();
+  const [isPending, startTransition] = useTransition();
+  const [registerError, setRegisterError] = useState<string | null>(null);
   const [values, setValues] = useState<FormValues>(INITIAL_VALUES);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [register, { isLoading, error: registerError }] = useRegisterMutation();
   const t = useTranslations('auth');
   const tValidation = useTranslations('validation');
 
@@ -59,7 +54,7 @@ const Register = () => {
   const hasErrors = Object.keys(errors).length > 0;
 
   const serverError = registerError
-    ? 'status' in registerError && registerError.status === 409
+    ? registerError === 'emailTaken'
       ? t('emailTaken')
       : t('registerError')
     : null;
@@ -71,23 +66,15 @@ const Register = () => {
   const getInputClass = (field: keyof FormValues) =>
     `form-control${isSubmitted && errors[field] ? ' is-invalid' : ''}`;
 
-  const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsSubmitted(true);
     if (hasErrors) return;
 
-    try {
-      const { token } = await register({
-        name: values.name.trim(),
-        email: values.email.trim(),
-        password: values.password,
-      }).unwrap();
-      dispatch(setToken(token));
-      saveTokenToLS(token);
-      router.push('/orders');
-    } catch (error) {
-      console.error('Не удалось зарегистрироваться:', error);
-    }
+    startTransition(async () => {
+      const error = await registerAction(values.name.trim(), values.email.trim(), values.password);
+      setRegisterError(error);
+    });
   };
 
   return (
@@ -166,8 +153,8 @@ const Register = () => {
 
         {serverError && <div className="alert alert-danger">{serverError}</div>}
 
-        <button type="submit" className="btn btn-success w-100" disabled={isLoading}>
-          {isLoading ? t('registering') : t('register')}
+        <button type="submit" className="btn btn-success w-100" disabled={isPending}>
+          {isPending ? t('registering') : t('register')}
         </button>
       </form>
     </AuthCard>

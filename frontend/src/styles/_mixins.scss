@@ -1,0 +1,11 @@
+@mixin dark-theme {
+  [data-theme='dark'] & {
+    @content;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    [data-theme='auto'] & {
+      @content;
+    }
+  }
+}

@@ -9,7 +9,7 @@
   padding: 16px 32px;
   border: 1px solid $border;
   border-radius: 7px;
-  background: #fff;
+  background: $surface;
   transition: box-shadow 0.2s;
   position: relative;
   overflow: hidden;
@@ -36,10 +36,10 @@
     text-align: left;
     cursor: pointer;
     overflow: hidden;
-    color: #6d7a87;
+    color: $text-secondary;
     font-size: 18px;
     text-decoration: underline;
-    text-decoration-color: #c9d1d9;
+    text-decoration-color: $line;
     text-overflow: ellipsis;
     text-underline-offset: 4px;
     white-space: nowrap;
@@ -60,7 +60,7 @@
     padding: 0;
     border: 1px solid $border;
     border-radius: 50%;
-    background: #fff;
+    background: $surface;
     color: $text-dark;
     cursor: pointer;
     transition:
@@ -117,7 +117,7 @@
     transition: color 0.2s;
 
     &:hover {
-      color: #e04b4b;
+      color: $danger;
     }
   }
 
@@ -148,7 +148,7 @@
     align-items: center;
     justify-content: center;
     width: 44px;
-    background: #dfe5ea;
+    background: $line;
     color: #fff;
     font-size: 28px;
   }

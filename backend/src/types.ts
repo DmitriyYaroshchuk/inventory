@@ -32,8 +32,19 @@ export interface OrderDetails extends OrderSummary {
   products: ProductDto[];
 }
 
+export interface ProductGroup {
+  type: string;
+  productsCount: number;
+  newCount: number;
+  total: Price[];
+}
+
 export interface User {
   id: number;
   name: string;
   email: string;
+}
+
+export interface UserListItem extends User {
+  createdAt: string;
 }

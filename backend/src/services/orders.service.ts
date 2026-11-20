@@ -1,6 +1,7 @@
 import type { ResultSetHeader, RowDataPacket } from 'mysql2';
 import { pool } from '../db';
-import type { OrderDetails, OrderSummary, Price, ProductDto } from '../types';
+import type { OrderDetails, OrderSummary } from '../types';
+import { sumPrices } from '../utils';
 import { getProducts } from './products.service';
 
 interface OrderRow extends RowDataPacket {
@@ -10,23 +11,20 @@ interface OrderRow extends RowDataPacket {
   date: Date;
 }
 
-const round2 = (n: number): number => Math.round(n * 100) / 100;
+const fetchOrders = async (orderId?: number, search?: string): Promise<OrderDetails[]> => {
+  const conditions: string[] = [];
+  const params: Array<string | number> = [];
 
-const sumPrices = (products: ProductDto[]): Price[] => {
-  const sums = new Map<string, Price>();
-  for (const product of products) {
-    for (const price of product.price) {
-      const current = sums.get(price.symbol);
-      if (current) current.value = round2(current.value + price.value);
-      else sums.set(price.symbol, { ...price, value: round2(price.value) });
-    }
+  if (orderId !== undefined) {
+    conditions.push('id = ?');
+    params.push(orderId);
   }
-  return [...sums.values()].sort((a, b) => a.symbol.localeCompare(b.symbol));
-};
+  if (search) {
+    conditions.push('title LIKE ?');
+    params.push(`%${search}%`);
+  }
 
-const fetchOrders = async (orderId?: number): Promise<OrderDetails[]> => {
-  const where = orderId !== undefined ? 'WHERE id = ?' : '';
-  const params = orderId !== undefined ? [orderId] : [];
+  const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
 
   const [orders] = await pool.query<OrderRow[]>(
     `SELECT id, title, description, date FROM orders ${where} ORDER BY date DESC, id DESC`,
@@ -50,8 +48,8 @@ const fetchOrders = async (orderId?: number): Promise<OrderDetails[]> => {
   });
 };
 
-export const listOrders = async (): Promise<OrderSummary[]> => {
-  const orders = await fetchOrders();
+export const listOrders = async (search?: string): Promise<OrderSummary[]> => {
+  const orders = await fetchOrders(undefined, search);
   return orders.map(({ products: _products, ...summary }) => summary);
 };
 

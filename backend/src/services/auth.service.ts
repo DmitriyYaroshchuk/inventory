@@ -71,3 +71,25 @@ export const verifyToken = (token: string): number | null => {
     return null;
   }
 };
+
+export const updateUserName = async (id: number, name: string): Promise<User | null> => {
+  await pool.query('UPDATE users SET name = ? WHERE id = ?', [name, id]);
+  return findUserById(id);
+};
+
+export const changePassword = async (
+  id: number,
+  currentPassword: string,
+  newPassword: string,
+): Promise<boolean> => {
+  const [rows] = await pool.query<UserRow[]>('SELECT * FROM users WHERE id = ?', [id]);
+  const row = rows[0];
+  if (!row) return false;
+
+  const isPasswordValid = await bcrypt.compare(currentPassword, row.password_hash);
+  if (!isPasswordValid) return false;
+
+  const passwordHash = await bcrypt.hash(newPassword, 10);
+  await pool.query('UPDATE users SET password_hash = ? WHERE id = ?', [passwordHash, id]);
+  return true;
+};

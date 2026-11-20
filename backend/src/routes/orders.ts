@@ -6,8 +6,9 @@ import { requireAuth } from '../middleware/auth';
 export const ordersRouter = Router();
 
 // GET /api/orders — список приходов (количество продуктов и суммы в валютах)
-ordersRouter.get('/', async (_req, res) => {
-  res.json(await listOrders());
+ordersRouter.get('/', async (req, res) => {
+  const q = typeof req.query.q === 'string' ? req.query.q.trim() : '';
+  res.json(await listOrders(q || undefined));
 });
 
 // GET /api/orders/:id — приход вместе с продуктами

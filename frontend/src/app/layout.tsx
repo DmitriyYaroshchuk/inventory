@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getTranslations } from 'next-intl/server';
-import Providers from '@/components/Providers/Providers';
+import { getTheme } from '@/lib/get-theme';
 import NavigationMenu from '@/components/NavigationMenu/NavigationMenu';
 import UserProfile from '@/components/UserProfile/UserProfile';
 import TopMenu from '@/components/TopMenu/TopMenu';
@@ -25,26 +25,26 @@ export const generateMetadata = async (): Promise<Metadata> => {
 
 const RootLayout = async ({ children }: LayoutProps<'/'>) => {
   const locale = await getLocale();
+  const theme = await getTheme();
 
   return (
     <html
       lang={locale}
       className={montserrat.variable}
+      data-theme={theme}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <body suppressHydrationWarning>
         <NextIntlClientProvider>
-          <Providers>
-            <TopMenu />
-            <div className="app__body">
-              <aside className="app__sidebar">
-                <UserProfile />
-                <NavigationMenu />
-              </aside>
-              <main className="app__content">{children}</main>
-            </div>
-          </Providers>
+          <TopMenu theme={theme} />
+          <div className="app__body">
+            <aside className="app__sidebar">
+              <UserProfile />
+              <NavigationMenu />
+            </aside>
+            <main className="app__content">{children}</main>
+          </div>
         </NextIntlClientProvider>
       </body>
     </html>

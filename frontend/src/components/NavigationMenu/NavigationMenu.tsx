@@ -8,12 +8,12 @@ import './NavigationMenu.scss';
 
 const items: NavigationItem[] = [
   { href: '/orders', labelKey: 'orders' },
-  { labelKey: 'groups' },
+  { href: '/groups', labelKey: 'groups' },
   { href: '/products', labelKey: 'products' },
   { href: '/statistics', labelKey: 'statistics' },
   { href: '/warehouses', labelKey: 'warehouses' },
-  { labelKey: 'users' },
-  { labelKey: 'settings' },
+  { href: '/users', labelKey: 'users' },
+  { href: '/settings', labelKey: 'settings' },
 ];
 
 const NavigationMenu = () => {
