@@ -113,7 +113,14 @@
     "passwordChanged": "Password changed",
     "wrongPassword": "Current password is incorrect",
     "passwordError": "Failed to change the password",
-    "language": "Interface language"
+    "language": "Interface language",
+    "theme": "Theme"
+  },
+  "theme": {
+    "label": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "auto": "System"
   },
   "products": {
     "title": "Products / {count}",
