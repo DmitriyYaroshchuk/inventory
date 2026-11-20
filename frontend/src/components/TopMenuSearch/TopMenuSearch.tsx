@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
-const SEARCH_PAGES = ['/products', '/orders'];
+const SEARCH_PAGES = ['/products', '/orders', '/users'];
+
 const DEBOUNCE_MS = 300;
 
 const TopMenuSearch = () => {
