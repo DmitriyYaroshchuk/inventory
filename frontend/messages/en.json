@@ -96,6 +96,25 @@
     "you": "you",
     "registered": "Registered"
   },
+  "settings": {
+    "title": "Settings",
+    "profile": "Profile",
+    "name": "Name",
+    "email": "Email",
+    "save": "Save",
+    "saving": "Saving...",
+    "saved": "Changes saved",
+    "saveError": "Failed to save changes",
+    "password": "Password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Repeat new password",
+    "changePassword": "Change password",
+    "passwordChanged": "Password changed",
+    "wrongPassword": "Current password is incorrect",
+    "passwordError": "Failed to change the password",
+    "language": "Interface language"
+  },
   "products": {
     "title": "Products / {count}",
     "type": "Type:",

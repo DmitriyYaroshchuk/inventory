@@ -97,6 +97,25 @@
     "you": "это вы",
     "registered": "Регистрация"
   },
+  "settings": {
+    "title": "Настройки",
+    "profile": "Профиль",
+    "name": "Имя",
+    "email": "Email",
+    "save": "Сохранить",
+    "saving": "Сохранение...",
+    "saved": "Изменения сохранены",
+    "saveError": "Не удалось сохранить изменения",
+    "password": "Пароль",
+    "currentPassword": "Текущий пароль",
+    "newPassword": "Новый пароль",
+    "confirmPassword": "Повторите новый пароль",
+    "changePassword": "Сменить пароль",
+    "passwordChanged": "Пароль изменён",
+    "wrongPassword": "Неверный текущий пароль",
+    "passwordError": "Не удалось сменить пароль",
+    "language": "Язык интерфейса"
+  },
   "products": {
     "title": "Продукты / {count}",
     "type": "Тип:",
